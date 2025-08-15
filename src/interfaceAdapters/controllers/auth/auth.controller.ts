@@ -1,11 +1,18 @@
 import { inject, injectable } from "tsyringe";
-import type { IUserResgisterUseCase } from "../../../entities/useCaseInterfaces/auth/register-usecase.interface.js";
+import type { IRegisterUserUsecase } from "../../../entities/useCaseInterfaces/auth/register-usecase.interface.js";
+import { Request, Response } from "express";
+import { UserRegisterRequestDto } from "../../../shared/dtos/auth.dto.js";
 
 @injectable()
-class AuthController {
+export class AuthController {
   constructor(
     @inject("IUserRegisterUsecase")
-    private registerUsecase: IUserResgisterUseCase
+    private registerUsecase: IRegisterUserUsecase
   ) {}
-  
+
+  signup(req:Request,res:Response,next:Function){
+
+    this.registerUsecase.execute(req.body as UserRegisterRequestDto)
+  }
+
 }
