@@ -12,7 +12,8 @@ export const config  ={
   },
   database:{
     mongoDb:process.env.MONGO_URL || "mongodb://localhost:27017/coderspace"
-  }
+  },
+  environment:process.env.NODE_ENV
 }
 
 

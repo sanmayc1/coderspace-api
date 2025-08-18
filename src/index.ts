@@ -7,7 +7,6 @@ import "./frameworks/di/di-resolver.js";
   try {
     const app = new Server();
     const mongoDb = new MongoConnect();
-
     mongoDb.connect();
     app.start();
   } catch (error) {
