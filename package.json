@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec node --loader ts-node/esm src/index.ts ",
+    "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
+    "lint": "npx eslint",
     "build": "tsc"
   },
   "type": "module",
@@ -17,9 +18,15 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
+    "eslint": "^9.33.0",
     "express": "^5.1.0",
     "mongoose": "^8.17.1",
-    "tsyringe": "^4.10.0"
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0",
+    "typescript-eslint": "^8.39.1",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^7.0.1",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.9",
@@ -27,7 +34,6 @@
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
     "@types/node": "^24.2.1",
-    "eslint": "^9.33.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2"

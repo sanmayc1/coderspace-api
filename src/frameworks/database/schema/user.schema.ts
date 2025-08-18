@@ -1,6 +1,5 @@
 import { Schema } from "mongoose";
 import { IUserModel } from "../models/user.model.js";
-import { ROLES } from "../../../shared/constant.js";
 
 export const UserSchema = new Schema<IUserModel>(
   {
@@ -19,8 +18,7 @@ export const UserSchema = new Schema<IUserModel>(
       required: true,
     },
     phone: {
-      type: String,
-      required: true,
+      type: String
     },
     username: {
       type: String,
@@ -40,8 +38,9 @@ export const UserSchema = new Schema<IUserModel>(
       type: String,
     },
     role: {
-      enum: ROLES,
-      required: true,
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
     },
     location: {
       type: String,

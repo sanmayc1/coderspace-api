@@ -21,7 +21,7 @@ export interface IUserEntity {
   password: string;
   level?: number;
   xpCoin?: number;
-  role: TRole;
+  role?: TRole;
   phone?: string;
   location?: string;
   dateOfBirth?: Date;
@@ -39,7 +39,7 @@ export interface IUserEntity {
   experience?: number;
   domain?: Rating[] | [];
   skills?: Rating[] | [];
-  profession: string;
+  profession?: string;
   createdAt?: Date;
   updtedAt?: Date;
 }
