@@ -1,9 +1,6 @@
+export type TRole = "admin" | "user";
 
-
-export type TRole = "admin" | "user" 
-
-export const ROLES =["admin","user"] 
-
+export const ROLES = ["admin", "user"];
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -17,7 +14,12 @@ export const HTTP_STATUS = {
 };
 
 export const ERROR_MESSAGES = {
- SERVER_ERROR: "An error occurred, please try again later.",
-   VALIDATION_ERROR: "Validation error occurred.",
- 
+  SERVER_ERROR: "An error occurred, please try again later.",
+  VALIDATION_ERROR: "Validation error occurred.",
+  EMAIL_EXIST:"email already exists",
+  USER_NAME_EXIST:"username already exists"
 };
+
+export const SUCCESS_MESSAGES = {
+  USER_REGISTERED:"user registered successfully"
+}

@@ -23,9 +23,8 @@ const developmentTransport = [
     db: config.database.mongoDb,
     collection: "error_logs",
     level: "error",
-    options: { useUnifiedTopology: true },
     expireAfterSeconds: 60 * 60 * 24 * 7,
-  }),
+  })
 ];
 
 export const logger = winston.createLogger({
