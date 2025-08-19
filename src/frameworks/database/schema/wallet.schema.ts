@@ -1,4 +1,4 @@
-import { Schema, ObjectId } from "mongoose";
+import { Schema } from "mongoose";
 import { IWalletModel } from "../models/wallet.model.js";
 
 export const WalletSchema = new Schema<IWalletModel>({

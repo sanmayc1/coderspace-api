@@ -4,7 +4,7 @@ import { IWalletModel, WalletModel } from "../../../frameworks/database/models/w
 
 
 export class WalletRepository implements IWalletRepository {
-  async create(userId: string | ObjectId): Promise<IWalletModel> {
-    return await WalletModel.create({ userId });
+  async create(userId: string | ObjectId,userType:string): Promise<IWalletModel> {
+    return await WalletModel.create({ userId,userType });
   }
 }

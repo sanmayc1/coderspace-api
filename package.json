@@ -15,6 +15,7 @@
   "description": "",
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
@@ -22,6 +23,7 @@
     "dotenv": "^17.2.1",
     "eslint": "^9.33.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.1",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.10.0",

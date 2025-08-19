@@ -1,8 +1,5 @@
-import type {
-  UserRegisterRequestDto,
-  UserRegisterResponseDto,
-} from "../../../interfaceAdapters/dtos/auth.dto.js";
+import type { UserRegisterRequestDto } from "../../../interfaceAdapters/dtos/auth.dto.js";
 
 export interface IRegisterUserUsecase {
-  execute(user: UserRegisterRequestDto): Promise<void>;
+  execute(user: UserRegisterRequestDto): Promise<string>;
 }

@@ -4,5 +4,5 @@ import { IWalletModel } from "../../../frameworks/database/models/wallet.model.j
 
 
 export interface IWalletRepository {
-    create(userId:string|ObjectId):Promise<IWalletModel>
+    create(userId:string|ObjectId,userType:string):Promise<IWalletModel>
 }

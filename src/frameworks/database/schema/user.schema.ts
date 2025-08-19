@@ -102,6 +102,10 @@ export const UserSchema = new Schema<IUserModel>(
     profession: {
       type: String,
     },
+    isVerified:{
+      type:Boolean,
+      default:false
+    }
   },
   { timestamps: true }
 );

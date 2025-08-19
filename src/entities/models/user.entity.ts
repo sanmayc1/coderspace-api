@@ -42,4 +42,5 @@ export interface IUserEntity {
   profession?: string;
   createdAt?: Date;
   updtedAt?: Date;
+  isVerified?:boolean
 }

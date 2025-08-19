@@ -3,11 +3,7 @@ import { DependencyInjection } from "./di-registry.js";
 import { AuthController } from "../../interfaceAdapters/controllers/auth/auth.controller.js";
 import { ErrorMiddleware } from "../../interfaceAdapters/middleware/error-handle.middleware.js";
 
+DependencyInjection.registerAll();
 
-
-
-DependencyInjection.registerAll()
-
-export const authcontroller = container.resolve(AuthController)
-export const errorMiddleware = container.resolve(ErrorMiddleware)
-
+export const authcontroller = container.resolve(AuthController);
+export const errorMiddleware = container.resolve(ErrorMiddleware);

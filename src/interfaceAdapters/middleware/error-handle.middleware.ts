@@ -1,9 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { ILoger } from "../services/logger/logger-service-interface.js";
 import { NextFunction, Request, Response } from "express";
-import { success, ZodError } from "zod";
+import {  ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { error, timeStamp } from "console";
 import { CustomError } from "../../shared/utils/errors/custom-error.js";
 
 @injectable()
@@ -18,28 +17,32 @@ export class ErrorMiddleware {
   ) {
     let statusCode = HTTP_STATUS.INTERNAL_SERVER_ERROR;
     let message = ERROR_MESSAGES.SERVER_ERROR;
-    let error = err.errors;
+    let errors = err.errors;
 
     if (err instanceof ZodError) {
-      let validationError: Record<string, string> = {};
+      const validationError: Record<string, string>[] = [];
+      const addedPath = new Set();
       err.issues.forEach((e) => {
-        if (!validationError.hasOwnProperty(e.path[0])) {
+        if (!addedPath.has(String(e.path))) {
           const path = String(e.path[0]);
-          validationError[path] = e.message;
+          validationError.push({ path, message: e.message });
+          addedPath.add(String(path));
         }
       });
 
-      error = validationError;
+      errors = validationError;
       message = ERROR_MESSAGES.VALIDATION_ERROR;
       statusCode = HTTP_STATUS.BAD_REQUEST;
     } else if (err instanceof CustomError) {
       if (err.filed) {
-        error = {
-          path: err.filed,
-          message: err.message,
-        };
+        errors = [
+          {
+            path: err.filed,
+            message: err.message,
+          },
+        ];
       } else {
-        error = err.message;
+        errors = [{ error: err.message }];
       }
       statusCode = err.statusCode;
       message = err.message;
@@ -59,7 +62,7 @@ export class ErrorMiddleware {
     res.status(statusCode).json({
       success: false,
       message,
-      error,
+      ...(errors && { errors }),
     });
   }
 }
