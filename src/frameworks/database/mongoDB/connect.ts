@@ -11,7 +11,7 @@ export class MongoConnect {
   public connect(): void {
     mongoose
       .connect(this._mongourl)
-      .then(() => console.log("MongoDB connected"))
+      .then(() => console.log("Connected to MongoDB"))
       .catch((err)=>console.log(err))
   }
 }

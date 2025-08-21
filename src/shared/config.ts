@@ -15,8 +15,19 @@ export const config = {
   jwt: {
     accessSecret: process.env.ACCESS_SECRET,
     refreshSecret: process.env.REFRESH_SECRET,
-    accessExpire:process.env.ACCESS_EXPIREIN,
-    refreshExpire:process.env.REFRESH_EXPIREIN
+    accessExpire: process.env.ACCESS_EXPIREIN,
+    refreshExpire: process.env.REFRESH_EXPIREIN,
+  },
+  smtp: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+  redis: {
+    username: process.env.REDIS_USER,
+    password: process.env.REDIS_PASSWORD,
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
   },
   environment: process.env.NODE_ENV,
+  cookieSecret: process.env.COOKIES_SECRET,
 };

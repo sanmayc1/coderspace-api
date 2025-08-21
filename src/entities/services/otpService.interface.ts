@@ -1,6 +1,10 @@
+import { IOtpEntity } from "../models/otp.entity.js"
 
 
-export interface IOTPService{
+export interface IOtpService{
     generateOtp():string
-    verifyOtp(otp:string):boolean
+    verifyOtp(current:string,original:string):Promise<boolean>
+    storeOtp(email:string,otp:string):Promise<IOtpEntity>
+    deleteOtp(email:string):Promise<void>
+    otpExists(email:string):Promise<IOtpEntity|null>
 } 

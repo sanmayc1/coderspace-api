@@ -1,7 +1,7 @@
 import { JwtPayload, SignOptions } from "jsonwebtoken";
-import { IJwtService } from "../../../entities/services/jwtService.interface.js";
+import { IJwtService } from "../../entities/services/jwtService.interface.js";
 import jwt from "jsonwebtoken";
-import { config } from "../../../shared/config.js";
+import { config } from "../../shared/config.js";
 
 export class JwtService implements IJwtService {
   private refreshSecret: string;

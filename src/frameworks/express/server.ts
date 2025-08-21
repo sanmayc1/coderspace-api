@@ -22,7 +22,7 @@ export class Server {
     this._app.use(cors({ origin: config.client.uri, credentials: true }));
     this._app.use(express.json());
     this._app.use(express.urlencoded({ extended: true }));
-    this._app.use(cookieParser());
+    this._app.use(cookieParser(config.cookieSecret));
   }
 
   private configureRouter(): void {

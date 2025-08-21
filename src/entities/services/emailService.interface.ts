@@ -1,3 +1,3 @@
 export interface IEmailService {
-  sendMail(email: string, template: string): Promise<void>;
+  sendMail(email: string, content: string): Promise<void>;
 }

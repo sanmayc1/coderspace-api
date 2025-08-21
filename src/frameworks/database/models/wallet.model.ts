@@ -1,6 +1,6 @@
 import { Document, model, ObjectId } from "mongoose";
-import { IWalletEnitity } from "../../../entities/models/wallet-Enitity.js";
-import { WalletSchema  } from "../schema/wallet.schema.js";
+import { IWalletEnitity } from "../../../entities/models/wallet.Enitity.js";
+import { walletSchema  } from "../schema/wallet.schema.js";
 
 
 export interface IWalletModel extends  Omit<IWalletEnitity,"_id "|"userId">,Document{
@@ -8,4 +8,4 @@ export interface IWalletModel extends  Omit<IWalletEnitity,"_id "|"userId">,Docu
     userId:ObjectId
 }
 
-export const WalletModel = model("Wallet",WalletSchema)
+export const WalletModel = model("Wallet",walletSchema)

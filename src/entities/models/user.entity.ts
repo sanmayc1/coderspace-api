@@ -1,19 +1,18 @@
-import { ObjectId } from "mongoose";
 import { TRole } from "../../shared/constant.js";
 
 interface PlanHistory {
-  planId: ObjectId;
+  planId: string;
   planName: string;
   expireAt: Date;
 }
 
 interface Rating {
-  _id: ObjectId;
+  _id: string;
   rating: number;
 }
 
 export interface IUserEntity {
-  _id?: ObjectId;
+  _id: string;
   name: string;
   email: string;
   username: string;
@@ -33,12 +32,12 @@ export interface IUserEntity {
   authProvider?: "google" | "github" | "local";
   about?: string;
   isPremiumActive?: boolean;
-  planHistory?: PlanHistory | [];
+  planHistory?: PlanHistory ;
   isProfileComplete?: boolean;
   position?: string;
   experience?: number;
-  domain?: Rating[] | [];
-  skills?: Rating[] | [];
+  domain?: Rating[] ;
+  skills?: Rating[] ;
   profession?: string;
   createdAt?: Date;
   updtedAt?: Date;

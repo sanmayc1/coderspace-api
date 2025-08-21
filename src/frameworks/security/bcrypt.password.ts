@@ -1,4 +1,4 @@
-import { IBcrypt } from "../../useCases/auth/interfaces/bcrypt.interface.js";
+import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { hash, compare } from "bcrypt";
 
 export class Bcrypt implements IBcrypt {

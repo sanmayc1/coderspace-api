@@ -4,6 +4,7 @@ import { usernameRegex1, usernameRegex2, usernameRegex3 } from "./regex.js";
 export const nameSchema = z
   .string()
   .min(1, { message: "Name must be at least 2 characters long" })
+  .trim()
   .regex(/^[a-zA-Z]+$/, {
     message: "Name must contain only alphabetic characters",
   });
@@ -11,6 +12,7 @@ export const nameSchema = z
 export const usernameSchema = z
   .string()
   .lowercase({ message: "Username must be in lowercase only" })
+  .trim()
   .regex(usernameRegex1, { message: "Username must start with @" })
   .regex(usernameRegex2, {
     message: "Username can only lowercase contain letters, numbers, and _",
@@ -25,6 +27,7 @@ export const passwordSchema = z
   .regex(/[A-Z]/, {
     message: "Password must contain at least one uppercase letter",
   })
+  .trim()
   .regex(/[0-9]/, { message: "Password must contain at least one digit" })
   .regex(/[@$!%*?&]/, {
     message: "Password must contain at least one special character",

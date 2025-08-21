@@ -1,8 +1,7 @@
-import { ObjectId } from "mongoose";
 
 export interface IWalletEnitity {
-  _id?: string | ObjectId;
-  userId: string | ObjectId;
+  _id: string 
+  userId: string 
   balance: number;
   contestAmount: number;
   userType:"user"|"company"|"admin"
