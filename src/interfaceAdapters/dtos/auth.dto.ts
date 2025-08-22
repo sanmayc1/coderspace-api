@@ -12,3 +12,9 @@ export interface UserRegisterResponseDto {
     userId:ObjectId
 }
 
+export interface UserLoginResponseDto{
+   userId:string,
+   email:string,
+   isProfileComplete:boolean
+}
+

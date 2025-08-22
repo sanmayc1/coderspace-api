@@ -1,0 +1,11 @@
+import { ITokenEntity } from "../../models/token.entity.js";
+import { IUserEntity } from "../../models/user.entity.js";
+
+
+export interface ILoginUserUsecaseOutput extends ITokenEntity , Pick<IUserEntity,"_id"|"email"|"isProfileComplete">{
+   clientId:string
+}
+
+export interface ILoginUserUsecase {
+  execute(email: string, password: string): Promise<ILoginUserUsecaseOutput>;
+}

@@ -1,5 +1,4 @@
-import SMTPPool from "nodemailer/lib/smtp-pool/index.js";
-import { IEmailService } from "../../entities/services/emailService.interface.js";
+import { IEmailService } from "../../entities/services/email-service.interface.js";
 import { createTransport } from "nodemailer";
 import { config } from "../../shared/config.js";
 

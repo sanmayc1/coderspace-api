@@ -2,9 +2,10 @@ import { Redis } from "ioredis";
 import { config } from "../../shared/config.js";
 
 export class RedisService {
-  static instance: Redis;
+  private static instance: Redis;
 
-  connect() {
+  // Get Redis instance (connect if not already)
+  static getInstance(): Redis {
     if (!RedisService.instance) {
       RedisService.instance = new Redis({
         host: config.redis.host,
@@ -21,7 +22,9 @@ export class RedisService {
         console.error("Redis error:", err);
       });
     }
+    return RedisService.instance;
   }
 }
 
-export const redis = RedisService.instance
+// Usage:
+export const redis = RedisService.getInstance();

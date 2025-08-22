@@ -1,4 +1,4 @@
-import { BaseRoute } from "../baseRoute.js";
+import { BaseRoute } from "../base-route.js";
 
 export class UserRoutes extends BaseRoute {
     constructor(){

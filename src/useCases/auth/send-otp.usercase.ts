@@ -1,12 +1,11 @@
 import { inject, injectable } from "tsyringe";
-import { ISendOtpUsecase } from "../../entities/useCaseInterfaces/auth/sendOtp.usecase.js";
-import { IOtpService } from "../../entities/services/otpService.interface.js";
-import { IEmailService } from "../../entities/services/emailService.interface.js";
+import { ISendOtpUsecase } from "../../entities/useCaseInterfaces/auth/send-otp.usecase.js";
+import { IOtpService } from "../../entities/services/otp-service.interface.js";
+import { IEmailService } from "../../entities/services/email-service.interface.js";
 import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { EmailService } from "../../interfaceAdapters/services/email.service.js";
-import { otpEmailTemplate } from "../../shared/emailTemplates.js";
+import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js"
+import { otpEmailTemplate } from "../../shared/email-templates.js";
 
 @injectable()
 export class SendOtpUsecase implements ISendOtpUsecase {
@@ -24,6 +23,7 @@ export class SendOtpUsecase implements ISendOtpUsecase {
         ERROR_MESSAGES.EMAIL_NOT_EXIST
       );
     }
+    
 
     const existUserOtp = await this._otpService.otpExists(email);
 

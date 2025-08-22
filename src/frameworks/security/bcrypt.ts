@@ -1,6 +1,8 @@
+import {  injectable } from "tsyringe";
 import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { hash, compare } from "bcrypt";
 
+@injectable()
 export class Bcrypt implements IBcrypt {
   async hash(original: string): Promise<string> {
     return await hash(original, 10);
