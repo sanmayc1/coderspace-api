@@ -3,7 +3,7 @@ import { IUserEntity } from "../../models/user.entity.js";
 
 
 export interface ILoginUserUsecaseOutput extends ITokenEntity , Pick<IUserEntity,"_id"|"email"|"isProfileComplete">{
-   clientId:string
+   deviceId:string
 }
 
 export interface ILoginUserUsecase {

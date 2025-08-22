@@ -9,6 +9,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
+import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.js";
 
 @injectable()
 export class LoginUserUsecase implements ILoginUserUsecase {
@@ -16,7 +17,8 @@ export class LoginUserUsecase implements ILoginUserUsecase {
     @inject("IUserRepository") private _userRepo: IUserRepository,
     @inject("IBcrypt") private _bcrypt: IBcrypt,
     @inject("IJwtService") private _jwtService: IJwtService,
-    @inject("IUniqueIdService") private _uniqueIdService:IUniqueIdService
+    @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
+    @inject("ITokenRepository") private _tokenRepo: ITokenRepository
   ) {}
   async execute(
     email: string,
@@ -31,7 +33,7 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       );
     }
 
-    if(user.authProvider !== 'local'){
+    if (user.authProvider !== "local") {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
         ERROR_MESSAGES.INVALID_CREDENTIALS
@@ -50,15 +52,20 @@ export class LoginUserUsecase implements ILoginUserUsecase {
     const accessToken = this._jwtService.signAccess({
       userId: user._id,
       role: user.role as string,
-      isProfileComplete:user.isProfileComplete
+      isProfileComplete: user.isProfileComplete,
     });
     const refreshToken = this._jwtService.signRefresh({
       userId: user._id,
       role: user.role as string,
-      isProfileComplete:user.isProfileComplete
+      isProfileComplete: user.isProfileComplete,
     });
 
-    const clientId = this._uniqueIdService.generate()
+    const deviceId = this._uniqueIdService.generate();
+    const payload = this._jwtService.verifyRefresh(refreshToken);
+
+    const expire = new Date((payload?.exp ?? 0) * 1000);
+
+    await this._tokenRepo.saveToken(user._id, deviceId, refreshToken, expire);
 
     return {
       accessToken,
@@ -66,7 +73,7 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       _id: user._id,
       email: user.email,
       isProfileComplete: user.isProfileComplete,
-      clientId
+      deviceId,
     };
   }
 }

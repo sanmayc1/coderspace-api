@@ -83,22 +83,25 @@ export class AuthController {
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken);
-    setCookies(res,COOKIES_NAMES.DEVICE_ID,data.clientId,true)
+    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId, true);
 
     res.status(HTTP_STATUS.OK).json({
       success: true,
       message: SUCCESS_MESSAGES.USER_LOGIN,
-      data: response
+      data: response,
     });
   }
 
   async tokenRefresh(req: Request, res: Response, next: NextFunction) {
-    const refreshToken = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
-    const { accessToken } = await this._refreshTokenUsecase.execute(
-      refreshToken
+    const token = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
+    const deviceId = req.signedCookies[COOKIES_NAMES.DEVICE_ID];
+    const { accessToken, refreshToken } = await this._refreshTokenUsecase.execute(
+      token,
+      deviceId
     );
-    console.log(accessToken);
+ 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, accessToken);
-    res.status(HTTP_STATUS.OK).json({success:true})
+    setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, refreshToken);
+    res.status(HTTP_STATUS.OK).json({ success: true });
   }
 }

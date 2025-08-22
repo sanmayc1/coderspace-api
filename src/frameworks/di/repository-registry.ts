@@ -3,6 +3,7 @@ import { UserRepository } from "../../interfaceAdapters/repositories/user.reposi
 import { WalletRepository } from "../../interfaceAdapters/repositories/wallet.repository.js";
 import { OtpRepository } from "../../interfaceAdapters/repositories/otp.repository.js";
 import { BlackListRepository } from "../../interfaceAdapters/repositories/blacklist-token.repository.js";
+import { TokenRepository } from "../../interfaceAdapters/repositories/token.repository.js";
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -10,5 +11,6 @@ export class RepositoryRegistery {
     container.register("IWalletRepository", { useClass: WalletRepository });
     container.register("IOtpRepository",{useClass:OtpRepository})
     container.register("IBlackListTokenRepository",{useClass:BlackListRepository})
+    container.register("ITokenRepository",{useClass:TokenRepository})
   }
 }
