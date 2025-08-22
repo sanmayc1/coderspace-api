@@ -6,16 +6,16 @@ import { logger } from "../../../frameworks/logger/winston.js";
 @injectable()
 export  class WinstonLoggerAdapter implements ILoger{
      info(message: string, meta?: Record<string, any>): void {
-         throw new Error("Method not implemented.");
+         logger.info(message,meta)
      }
      warn(message: string, meta?: Record<string, any>): void {
-         throw new Error("Method not implemented.");
+         logger.warn(message,meta)
      }
      error(message: string, meta?: Record<string, any>): void {
          logger.error(message,meta)
      }
      debug(message: string, meta?: Record<string, any>): void {
-         throw new Error("Method not implemented.");
+         logger.debug(message,meta)
      }
 
 }

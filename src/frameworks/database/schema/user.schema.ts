@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { IUserModel } from "../models/user.model.js";
 
-export const UserSchema = new Schema<IUserModel>(
+export const userSchema = new Schema<IUserModel>(
   {
     name: {
       type: String,
@@ -102,6 +102,11 @@ export const UserSchema = new Schema<IUserModel>(
     profession: {
       type: String,
     },
+    isVerified:{
+      type:Boolean,
+      default:false
+    }
+  
   },
   { timestamps: true }
 );
