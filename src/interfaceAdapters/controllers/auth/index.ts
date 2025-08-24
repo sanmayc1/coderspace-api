@@ -11,12 +11,15 @@ import type { IVerifyOtpUsecase } from "../../../entities/useCaseInterfaces/auth
 import { CustomError } from "../../../entities/utils/errors/custom-error.js";
 import type { ILoginUserUsecase } from "../../../entities/useCaseInterfaces/auth/login-user.usecase.interface.js";
 import { inject, injectable } from "tsyringe";
-import type { NextFunction, Request, Response } from "express";
+import type { Request, Response } from "express";
 import type { UserRegisterRequestDto } from "../../dtos/auth.dto.js";
-import { UserSchema } from "./validation/user-register-validation-schema.js";
+import { UserSchema } from "./validation/user-validation-schema.js";
 import { UserMapperController } from "../../mappers/user.mapper.js";
 import type { IRefreshTokenUsecase } from "../../../entities/useCaseInterfaces/auth/refresh-token.usecase.interface.js"; 
-
+import type { ILogoutUsecase } from "../../../entities/useCaseInterfaces/auth/logout.usecase.interface.js";
+import type { IForgetPasswordUsecase } from "../../../entities/useCaseInterfaces/auth/forget-password.usecase.interface.js";
+import type { ISendRestPasswordLink } from "../../../entities/useCaseInterfaces/auth/send-reset-link.js";
+import { passwordSchema } from "../../../shared/validation/schema.js";
 export {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -30,12 +33,15 @@ export {
   ILoginUserUsecase,
   inject,
   injectable,
-  NextFunction,
   Request,
   Response,
   UserMapperController,
   UserRegisterRequestDto,
   UserSchema,
-  IRefreshTokenUsecase
+  IRefreshTokenUsecase,
+  ILogoutUsecase,
+  IForgetPasswordUsecase,
+  ISendRestPasswordLink,
+  passwordSchema,
 
 };

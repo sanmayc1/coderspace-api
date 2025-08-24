@@ -5,7 +5,7 @@ import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IJwtPayload } from "../../entities/models/jwt-payload.enitity.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.js";
+import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
 
 @injectable()
 export class RefreshTokenUsecase implements IRefreshTokenUsecase {
@@ -26,6 +26,7 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
     if (!isValid) {
       throw new CustomError(HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.TOKEN_EXPIRE);
     }
+    
     const newPayload: IJwtPayload = {
       userId: payload.userId,
       isProfileComplete: payload.isProfileComplete,
@@ -37,7 +38,7 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
     const accessToken = this._jwtService.signAccess(newPayload);
     const newRefreshToken = this._jwtService.signRefresh(newPayload, expireIn);
     await this._tokenRepo.updateToken(newRefreshToken, deviceId);
-    
+
     return { accessToken, refreshToken: newRefreshToken };
   }
 }

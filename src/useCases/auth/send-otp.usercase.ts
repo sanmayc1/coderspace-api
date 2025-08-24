@@ -33,7 +33,7 @@ export class SendOtpUsecase implements ISendOtpUsecase {
 
     const otp = this._otpService.generateOtp();
     const content = otpEmailTemplate(otp);
-    this._emailService.sendMail(email, content);
+    this._emailService.sendMail(email, content,"Your Coderspace Verification Code");
     await this._otpService.storeOtp(email, otp);
   }
 }

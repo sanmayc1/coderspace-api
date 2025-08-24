@@ -15,11 +15,11 @@ export class EmailService implements IEmailService {
       },
     });
   }
-  async sendMail(email: string, content: string): Promise<void> {
+  async sendMail(email: string, content: string,subject:string): Promise<void> {
     this.transport.sendMail({
       from: `"CoderSpace" <${config.smtp.user}>`,
       to: email,
-      subject: "Verification",
+      subject,
       html: content,
     });
   }

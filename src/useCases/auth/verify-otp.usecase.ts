@@ -14,7 +14,7 @@ export class VerifyOtpUsecase implements IVerifyOtpUsecase {
   async execute(email: string, otp: string): Promise<void> {
     const otpExist = await this._otpService.otpExists(email);
 
-    if (!otpExist) {
+    if (!otpExist || otpExist.expiry < new Date()) {
       throw new CustomError(HTTP_STATUS.GONE, ERROR_MESSAGES.OTP_EXPIRE);
     }
 

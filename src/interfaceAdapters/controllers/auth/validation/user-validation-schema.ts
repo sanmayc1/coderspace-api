@@ -14,3 +14,7 @@ export const UserSchema = z.object({
   username: usernameSchema,
   password: passwordSchema,
 });
+
+export const PasswordSchema = z.object({
+  password:passwordSchema
+})

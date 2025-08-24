@@ -1,4 +1,4 @@
-import { success } from "zod";
+
 import {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -9,7 +9,6 @@ import {
   IRegisterUserUsecase,
   ISendOtpUsecase,
   IVerifyOtpUsecase,
-  NextFunction,
   Request,
   Response,
   UserMapperController,
@@ -19,7 +18,12 @@ import {
   injectable,
   setCookies,
   IRefreshTokenUsecase,
+  ILogoutUsecase,
+  IForgetPasswordUsecase,
+  ISendRestPasswordLink,
+  passwordSchema
 } from "./index.js";
+
 
 @injectable()
 export class AuthController {
@@ -30,12 +34,17 @@ export class AuthController {
     @inject("IVerifyOtpUsecase") private _verifyOtpUsecase: IVerifyOtpUsecase,
     @inject("ILoginUserUsecase") private _loginUserUsecase: ILoginUserUsecase,
     @inject("IRefreshTokenUsecase")
-    private _refreshTokenUsecase: IRefreshTokenUsecase
+    private _refreshTokenUsecase: IRefreshTokenUsecase,
+    @inject("ILogoutUsecase") private _logoutUsecase: ILogoutUsecase,
+    @inject("ISendRestPasswordLink")
+    private _sendRestPasswordLink: ISendRestPasswordLink,
+    @inject("IForgetPasswordUsecase")
+    private _forgetPassword: IForgetPasswordUsecase
   ) {}
 
   // Signup Controller
 
-  async signup(req: Request, res: Response, next: NextFunction) {
+  async signup(req: Request, res: Response) {
     const dto: UserRegisterRequestDto = UserSchema.parse(req.body);
     const userEntity = UserMapperController.toEntity(dto);
     const email = await this._registerUsecase.execute(userEntity);
@@ -47,7 +56,7 @@ export class AuthController {
 
   // Send OTP Controller
 
-  async sendOtp(req: Request, res: Response, next: NextFunction) {
+  async sendOtp(req: Request, res: Response) {
     const email = req.signedCookies[COOKIES_NAMES.SIGNUP];
     if (!email) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.NO_COOKIES);
@@ -60,7 +69,7 @@ export class AuthController {
 
   // Verify OTP Controller
 
-  async verifyOtp(req: Request, res: Response, next: NextFunction) {
+  async verifyOtp(req: Request, res: Response) {
     const email = req.signedCookies[COOKIES_NAMES.SIGNUP];
     if (!email) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.NO_COOKIES);
@@ -75,7 +84,7 @@ export class AuthController {
 
   // Login Controller
 
-  async login(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response) {
     const { email, password } = req.body;
 
     const data = await this._loginUserUsecase.execute(email, password);
@@ -92,16 +101,48 @@ export class AuthController {
     });
   }
 
-  async tokenRefresh(req: Request, res: Response, next: NextFunction) {
+  // Token refresh Controller
+
+  async tokenRefresh(req: Request, res: Response) {
     const token = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
     const deviceId = req.signedCookies[COOKIES_NAMES.DEVICE_ID];
-    const { accessToken, refreshToken } = await this._refreshTokenUsecase.execute(
-      token,
-      deviceId
-    );
- 
+    const { accessToken, refreshToken } =
+      await this._refreshTokenUsecase.execute(token, deviceId);
+
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, accessToken);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, refreshToken);
     res.status(HTTP_STATUS.OK).json({ success: true });
+  }
+
+  // Logout User
+
+  async logout(req: Request, res: Response) {
+    const refreshToken = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
+    const accessToken = req.cookies[COOKIES_NAMES.ACCESS_TOKEN];
+    const deviceId = req.signedCookies[COOKIES_NAMES.DEVICE_ID];
+
+    await this._logoutUsecase.executes(refreshToken, accessToken, deviceId);
+
+    res.clearCookie(COOKIES_NAMES.ACCESS_TOKEN);
+    res.clearCookie(COOKIES_NAMES.REFRESH_TOKEN);
+    res.clearCookie(COOKIES_NAMES.DEVICE_ID);
+    res.status(HTTP_STATUS.NO_CONTENT).json({ success: true });
+  }
+
+  async forgetPasword(req: Request, res: Response) {
+    const email = req.body.email;
+    await this._sendRestPasswordLink.execute(email);
+    res.status(HTTP_STATUS.OK).json({
+      success: true,
+      message: SUCCESS_MESSAGES.SEND_PASSWORD_REST_LINK,
+    });
+  }
+
+  async resetPassword(req: Request, res: Response) {
+    const password = passwordSchema.parse(req.body.newPassword);
+    const token = req.body.token;
+
+    await this._forgetPassword.execute(token,password);
+    res.status(200).json({success:true})
   }
 }

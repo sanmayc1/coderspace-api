@@ -9,7 +9,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.js";
+import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
 
 @injectable()
 export class LoginUserUsecase implements ILoginUserUsecase {

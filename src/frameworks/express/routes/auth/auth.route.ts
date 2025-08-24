@@ -29,17 +29,29 @@ export class AuthRoute extends BaseRoute {
       asyncHandler(authcontroller.login.bind(authcontroller))
     );
 
-    this.router.patch(
+    this.router.post(
       "/password/forget",
-      authMiddleware.handle("user").bind(authMiddleware),
-      (req, res) => {
-        res.status(200).json({success:true})
-      }
+      asyncHandler(
+        authcontroller.forgetPasword.bind(authcontroller)
+      )
+    );
+
+     this.router.patch(
+      "/password/reset",
+      asyncHandler(
+        authcontroller.resetPassword.bind(authcontroller)
+      )
     );
 
     this.router.post(
       "/refresh",
       asyncHandler(authcontroller.tokenRefresh.bind(authcontroller))
+    );
+
+    this.router.post(
+      "/logout",
+      asyncHandler(authMiddleware.handle("user").bind(authMiddleware)),
+      asyncHandler(authcontroller.logout.bind(authcontroller))
     );
   }
 }

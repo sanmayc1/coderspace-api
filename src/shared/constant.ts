@@ -5,6 +5,7 @@ export const ROLES = ["admin", "user"];
 export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
+  NO_CONTENT:204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -28,12 +29,14 @@ export const ERROR_MESSAGES = {
   TOKEN_EXPIRE: "Invalid or expired token",
   ACCESS_DENIED: "You do not have permission to access this resource",
   TOKEN_BLACKLIST: "Token has been revoked or blacklisted",
+  REST_LINK_EXPIRE:"Invalid or expired password reset link"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
   SEND_OTP_TO_MAIL: "Successufully send otp to registered email",
   OTP_VERIFIED: "Otp verified successfully",
   USER_LOGIN: "User successfully login",
+  SEND_PASSWORD_REST_LINK:"Successufully send password rest link to email"
 };
 
 export const COOKIES_NAMES = {
@@ -42,3 +45,5 @@ export const COOKIES_NAMES = {
   ACCESS_TOKEN: "_secure_at_auth",
   DEVICE_ID: "_dvid",
 };
+
+

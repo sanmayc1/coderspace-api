@@ -4,7 +4,6 @@ import { config } from "../../shared/config.js";
 export class RedisService {
   private static instance: Redis;
 
-  // Get Redis instance (connect if not already)
   static getInstance(): Redis {
     if (!RedisService.instance) {
       RedisService.instance = new Redis({
@@ -26,5 +25,4 @@ export class RedisService {
   }
 }
 
-// Usage:
 export const redis = RedisService.getInstance();

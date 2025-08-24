@@ -4,6 +4,10 @@ import { SendOtpUsecase } from "../../useCases/auth/send-otp.usercase.js";
 import { VerifyOtpUsecase } from "../../useCases/auth/verify-otp.usecase.js";
 import { LoginUserUsecase } from "../../useCases/auth/login-user.usecase.js";
 import { RefreshTokenUsecase } from "../../useCases/auth/refresh-tokenUsecase.js";
+import { LogoutUsecase } from "../../useCases/auth/logout.usecase.js";
+import { SendRestPasswordLink } from "../../useCases/auth/send-reset-link.usecase.js";
+import { ForgetPasswordUsecase } from "../../useCases/auth/forget-password.usecase.js";
+
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -16,5 +20,8 @@ export class UsecaseRegistery {
     container.register("IRefreshTokenUsecase", {
       useClass: RefreshTokenUsecase,
     });
+    container.register("ILogoutUsecase", { useClass: LogoutUsecase });
+    container.register("ISendRestPasswordLink",{useClass:SendRestPasswordLink})
+    container.register("IForgetPasswordUsecase",{useClass:ForgetPasswordUsecase})
   }
 }
