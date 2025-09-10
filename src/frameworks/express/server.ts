@@ -3,8 +3,7 @@ import cors from "cors";
 import http from "http";
 import cookieParser from "cookie-parser";
 import { config } from "../../shared/config.js";
-import { AuthRoute } from "./routes/auth/auth.route.js";
-import { errorMiddleware } from "../di/di-resolver.js";
+import { authRoutes, errorMiddleware } from "../di/di-resolver.js";
 
 export class Server {
   private _app: Application;
@@ -26,7 +25,7 @@ export class Server {
   }
 
   private configureRouter(): void {
-    this._app.use("/api/v1/auth", new AuthRoute().router);
+    this._app.use("/api/v1/auth", authRoutes.router);
   }
   private configureErrorHandling() {
     this._app.use(errorMiddleware.handleError.bind(errorMiddleware));

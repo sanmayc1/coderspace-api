@@ -17,10 +17,11 @@ export interface IUserEntity {
   email: string;
   username: string;
   profileUrl?: string;
-  password: string;
+  password?: string;
   level?: number;
   xpCoin?: number;
   role?: TRole;
+  gstin?:string;
   phone?: string;
   location?: string;
   dateOfBirth?: Date;

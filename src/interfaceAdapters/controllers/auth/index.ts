@@ -12,14 +12,17 @@ import { CustomError } from "../../../entities/utils/errors/custom-error.js";
 import type { ILoginUserUsecase } from "../../../entities/useCaseInterfaces/auth/login-user.usecase.interface.js";
 import { inject, injectable } from "tsyringe";
 import type { Request, Response } from "express";
-import type { UserRegisterRequestDto } from "../../dtos/auth.dto.js";
+import type { UserRegisterRequestDto } from "../../../useCases/auth/dtos/auth.dto.js";
 import { UserSchema } from "./validation/user-validation-schema.js";
-import { UserMapperController } from "../../mappers/user.mapper.js";
+import { UserMapper } from "../../../useCases/auth/mappers/user.mapper.js";
 import type { IRefreshTokenUsecase } from "../../../entities/useCaseInterfaces/auth/refresh-token.usecase.interface.js"; 
 import type { ILogoutUsecase } from "../../../entities/useCaseInterfaces/auth/logout.usecase.interface.js";
 import type { IForgetPasswordUsecase } from "../../../entities/useCaseInterfaces/auth/forget-password.usecase.interface.js";
 import type { ISendRestPasswordLink } from "../../../entities/useCaseInterfaces/auth/send-reset-link.js";
 import { passwordSchema } from "../../../shared/validation/schema.js";
+import crypto from "crypto"
+import { config } from "../../../shared/config.js";
+import type { IGithHubAuthUsecase } from "../../../entities/useCaseInterfaces/auth/github-auth.usecase.interface.js";
 export {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -35,7 +38,7 @@ export {
   injectable,
   Request,
   Response,
-  UserMapperController,
+  UserMapper as UserMapperController,
   UserRegisterRequestDto,
   UserSchema,
   IRefreshTokenUsecase,
@@ -43,5 +46,8 @@ export {
   IForgetPasswordUsecase,
   ISendRestPasswordLink,
   passwordSchema,
+  crypto,
+  config,
+  IGithHubAuthUsecase
 
 };

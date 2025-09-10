@@ -6,6 +6,8 @@ import { OtpService } from "../../interfaceAdapters/services/otp.service.js";
 import { EmailService } from "../../interfaceAdapters/services/email.service.js";
 import { AuthMiddleware } from "../../interfaceAdapters/middleware/auth.middleware.js";
 import { UniqueIdService } from "../../interfaceAdapters/services/uuid.service.js";
+import { GitHubAuthService } from "../../interfaceAdapters/services/github-auth.service.js";
+import { GoogleAuthService } from "../../interfaceAdapters/services/google-auth.service.js";
 
 export class ServiceRegistry {
   static registerServices() {
@@ -13,6 +15,8 @@ export class ServiceRegistry {
     container.registerSingleton("IOtpService",OtpService)
     container.registerSingleton("IEmailService",EmailService)
     container.registerSingleton("IUniqueIdService",UniqueIdService)
+    container.registerSingleton("IGitHubAuthService",GitHubAuthService)
+    container.registerSingleton("IGoogleAuthService",GoogleAuthService)
     // logger
     container.registerSingleton("ILogger", WinstonLoggerAdapter);
     // security

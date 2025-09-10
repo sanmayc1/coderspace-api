@@ -1,5 +1,5 @@
 import { Document, model, ObjectId } from "mongoose";
-import { IWalletEnitity } from "../../../entities/models/wallet.Enitity.js";
+import { IWalletEnitity } from "../../../entities/models/wallet.entity.js";
 import { walletSchema  } from "../schema/wallet.schema.js";
 
 

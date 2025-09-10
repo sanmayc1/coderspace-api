@@ -15,7 +15,6 @@ export const userSchema = new Schema<IUserModel>(
     },
     password: {
       type: String,
-      required: true,
     },
     phone: {
       type: String
@@ -71,6 +70,9 @@ export const userSchema = new Schema<IUserModel>(
       type: String,
       enum: ["google", "github", "local"],
       default: "local",
+    },
+    gstin:{
+      type:String
     },
     about: {
       type: String,

@@ -1,6 +1,6 @@
 import { IOtpEntity } from "../../entities/models/otp.entity.js";
 import { IUserEntity } from "../../entities/models/user.entity.js";
-import { IWalletEnitity } from "../../entities/models/wallet.Enitity.js";
+import { IWalletEnitity } from "../../entities/models/wallet.entity.js";
 import { IOtpModel } from "./models/otp.model.js";
 import { IUserModel } from "./models/user.model.js";
 import { IWalletModel } from "./models/wallet.model.js";

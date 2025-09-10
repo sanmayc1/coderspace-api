@@ -1,9 +1,16 @@
-import { success } from "zod";
+import { injectable } from "tsyringe";
 import { asyncHandler } from "../../../../shared/async-handler.js";
-import { authcontroller, authMiddleware } from "../../../di/di-resolver.js";
+import {
+  authcontroller,
+  authMiddleware,
+  githubAuthController,
+  googleAuthController,
+  googleAuthService,
+} from "../../../di/di-resolver.js";
 import { BaseRoute } from "../base-route.js";
-import { tr } from "zod/locales";
+import { config } from "../../../../shared/config.js";
 
+@injectable()
 export class AuthRoute extends BaseRoute {
   constructor() {
     super();
@@ -31,16 +38,12 @@ export class AuthRoute extends BaseRoute {
 
     this.router.post(
       "/password/forget",
-      asyncHandler(
-        authcontroller.forgetPasword.bind(authcontroller)
-      )
+      asyncHandler(authcontroller.forgetPasword.bind(authcontroller))
     );
 
-     this.router.patch(
+    this.router.patch(
       "/password/reset",
-      asyncHandler(
-        authcontroller.resetPassword.bind(authcontroller)
-      )
+      asyncHandler(authcontroller.resetPassword.bind(authcontroller))
     );
 
     this.router.post(
@@ -52,6 +55,37 @@ export class AuthRoute extends BaseRoute {
       "/logout",
       asyncHandler(authMiddleware.handle("user").bind(authMiddleware)),
       asyncHandler(authcontroller.logout.bind(authcontroller))
+    );
+
+        this.router.get(
+      "/me",
+      asyncHandler(authMiddleware.handle("user").bind(authMiddleware)),
+      asyncHandler(authcontroller.authenticatedUser.bind(authcontroller))
+    );
+
+    this.router.get(
+      "/github/callback",
+      asyncHandler(githubAuthController.githubAuth.bind(githubAuthController))
+    );
+
+    this.router.get(
+      "/github",
+      githubAuthController.redirectToGithub.bind(githubAuthController)
+    );
+
+    this.router.get(
+      "/google",
+      googleAuthService
+        .getPassport()
+        .authenticate("google", { scope: ["profile", "email"] })
+    );
+
+    this.router.get(
+      "/google/callback",
+       googleAuthService
+        .getPassport()
+        .authenticate("google", {session:false, failureRedirect: config.client.uri }),
+         asyncHandler(googleAuthController.googleAuth.bind(googleAuthController))
     );
   }
 }

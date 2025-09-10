@@ -1,4 +1,4 @@
-
+import { validRole } from "../../../shared/role-check-helper.js";
 import {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -12,7 +12,6 @@ import {
   Request,
   Response,
   UserMapperController,
-  UserRegisterRequestDto,
   UserSchema,
   inject,
   injectable,
@@ -21,9 +20,8 @@ import {
   ILogoutUsecase,
   IForgetPasswordUsecase,
   ISendRestPasswordLink,
-  passwordSchema
+  passwordSchema,
 } from "./index.js";
-
 
 @injectable()
 export class AuthController {
@@ -45,9 +43,23 @@ export class AuthController {
   // Signup Controller
 
   async signup(req: Request, res: Response) {
-    const dto: UserRegisterRequestDto = UserSchema.parse(req.body);
-    const userEntity = UserMapperController.toEntity(dto);
-    const email = await this._registerUsecase.execute(userEntity);
+    const validated = UserSchema.parse({
+      name: req.body.name,
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+    });
+
+    const role = req.body.role;
+
+    if (!validRole(role)) {
+      throw new CustomError(
+        HTTP_STATUS.BAD_REQUEST,
+        ERROR_MESSAGES.INVALID_REQUEST
+      );
+    }
+
+    const email = await this._registerUsecase.execute({ ...validated, role });
     setCookies(res, COOKIES_NAMES.SIGNUP, email, true);
     res
       .status(HTTP_STATUS.CREATED)
@@ -142,7 +154,13 @@ export class AuthController {
     const password = passwordSchema.parse(req.body.newPassword);
     const token = req.body.token;
 
-    await this._forgetPassword.execute(token,password);
-    res.status(200).json({success:true})
+    await this._forgetPassword.execute(token, password);
+    res
+      .status(200)
+      .json({ success: true, message: SUCCESS_MESSAGES.PASSWORD_REST });
+  }
+
+  async authenticatedUser(req:Request,res:Response){
+    res.status(HTTP_STATUS.OK).json(req?.user)
   }
 }

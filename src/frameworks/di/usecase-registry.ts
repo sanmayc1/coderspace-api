@@ -7,6 +7,7 @@ import { RefreshTokenUsecase } from "../../useCases/auth/refresh-tokenUsecase.js
 import { LogoutUsecase } from "../../useCases/auth/logout.usecase.js";
 import { SendRestPasswordLink } from "../../useCases/auth/send-reset-link.usecase.js";
 import { ForgetPasswordUsecase } from "../../useCases/auth/forget-password.usecase.js";
+import { GithHubAuthUsecase } from "../../useCases/auth/github-auth.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -23,5 +24,6 @@ export class UsecaseRegistery {
     container.register("ILogoutUsecase", { useClass: LogoutUsecase });
     container.register("ISendRestPasswordLink",{useClass:SendRestPasswordLink})
     container.register("IForgetPasswordUsecase",{useClass:ForgetPasswordUsecase})
+    container.register("IGithHubAuthUsecase",{useClass:GithHubAuthUsecase})
   }
 }

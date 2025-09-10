@@ -1,10 +1,12 @@
 import { ObjectId } from "mongoose"
+import { TRole } from "../../../shared/constant.js"
 
 export interface UserRegisterRequestDto {
     name:string
     username:string
     email:string
-    password:string
+    password:string,
+    role:TRole
 }
 
 

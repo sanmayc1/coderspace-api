@@ -2,6 +2,7 @@ import { IEmailService } from "../../entities/services/email-service.interface.j
 import { createTransport } from "nodemailer";
 import { config } from "../../shared/config.js";
 
+
 export class EmailService implements IEmailService {
   private transport;
   constructor() {

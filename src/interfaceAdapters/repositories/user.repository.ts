@@ -19,7 +19,7 @@ export class UserRepository implements IUserRepository {
     await UserModel.updateOne({ email }, { isVerified: true });
   }
 
-  async findByUsernmae(username: string): Promise<IUserEntity | null> {
+  async findByUsername(username: string): Promise<IUserEntity | null> {
     const user = await UserModel.findOne({ username });
     return user ? userMapperRepo.toEntity(user) : user;
   }

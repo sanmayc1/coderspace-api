@@ -12,13 +12,13 @@ import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repo
 export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
   constructor(
     @inject("IPasswordRestRepository")
-    private _passwordRestRepo: IPasswordRestRepository,
-    @inject("IUserRepository") private _userRepo: IUserRepository,
+    private _passwordRestRepository: IPasswordRestRepository,
+    @inject("IUserRepository") private _userRepository: IUserRepository,
     @inject("IBcrypt") private _bcrypt: IBcrypt,
-    @inject("ITokenRepository") private _tokenRepo: ITokenRepository
+    @inject("ITokenRepository") private _tokenRepository: ITokenRepository
   ) {}
   async execute(token: string, newPassword: string): Promise<void> {
-    const userId = await this._passwordRestRepo.find(`reset:${token}`);
+    const userId = await this._passwordRestRepository.find(`reset:${token}`);
     if (!userId) {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
@@ -26,7 +26,7 @@ export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
       );
     }
 
-    const user = await this._userRepo.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) {
       throw new CustomError(
@@ -37,8 +37,8 @@ export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
 
     const hasedPassword = await this._bcrypt.hash(newPassword);
 
-    await this._userRepo.updateById(user._id, { password: hasedPassword });
-    await this._passwordRestRepo.del(`reset:${token}`);
-    await this._tokenRepo.deleteAllTokenByUserId(user._id);
+    await this._userRepository.updateById(user._id, { password: hasedPassword });
+    await this._passwordRestRepository.del(`reset:${token}`);
+    await this._tokenRepository.deleteAllTokenByUserId(user._id);
   }
 }

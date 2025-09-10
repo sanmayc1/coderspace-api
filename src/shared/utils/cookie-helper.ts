@@ -5,13 +5,14 @@ export const setCookies = (
   res: Response,
   cookieName: string,
   cookieValue: string,
-  signed:boolean = false
+  signed: boolean = false,
+  sameSite: "lax" | "none" | "strict" = "lax"
 ) => {
   const isProduction = config.environment === "production";
   res.cookie(cookieName, cookieValue, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? "strict" : "none",
-    signed:signed
+    sameSite: isProduction && sameSite === "none" ? "none":'lax',
+    signed: signed,
   });
 };
