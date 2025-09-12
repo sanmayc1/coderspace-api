@@ -4,20 +4,29 @@ import { userSchema } from "../schema/user.schema.js";
 import { TRole } from "../../../shared/constant.js";
 
 export interface IUserModel
-  extends Omit<IUserEntity, "_id" | "role"|"isProfileComplete"|"password"|"isVerified"|"level"|"notifiacation"|"xpCoin"|"authProvider"|"badge"|"isPremiumActive">,
+  extends Omit<
+      IUserEntity,
+      | "_id"
+      | "isProfileComplete"
+      | "level"
+      | "notifiacation"
+      | "xpCoin"
+      | "badge"
+      | "isPremiumActive"
+      | "accountId"
+      | "globalScore"
+    >,
     Document {
   _id: ObjectId;
-  role: TRole;
+  accountId: ObjectId;
   isProfileComplete: boolean;
-  password: string;
-  isVerified: boolean;
   level: number;
   notification: boolean;
   xpCoin: number;
-  authProvider:"google" | "github" | "local",
-  badge:"silver" | "gold" | "platinum",
-  isPremiumActive:boolean
-  
+  badge: "silver" | "gold" | "platinum";
+  isPremiumActive: boolean;
+  globalScore:number
+
 }
 
 export const UserModel = model<IUserModel>("User", userSchema);

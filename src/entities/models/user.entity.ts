@@ -1,4 +1,5 @@
 import { TRole } from "../../shared/constant.js";
+import { IAccountsEntity } from "./accounts-entity.js";
 
 interface PlanHistory {
   planId: string;
@@ -12,16 +13,11 @@ interface Rating {
 }
 
 export interface IUserEntity {
-  _id: string;
-  name: string;
-  email: string;
+  _id?: string;
+  accountId:string | Pick<IAccountsEntity , "email">
   username: string;
-  profileUrl?: string;
-  password?: string;
   level?: number;
   xpCoin?: number;
-  role?: TRole;
-  gstin?:string;
   phone?: string;
   location?: string;
   dateOfBirth?: Date;
@@ -30,7 +26,6 @@ export interface IUserEntity {
   globalScore?: number;
   notification?: boolean;
   badge?: "silver" | "gold" | "platinum";
-  authProvider?: "google" | "github" | "local";
   about?: string;
   isPremiumActive?: boolean;
   planHistory?: PlanHistory ;
@@ -42,5 +37,4 @@ export interface IUserEntity {
   profession?: string;
   createdAt?: Date;
   updtedAt?: Date;
-  isVerified?:boolean
 }

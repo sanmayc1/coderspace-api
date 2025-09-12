@@ -5,25 +5,28 @@ import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface.js";
-import { UserRegisterRequestDto } from "./dtos/auth.dto.js";
-import { UserMapper } from "./mappers/user.mapper.js";
+import { RegisterUserRequestDto } from "../dtos/auth.dto.js";
+import { accountDtoMapper } from "../mappers/account.mapper.js";
+import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class RegisterUserUsecase implements IRegisterUserUsecase {
   constructor(
     @inject("IUserRepository") private _userRepository: IUserRepository,
     @inject("IBcrypt") private _bcrypt: IBcrypt,
-    @inject("IWalletRepository") private _walletRepository: IWalletRepository
+    @inject("IWalletRepository") private _walletRepository: IWalletRepository,
+    @inject("IAccountRepository")
+    private _accountRepository: IAccountsRepository
   ) {}
 
-  async execute(data: UserRegisterRequestDto): Promise<string> {
-    const user = UserMapper.toEntity(data)
-    const existingUser = await this._userRepository.findByEmail(user.email);
+  async execute(data: RegisterUserRequestDto): Promise<string> {
+    const account = accountDtoMapper.toEntity(data);
 
-    if (existingUser) {
-      if (!existingUser.isVerified&& existingUser.username=== user.username) {
-        return existingUser.email;
-      }
+    const existingAccount = await this._accountRepository.findByEmail(
+      account.email
+    );
+
+    if (existingAccount) {
       throw new CustomError(
         HTTP_STATUS.CONFLICT,
         ERROR_MESSAGES.EMAIL_EXIST,
@@ -31,9 +34,11 @@ export class RegisterUserUsecase implements IRegisterUserUsecase {
       );
     }
 
-    const existUsername = await this._userRepository.findByUsername(user.username);
+    const existingUsername = await this._userRepository.findByUsername(
+      data.username
+    );
 
-    if (existUsername) {
+    if ( existingUsername) {
       throw new CustomError(
         HTTP_STATUS.CONFLICT,
         ERROR_MESSAGES.USERNAME_EXIST,
@@ -41,10 +46,18 @@ export class RegisterUserUsecase implements IRegisterUserUsecase {
       );
     }
 
-    user.password = await this._bcrypt.hash(user.password as string);
+    const hashedPassword = await this._bcrypt.hash(account.password as string);
+    account.password = hashedPassword;
 
-    const createdUser = await this._userRepository.save(user);
-    await this._walletRepository.create(createdUser._id, user.role);
-    return createdUser.email;
+    const newAccount = await this._accountRepository.create(account);
+    await this._userRepository.save({
+      username: data.username,
+      accountId: newAccount._id,
+    });
+
+    await this._walletRepository.create({accountId:newAccount._id})
+
+    return account.email;
+
   }
 }

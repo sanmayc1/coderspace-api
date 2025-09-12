@@ -4,12 +4,15 @@ import { IOtpService } from "../../entities/services/otp-service.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
+import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class VerifyOtpUsecase implements IVerifyOtpUsecase {
   constructor(
     @inject("IOtpService") private _otpService: IOtpService,
-    @inject("IUserRepository") private _userRepo: IUserRepository
+    @inject("IUserRepository") private _userRepo: IUserRepository,
+        @inject("IAccountRepository")
+        private _accountRepository: IAccountsRepository
   ) {}
   async execute(email: string, otp: string): Promise<void> {
     const otpExist = await this._otpService.otpExists(email);
@@ -27,6 +30,6 @@ export class VerifyOtpUsecase implements IVerifyOtpUsecase {
       );
     }
 
-    await this._userRepo.setUserVerified(email);
+    await this._accountRepository.setAccountVerified(email);
   }
 }

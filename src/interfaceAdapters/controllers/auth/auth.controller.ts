@@ -11,7 +11,6 @@ import {
   IVerifyOtpUsecase,
   Request,
   Response,
-  UserMapperController,
   UserSchema,
   inject,
   injectable,
@@ -22,6 +21,7 @@ import {
   ISendRestPasswordLink,
   passwordSchema,
 } from "./index.js";
+import { LoginSchema } from "./validation/user-validation-schema.js";
 
 @injectable()
 export class AuthController {
@@ -50,16 +50,8 @@ export class AuthController {
       password: req.body.password,
     });
 
-    const role = req.body.role;
+    const email = await this._registerUsecase.execute(validated);
 
-    if (!validRole(role)) {
-      throw new CustomError(
-        HTTP_STATUS.BAD_REQUEST,
-        ERROR_MESSAGES.INVALID_REQUEST
-      );
-    }
-
-    const email = await this._registerUsecase.execute({ ...validated, role });
     setCookies(res, COOKIES_NAMES.SIGNUP, email, true);
     res
       .status(HTTP_STATUS.CREATED)
@@ -98,9 +90,9 @@ export class AuthController {
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
+    const validated = LoginSchema.parse({email,password})
 
-    const data = await this._loginUserUsecase.execute(email, password);
-    const response = UserMapperController.toLoginResponse(data);
+    const data = await this._loginUserUsecase.execute(validated); 
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken);
@@ -109,7 +101,7 @@ export class AuthController {
     res.status(HTTP_STATUS.OK).json({
       success: true,
       message: SUCCESS_MESSAGES.USER_LOGIN,
-      data: response,
+      data: data.response,
     });
   }
 

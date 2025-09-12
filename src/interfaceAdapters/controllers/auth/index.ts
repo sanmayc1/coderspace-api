@@ -12,9 +12,8 @@ import { CustomError } from "../../../entities/utils/errors/custom-error.js";
 import type { ILoginUserUsecase } from "../../../entities/useCaseInterfaces/auth/login-user.usecase.interface.js";
 import { inject, injectable } from "tsyringe";
 import type { Request, Response } from "express";
-import type { UserRegisterRequestDto } from "../../../useCases/auth/dtos/auth.dto.js";
+import type { RegisterUserRequestDto } from "../../../useCases/dtos/auth.dto.js";
 import { UserSchema } from "./validation/user-validation-schema.js";
-import { UserMapper } from "../../../useCases/auth/mappers/user.mapper.js";
 import type { IRefreshTokenUsecase } from "../../../entities/useCaseInterfaces/auth/refresh-token.usecase.interface.js"; 
 import type { ILogoutUsecase } from "../../../entities/useCaseInterfaces/auth/logout.usecase.interface.js";
 import type { IForgetPasswordUsecase } from "../../../entities/useCaseInterfaces/auth/forget-password.usecase.interface.js";
@@ -38,8 +37,7 @@ export {
   injectable,
   Request,
   Response,
-  UserMapper as UserMapperController,
-  UserRegisterRequestDto,
+  RegisterUserRequestDto as UserRegisterRequestDto,
   UserSchema,
   IRefreshTokenUsecase,
   ILogoutUsecase,

@@ -3,6 +3,8 @@ export type TRole = "admin" | "user" | "company";
 export type TAuthProviders = "google" | "github" | "local";
 
 export const ROLES = ["admin", "user", "company"];
+export  const AUTHPROVIDER = ["github","google","local"]
+export const BADGE = ["silver", "gold", "platinum"]
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -36,6 +38,7 @@ export const ERROR_MESSAGES = {
   INVALID_AUTH_CODE: "Invalid_auth_code",
   INVALID_AUTH_PROVIDER: "Invalid_auth_provider",
   INVALID_REQUEST: "Invalid request",
+  ACCOUNT_NOT_VERIFIED:"Account not verified. Please complete OTP verification"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",

@@ -1,21 +1,9 @@
 import { Schema } from "mongoose";
 import { IUserModel } from "../models/user.model.js";
+import { BADGE } from "../../../shared/constant.js";
 
 export const userSchema = new Schema<IUserModel>(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      index: true,
-    },
-    password: {
-      type: String,
-    },
     phone: {
       type: String
     },
@@ -32,14 +20,6 @@ export const userSchema = new Schema<IUserModel>(
     level: {
       type: Number,
       default: 0,
-    },
-    profileUrl: {
-      type: String,
-    },
-    role: {
-      type: String,
-      enum: ["admin", "user"],
-      default: "user",
     },
     location: {
       type: String,
@@ -63,16 +43,8 @@ export const userSchema = new Schema<IUserModel>(
     },
     badge: {
       type: String,
-      enum: ["silver", "gold", "platinum"],
+      enum: BADGE ,
       default: "silver",
-    },
-    authProvider: {
-      type: String,
-      enum: ["google", "github", "local"],
-      default: "local",
-    },
-    gstin:{
-      type:String
     },
     about: {
       type: String,
@@ -104,11 +76,10 @@ export const userSchema = new Schema<IUserModel>(
     profession: {
       type: String,
     },
-    isVerified:{
-      type:Boolean,
-      default:false
+    accountId:{
+      type:Schema.Types.ObjectId,
+      ref:"Account"
     }
-  
   },
   { timestamps: true }
 );

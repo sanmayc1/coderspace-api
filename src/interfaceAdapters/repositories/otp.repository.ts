@@ -1,6 +1,6 @@
 import { IOtpEntity } from "../../entities/models/otp.entity.js";
 import { IOtpRespository } from "../../entities/repositoryInterfaces/otp.interface.js";
-import { otpMapper } from "../../frameworks/database/dto.mapper.js";
+import { otpMapper } from "../../frameworks/database/dtoMappers/dto.mapper.js";
 import { OtpModel } from "../../frameworks/database/models/otp.model.js";
 
 export class OtpRepository implements IOtpRespository {

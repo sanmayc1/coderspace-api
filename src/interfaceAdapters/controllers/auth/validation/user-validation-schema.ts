@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { email } from "zod";
 import {
   nameSchema,
   passwordSchema,
@@ -13,8 +13,14 @@ export const UserSchema = z.object({
     .regex(strongEmailRegex, { message: "Invalid email format" }),
   username: usernameSchema,
   password: passwordSchema,
-});
+}).strict();
 
 export const PasswordSchema = z.object({
   password:passwordSchema
+})
+
+
+export const LoginSchema = z.object({
+  email:z.string().regex(strongEmailRegex, { message: "Invalid email format" }),
+  password:z.string().min(7,{message:"Invalid credentials"})
 })

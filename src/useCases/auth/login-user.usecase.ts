@@ -10,37 +10,44 @@ import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
 import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
+import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
+import { registerUserUsecaseMapper } from "../mappers/register.usecase.mapper.js";
 
 @injectable()
 export class LoginUserUsecase implements ILoginUserUsecase {
   constructor(
-    @inject("IUserRepository") private _userRepo: IUserRepository,
+    @inject("IUserRepository") private _userRepository: IUserRepository,
     @inject("IBcrypt") private _bcrypt: IBcrypt,
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
-    @inject("ITokenRepository") private _tokenRepo: ITokenRepository
+    @inject("ITokenRepository") private _tokenRepository: ITokenRepository,
+    @inject("IAccountRepository")
+    private _accountRepository: IAccountsRepository
   ) {}
   async execute(
-    email: string,
-    password: string
+    data: Pick<IAccountsEntity, "email" | "password">
   ): Promise<ILoginUserUsecaseOutput> {
-    const user = await this._userRepo.findByEmail(email);
+    const account = await this._accountRepository.findByEmail(data.email);
 
-    if (!user) {
+    if (!account) {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
         ERROR_MESSAGES.INVALID_CREDENTIALS
       );
     }
 
-    if (user.authProvider !== "local") {
+    if (account.authProvider !== "local") {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
         ERROR_MESSAGES.INVALID_CREDENTIALS
       );
     }
 
-    const isMatch = await this._bcrypt.compare(password, user.password);
+    const isMatch = await this._bcrypt.compare(
+      data.password as string,
+      account.password as string
+    );
 
     if (!isMatch) {
       throw new CustomError(
@@ -49,15 +56,27 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       );
     }
 
+    if (!account.isVerified) {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        ERROR_MESSAGES.ACCOUNT_NOT_VERIFIED
+      );
+    }
+
+    const user = await this._userRepository.findByAccountId(
+      account._id as string
+    );
+
     const accessToken = this._jwtService.signAccess({
-      userId: user._id,
-      role: user.role as string,
-      isProfileComplete: user.isProfileComplete,
+      userId: account._id,
+      role: account.role,
+      isProfileComplete: user?.isProfileComplete,
     });
+
     const refreshToken = this._jwtService.signRefresh({
-      userId: user._id,
-      role: user.role as string,
-      isProfileComplete: user.isProfileComplete,
+      userId: account._id,
+      role: account.role,
+      isProfileComplete: user?.isProfileComplete,
     });
 
     const deviceId = this._uniqueIdService.generate();
@@ -65,15 +84,24 @@ export class LoginUserUsecase implements ILoginUserUsecase {
 
     const expire = new Date((payload?.exp ?? 0) * 1000);
 
-    await this._tokenRepo.saveToken(user._id, deviceId, refreshToken, expire);
+    await this._tokenRepository.saveToken(
+      account._id as string,
+      deviceId,
+      refreshToken,
+      expire
+    );
+
+    const response = registerUserUsecaseMapper.toResponse({
+      id: account._id as string,
+      email: account.email,
+      isProfileComplete: user?.isProfileComplete as boolean,
+    });
 
     return {
       accessToken,
       refreshToken,
-      _id: user._id,
-      email: user.email,
-      isProfileComplete: user.isProfileComplete,
       deviceId,
+      response
     };
   }
 }

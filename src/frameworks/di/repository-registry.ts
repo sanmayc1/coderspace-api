@@ -5,6 +5,7 @@ import { OtpRepository } from "../../interfaceAdapters/repositories/otp.reposito
 import { BlackListRepository } from "../../interfaceAdapters/repositories/blacklist-token.repository.js";
 import { TokenRepository } from "../../interfaceAdapters/repositories/token.repository.js";
 import { PasswordRestRepository } from "../../interfaceAdapters/repositories/password-reset.repository.js";
+import { AccountRepository } from "../../interfaceAdapters/repositories/account-repository.js";
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -14,5 +15,6 @@ export class RepositoryRegistery {
     container.register("IBlackListTokenRepository",{useClass:BlackListRepository})
     container.register("IPasswordRestRepository",{useClass:PasswordRestRepository})
     container.register("ITokenRepository",{useClass:TokenRepository})
+    container.register("IAccountRepository",{useClass:AccountRepository})
   }
 }

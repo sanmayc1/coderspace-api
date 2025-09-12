@@ -1,10 +1,9 @@
 
 export interface IWalletEnitity {
   _id: string 
-  userId: string 
+  accountId: string 
   balance: number;
   contestAmount: number;
-  userType:"user"|"company"|"admin"
   createdAt:Date
   updatedAt:Date
 

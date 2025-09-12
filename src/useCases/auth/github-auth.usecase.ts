@@ -11,6 +11,7 @@ import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
 import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
 import { IUserEntity } from "../../entities/models/user.entity.js";
+import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class GithHubAuthUsecase implements IGithHubAuthUsecase {
@@ -21,7 +22,9 @@ export class GithHubAuthUsecase implements IGithHubAuthUsecase {
     @inject("IWalletRepository") private _walletRepo: IWalletRepository,
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
-    @inject("ITokenRepository") private _tokenRepo: ITokenRepository
+    @inject("ITokenRepository") private _tokenRepo: ITokenRepository,
+    @inject("IAccountRepository")
+    private _accountRepository: IAccountsRepository
   ) {}
   async execute(
     sessionState: string,
@@ -45,7 +48,7 @@ export class GithHubAuthUsecase implements IGithHubAuthUsecase {
 
     const user = await this._githubAuthService.getUserProfile(token);
 
-    let existingUser = await this._userRepo.findByEmail(user.email);
+    let existingUser = await this._accountRepository.findByEmail(user.email);
 
     if (!existingUser) {
       let baseUsername = `@${user.email.split("@")[0]}`;
@@ -57,15 +60,14 @@ export class GithHubAuthUsecase implements IGithHubAuthUsecase {
         exists = await this._userRepo.findByUsername(username);
       }
 
-      const newUser:Partial<IUserEntity> = {
+      const newUser: Partial<IUserEntity> = {
         email: user.email,
         username,
         name: user.name,
-         authProvider:"github",
+        authProvider: "github",
         ...(user.avatar_url && { profileUrl: user.avatar_url }),
         ...(user.html_url && { githubUrl: user.html_url }),
         ...(user.location && { location: user.location }),
-       
       };
 
       existingUser = await this._userRepo.save(newUser);
