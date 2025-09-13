@@ -26,7 +26,7 @@ export class GoogleAuthService implements IGoogleAuthService {
           profile: any,
           done: VerifyCallback
         ) => {
-            console.log(profile)
+           
           done(null, profile);
         }
       )

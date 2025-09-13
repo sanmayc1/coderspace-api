@@ -1,7 +1,7 @@
 import { model, Document, ObjectId } from "mongoose";
 import { IUserEntity } from "../../../entities/models/user.entity.js";
 import { userSchema } from "../schema/user.schema.js";
-import { TRole } from "../../../shared/constant.js";
+
 
 export interface IUserModel
   extends Omit<

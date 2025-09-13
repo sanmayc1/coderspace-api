@@ -1,4 +1,3 @@
-import { TRole } from "../../shared/constant.js";
 import { IAccountsEntity } from "./accounts-entity.js";
 
 interface PlanHistory {

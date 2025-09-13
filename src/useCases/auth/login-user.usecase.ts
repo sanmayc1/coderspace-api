@@ -1,8 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import {
-  ILoginUserUsecase,
-  ILoginUserUsecaseOutput,
-} from "../../entities/useCaseInterfaces/auth/login-user.usecase.interface.js";
+import { ILoginUserUsecase } from "../Interfaces/auth/login-user.usecase.interface.js";
 import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
@@ -13,6 +10,7 @@ import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repo
 import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
 import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
 import { registerUserUsecaseMapper } from "../mappers/register.usecase.mapper.js";
+import { ILoginUserUsecaseOutputDto } from "../dtos/auth.dto.js";
 
 @injectable()
 export class LoginUserUsecase implements ILoginUserUsecase {
@@ -27,20 +25,22 @@ export class LoginUserUsecase implements ILoginUserUsecase {
   ) {}
   async execute(
     data: Pick<IAccountsEntity, "email" | "password">
-  ): Promise<ILoginUserUsecaseOutput> {
+  ): Promise<ILoginUserUsecaseOutputDto> {
     const account = await this._accountRepository.findByEmail(data.email);
 
     if (!account) {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
-        ERROR_MESSAGES.INVALID_CREDENTIALS
+        ERROR_MESSAGES.INVALID_CREDENTIALS,
+        "password"
       );
     }
 
     if (account.authProvider !== "local") {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
-        ERROR_MESSAGES.INVALID_CREDENTIALS
+        ERROR_MESSAGES.INVALID_CREDENTIALS,
+        "password"
       );
     }
 
@@ -66,20 +66,21 @@ export class LoginUserUsecase implements ILoginUserUsecase {
     const user = await this._userRepository.findByAccountId(
       account._id as string
     );
-
+    const deviceId = this._uniqueIdService.generate();
     const accessToken = this._jwtService.signAccess({
-      userId: account._id,
+      accountId: account._id,
       role: account.role,
       isProfileComplete: user?.isProfileComplete,
+      deviceId,
     });
 
     const refreshToken = this._jwtService.signRefresh({
-      userId: account._id,
+      accountId: account._id,
       role: account.role,
       isProfileComplete: user?.isProfileComplete,
+      deviceId,
     });
 
-    const deviceId = this._uniqueIdService.generate();
     const payload = this._jwtService.verifyRefresh(refreshToken);
 
     const expire = new Date((payload?.exp ?? 0) * 1000);
@@ -95,13 +96,15 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       id: account._id as string,
       email: account.email,
       isProfileComplete: user?.isProfileComplete as boolean,
+      profileUrl:account.profileUrl || ""
+
     });
 
     return {
       accessToken,
       refreshToken,
       deviceId,
-      response
+      response,
     };
   }
 }

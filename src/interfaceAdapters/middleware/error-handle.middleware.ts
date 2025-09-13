@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ILoger } from "../services/logger/logger-service-interface.js";
-import { NextFunction, Request, Response } from "express";
+import {  NextFunction, Request, Response } from "express";
 import {  ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
@@ -13,7 +13,7 @@ export class ErrorMiddleware {
     err: any,
     req: Request,
     res: Response,
-    next: NextFunction
+    next:NextFunction
   ) {
     let statusCode = HTTP_STATUS.INTERNAL_SERVER_ERROR;
     let message = ERROR_MESSAGES.SERVER_ERROR;

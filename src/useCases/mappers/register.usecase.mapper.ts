@@ -1,4 +1,4 @@
-import { LoginUserResponse } from "../../entities/useCaseInterfaces/auth/login-user.usecase.interface.js";
+import { IAuthResponseDto } from "../dtos/auth.dto.js"; 
 
 
 export const registerUserUsecaseMapper = {
@@ -6,15 +6,19 @@ export const registerUserUsecaseMapper = {
     id,
     email,
     isProfileComplete,
+    profileUrl
   }: {
     id: string;
     email: string;
     isProfileComplete: boolean;
-  }): LoginUserResponse {
+    profileUrl:string
+
+  }): IAuthResponseDto {
     return {
       accountId: id,
       email,
       profileComplete: isProfileComplete,
+      profileUrl
     };
   },
 };

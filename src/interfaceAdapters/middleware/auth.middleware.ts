@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IAuthMiddleware } from "../../entities/middleware/auth-middleware.interface.js";
+import { IAuthMiddleware } from "./interfaces/auth-middleware.interface.js";
 import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import {
   COOKIES_NAMES,
@@ -18,7 +18,9 @@ export class AuthMiddleware implements IAuthMiddleware {
     private _blacklistRepo: IBlackListTokenRepository
   ) {}
 
-  handle(role: TRole): Function {
+  handle(
+    role: TRole
+  ): (req: Request, res: Response, next: NextFunction) => Promise<void> {
     return async (req: Request, res: Response, next: NextFunction) => {
       const accessToken = req.cookies[COOKIES_NAMES.ACCESS_TOKEN];
       if (!accessToken) {
@@ -39,7 +41,9 @@ export class AuthMiddleware implements IAuthMiddleware {
 
       // Checking access token is blacklisted
 
-      const isBlacklisted = await this._blacklistRepo.find(`blacklist:${accessToken}`);
+      const isBlacklisted = await this._blacklistRepo.find(
+        `blacklist:${accessToken}`
+      );
 
       if (isBlacklisted) {
         res

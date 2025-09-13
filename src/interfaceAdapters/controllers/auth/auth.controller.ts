@@ -1,4 +1,3 @@
-import { validRole } from "../../../shared/role-check-helper.js";
 import {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -20,8 +19,11 @@ import {
   IForgetPasswordUsecase,
   ISendRestPasswordLink,
   passwordSchema,
+  IAuthUserUsecase,
+  IJwtPayload,
+  LoginSchema,
+  commonResponse,
 } from "./index.js";
-import { LoginSchema } from "./validation/user-validation-schema.js";
 
 @injectable()
 export class AuthController {
@@ -37,7 +39,8 @@ export class AuthController {
     @inject("ISendRestPasswordLink")
     private _sendRestPasswordLink: ISendRestPasswordLink,
     @inject("IForgetPasswordUsecase")
-    private _forgetPassword: IForgetPasswordUsecase
+    private _forgetPassword: IForgetPasswordUsecase,
+    @inject("IAuthUserUsecase") private _authUserUsecase: IAuthUserUsecase
   ) {}
 
   // Signup Controller
@@ -55,7 +58,7 @@ export class AuthController {
     setCookies(res, COOKIES_NAMES.SIGNUP, email, true);
     res
       .status(HTTP_STATUS.CREATED)
-      .json({ success: true, message: SUCCESS_MESSAGES.USER_REGISTERED });
+      .json(commonResponse(true, SUCCESS_MESSAGES.USER_REGISTERED));
   }
 
   // Send OTP Controller
@@ -68,7 +71,7 @@ export class AuthController {
     await this._sendOtpUsecase.execute(email);
     res
       .status(HTTP_STATUS.OK)
-      .json({ success: true, message: SUCCESS_MESSAGES.SEND_OTP_TO_MAIL });
+      .json(commonResponse(true, SUCCESS_MESSAGES.SEND_OTP_TO_MAIL));
   }
 
   // Verify OTP Controller
@@ -83,26 +86,24 @@ export class AuthController {
     res.clearCookie(COOKIES_NAMES.SIGNUP);
     res
       .status(HTTP_STATUS.OK)
-      .json({ success: true, message: SUCCESS_MESSAGES.OTP_VERIFIED });
+      .json(commonResponse(true, SUCCESS_MESSAGES.OTP_VERIFIED));
   }
 
   // Login Controller
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
-    const validated = LoginSchema.parse({email,password})
+    const validated = LoginSchema.parse({ email, password });
 
-    const data = await this._loginUserUsecase.execute(validated); 
+    const data = await this._loginUserUsecase.execute(validated);
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken);
     setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId, true);
 
-    res.status(HTTP_STATUS.OK).json({
-      success: true,
-      message: SUCCESS_MESSAGES.USER_LOGIN,
-      data: data.response,
-    });
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.USER_LOGIN, data.response));
   }
 
   // Token refresh Controller
@@ -115,7 +116,9 @@ export class AuthController {
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, accessToken);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, refreshToken);
-    res.status(HTTP_STATUS.OK).json({ success: true });
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.TOKEN_REFRESH));
   }
 
   // Logout User
@@ -130,16 +133,17 @@ export class AuthController {
     res.clearCookie(COOKIES_NAMES.ACCESS_TOKEN);
     res.clearCookie(COOKIES_NAMES.REFRESH_TOKEN);
     res.clearCookie(COOKIES_NAMES.DEVICE_ID);
-    res.status(HTTP_STATUS.NO_CONTENT).json({ success: true });
+    res
+      .status(HTTP_STATUS.NO_CONTENT)
+      .json(commonResponse(true, SUCCESS_MESSAGES.LOGOUT));
   }
 
   async forgetPasword(req: Request, res: Response) {
     const email = req.body.email;
     await this._sendRestPasswordLink.execute(email);
-    res.status(HTTP_STATUS.OK).json({
-      success: true,
-      message: SUCCESS_MESSAGES.SEND_PASSWORD_REST_LINK,
-    });
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.SEND_PASSWORD_REST_LINK));
   }
 
   async resetPassword(req: Request, res: Response) {
@@ -148,11 +152,14 @@ export class AuthController {
 
     await this._forgetPassword.execute(token, password);
     res
-      .status(200)
-      .json({ success: true, message: SUCCESS_MESSAGES.PASSWORD_REST });
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.PASSWORD_REST));
   }
 
-  async authenticatedUser(req:Request,res:Response){
-    res.status(HTTP_STATUS.OK).json(req?.user)
+  async authenticatedUser(req: Request, res: Response) {
+    const response = await this._authUserUsecase.execute(req.user as IJwtPayload);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.ACCOUNT_DETAILS, response));
   }
 }

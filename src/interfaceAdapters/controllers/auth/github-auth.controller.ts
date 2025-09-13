@@ -39,7 +39,7 @@ export class GithHubAuthController {
     );
 
     if (data.statusCode !== HTTP_STATUS.OK) {
-      res.redirect(`${config.client.uri}/auth/login?error=${data.message}`);
+      res.redirect(`${config.client.uri}/user/login?error=${data.message}`);
       return 
     }
 

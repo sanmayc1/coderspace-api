@@ -1,9 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { IPasswordRestRepository } from "../../entities/repositoryInterfaces/password-reset.interface.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IForgetPasswordUsecase } from "../../entities/useCaseInterfaces/auth/forget-password.usecase.interface.js";
+import { IForgetPasswordUsecase } from "../Interfaces/auth/forget-password.usecase.interface.js";
 import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
 import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";

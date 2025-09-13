@@ -38,7 +38,8 @@ export const ERROR_MESSAGES = {
   INVALID_AUTH_CODE: "Invalid_auth_code",
   INVALID_AUTH_PROVIDER: "Invalid_auth_provider",
   INVALID_REQUEST: "Invalid request",
-  ACCOUNT_NOT_VERIFIED:"Account not verified. Please complete OTP verification"
+  ACCOUNT_NOT_VERIFIED:"Account not verified. Please complete OTP verification",
+  ACCOUNT_NOT_FOUND:'Account not found'
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -47,6 +48,9 @@ export const SUCCESS_MESSAGES = {
   USER_LOGIN: "User successfully login",
   SEND_PASSWORD_REST_LINK: "Successufully send password rest link to email",
   PASSWORD_REST: "Password rest successfully",
+  ACCOUNT_DETAILS: "Account details fetched successfully",
+  LOGOUT:"Logout successfully",
+  TOKEN_REFRESH:"Access token refreshed successfully"
 };
 
 export const COOKIES_NAMES = {

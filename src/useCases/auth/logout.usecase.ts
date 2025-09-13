@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ILogoutUsecase } from "../../entities/useCaseInterfaces/auth/logout.usecase.interface.js";
+import { ILogoutUsecase } from "../Interfaces/auth/logout.usecase.interface.js";
 import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
 import { IBlackListTokenRepository } from "../../entities/repositoryInterfaces/blacklist-token.interface.js";
 import { IJwtService } from "../../entities/services/jwt-service.interface.js";
@@ -17,7 +17,7 @@ export class LogoutUsecase implements ILogoutUsecase {
     accessToken: string,
     deviceId: string
   ): Promise<void> {
-    let payload = this._jwtService.verifyAccess(accessToken);
+    const payload = this._jwtService.verifyAccess(accessToken);
 
     const expire = Math.max(
       (payload ? payload?.exp ?? 0 : 0) -

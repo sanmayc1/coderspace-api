@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { ITokenEntity } from "../../entities/models/token.entity.js";
-import { IRefreshTokenUsecase } from "../../entities/useCaseInterfaces/auth/refresh-token.usecase.interface.js";
+import { IRefreshTokenUsecase } from "../Interfaces/auth/refresh-token.usecase.interface.js";
 import { IJwtService } from "../../entities/services/jwt-service.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
@@ -28,9 +28,10 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
     }
     
     const newPayload: IJwtPayload = {
-      userId: payload.userId,
+      accountId: payload.accountId,
       isProfileComplete: payload.isProfileComplete,
       role: payload.role,
+      deviceId
     };
 
     const timeInSeconds = Math.floor(new Date().getTime() / 1000);

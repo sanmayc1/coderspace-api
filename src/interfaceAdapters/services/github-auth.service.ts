@@ -35,7 +35,7 @@ export class GitHubAuthService implements IGitHubAuthService {
         },
       });
 
-      for (let data of response.data) {
+      for (const data of response.data) {
         if (data.verified && data.primary) {
           user.email = data.email;
         }

@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { ISendRestPasswordLink } from "../../entities/useCaseInterfaces/auth/send-reset-link.js";
+import { ISendRestPasswordLink } from "../Interfaces/auth/send-reset-link.js";
 import { IPasswordRestRepository } from "../../entities/repositoryInterfaces/password-reset.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";

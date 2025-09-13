@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { IVerifyOtpUsecase } from "../../entities/useCaseInterfaces/auth/verify-otp.usecase.interface.js";
+import { IVerifyOtpUsecase } from "../Interfaces/auth/verify-otp.usecase.interface.js";
 import { IOtpService } from "../../entities/services/otp-service.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";

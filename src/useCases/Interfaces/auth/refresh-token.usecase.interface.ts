@@ -1,4 +1,4 @@
-import { ITokenEntity } from "../../models/token.entity.js";
+import { ITokenEntity } from "../../../entities/models/token.entity.js";
 
 
 
