@@ -4,16 +4,16 @@ import { TokenModel } from "../../frameworks/database/models/token.model.js";
 
 @injectable()
 export class TokenRepository implements ITokenRepository {
-  async deleteAllTokenByUserId(userId: string): Promise<void> {
-    await TokenModel.deleteMany({ userId });
+  async deleteAllTokenByAccountId(accountId: string): Promise<void> {
+    await TokenModel.deleteMany({ accountId });
   }
   async saveToken(
-    userId: string,
+    accountId: string,
     deviceId: string,
     token: string,
     expiry: Date
   ): Promise<void> {
-    await TokenModel.create({ userId, deviceId, token, expiry });
+    await TokenModel.create({ accountId, deviceId, token, expiry });
   }
   async updateToken(token: string, deviceId: string): Promise<void> {
     await TokenModel.findOneAndUpdate({ deviceId }, { token });

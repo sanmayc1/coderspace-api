@@ -1,5 +1,6 @@
 import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
 import { IUserEntity } from "../../entities/models/user.entity.js";
+import { TRole } from "../../shared/constant.js";
 import { IAuthProviderUsecaseOutputDto, IAuthResponseDto, IGoogleAuthUsecaseInputDto } from "../dtos/auth.dto.js";
 
 export const authUserUsecaseMapper = {
@@ -12,6 +13,7 @@ export const authUserUsecaseMapper = {
       email: account.email,
       profileComplete: user.isProfileComplete as boolean,
       profileUrl: account.profileUrl || "",
+      role:account.role as TRole
     };
   },
 };

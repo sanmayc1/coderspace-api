@@ -1,6 +1,5 @@
+import { ILoginCompanyUsecase } from "../Interfaces/auth/login-company.usecase.interface.js";
 import { inject, injectable } from "tsyringe";
-import { ILoginUserUsecase } from "../Interfaces/auth/login-user.usecase.interface.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
@@ -10,13 +9,11 @@ import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repo
 import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
 import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
 import { LoginUserUsecaseMapper } from "../mappers/register.usecase.mapper.js";
-import { ILoginUserUsecaseOutputDto } from "../dtos/auth.dto.js";
-import { IUserEntity } from "../../entities/models/user.entity.js";
+import { ILoginCompanyUsecaseOutputDto } from "../dtos/auth.dto.js";
 
 @injectable()
-export class LoginUserUsecase implements ILoginUserUsecase {
+export class LoginCompanyUsecase implements ILoginCompanyUsecase {
   constructor(
-    @inject("IUserRepository") private _userRepository: IUserRepository,
     @inject("IBcrypt") private _bcrypt: IBcrypt,
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
@@ -26,7 +23,7 @@ export class LoginUserUsecase implements ILoginUserUsecase {
   ) {}
   async execute(
     data: Pick<IAccountsEntity, "email" | "password">
-  ): Promise<ILoginUserUsecaseOutputDto> {
+  ): Promise<ILoginCompanyUsecaseOutputDto> {
     const account = await this._accountRepository.findByEmail(data.email);
 
     if (!account) {
@@ -65,22 +62,24 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       );
     }
 
-    const user = await this._userRepository.findByAccountId(
-      account._id as string
-    );
+    if (account.role === "user") {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        ERROR_MESSAGES.AUTH_ACCESS_DENIED,
+        "password"
+      );
+    }
 
     const deviceId = this._uniqueIdService.generate();
     const accessToken = this._jwtService.signAccess({
       accountId: account._id,
       role: account.role,
-      isProfileComplete: user?.isProfileComplete,
       deviceId,
     });
 
     const refreshToken = this._jwtService.signRefresh({
       accountId: account._id,
       role: account.role,
-      isProfileComplete: user?.isProfileComplete,
       deviceId,
     });
 
@@ -95,10 +94,7 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       expire
     );
 
-    const response = LoginUserUsecaseMapper.toResponse(
-      account,
-      user as IUserEntity
-    );
+    const response = LoginUserUsecaseMapper.toResponse(account);
 
     return {
       accessToken,

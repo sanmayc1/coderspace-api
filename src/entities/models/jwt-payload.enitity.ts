@@ -2,7 +2,7 @@
 export interface IJwtPayload {
   accountId: string;
   role: string;
-  isProfileComplete: boolean;
+  isProfileComplete?: boolean;
   deviceId:string
   exp?:number
 }

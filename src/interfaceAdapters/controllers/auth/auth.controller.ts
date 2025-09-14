@@ -1,3 +1,4 @@
+import { ILoginCompanyUsecase } from "../../../useCases/Interfaces/auth/login-company.usecase.interface.js";
 import {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -40,7 +41,8 @@ export class AuthController {
     private _sendRestPasswordLink: ISendRestPasswordLink,
     @inject("IForgetPasswordUsecase")
     private _forgetPassword: IForgetPasswordUsecase,
-    @inject("IAuthUserUsecase") private _authUserUsecase: IAuthUserUsecase
+    @inject("IAuthUserUsecase") private _authUserUsecase: IAuthUserUsecase,
+    @inject("ILoginCompanyUsecase") private _loginCompanyUsecase:ILoginCompanyUsecase
   ) {}
 
   // Signup Controller
@@ -103,7 +105,7 @@ export class AuthController {
 
     res
       .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.USER_LOGIN, data.response));
+      .json(commonResponse(true, SUCCESS_MESSAGES.LOGIN, data.response));
   }
 
   // Token refresh Controller
@@ -157,9 +159,26 @@ export class AuthController {
   }
 
   async authenticatedUser(req: Request, res: Response) {
-    const response = await this._authUserUsecase.execute(req.user as IJwtPayload);
+    const response = await this._authUserUsecase.execute(
+      req.user as IJwtPayload
+    );
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.ACCOUNT_DETAILS, response));
+  }
+
+  async companyLogin(req: Request, res: Response) {
+    const { email, password } = req.body;
+    const validated = LoginSchema.parse({ email, password });
+
+    const data = await this._loginCompanyUsecase.execute(validated);
+
+    setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken);
+    setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken);
+    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId, true);
+
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.LOGIN, data.response));
   }
 }

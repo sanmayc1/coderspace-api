@@ -41,6 +41,6 @@ export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
       password: hasedPassword,
     });
     await this._passwordRestRepository.del(`reset:${token}`);
-    await this._tokenRepository.deleteAllTokenByUserId(accountId);
+    await this._tokenRepository.deleteAllTokenByAccountId(accountId);
   }
 }

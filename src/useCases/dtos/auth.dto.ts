@@ -1,4 +1,5 @@
 import { ITokenEntity } from "../../entities/models/token.entity.js";
+import { TRole } from "../../shared/constant.js";
 
 export interface RegisterUserRequestDto {
   name: string;
@@ -13,6 +14,10 @@ export interface ILoginUserUsecaseOutputDto extends ITokenEntity {
   response: IAuthResponseDto;
 }
 
+export interface ILoginCompanyUsecaseOutputDto extends ILoginUserUsecaseOutputDto  {
+
+}
+
 export interface IAuthProviderUsecaseOutputDto {
   statusCode: number;
   message?: string;
@@ -24,8 +29,9 @@ export interface IAuthProviderUsecaseOutputDto {
 export interface IAuthResponseDto {
   accountId: string;
   email: string;
-  profileComplete: boolean;
+  profileComplete?: boolean;
   profileUrl: string;
+  role:TRole
 }
 
 export interface IGoogleAuthUsecaseInputDto {

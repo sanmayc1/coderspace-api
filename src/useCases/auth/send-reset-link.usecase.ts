@@ -29,6 +29,13 @@ export class SendRestPasswordLink implements ISendRestPasswordLink {
       );
     }
 
+    if (account.authProvider !== "local") {
+      throw new CustomError(
+        HTTP_STATUS.BAD_REQUEST,
+        ERROR_MESSAGES.DIFFERENT_AUTHPROVIDER
+      );
+    }
+
     const token = this._uuidService.generate();
 
     await this._passwordRestRepo.save(

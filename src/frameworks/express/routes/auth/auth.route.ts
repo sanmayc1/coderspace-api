@@ -57,7 +57,7 @@ export class AuthRoute extends BaseRoute {
       asyncHandler(authcontroller.logout.bind(authcontroller))
     );
 
-        this.router.get(
+    this.router.get(
       "/me",
       asyncHandler(authMiddleware.handle("user").bind(authMiddleware)),
       asyncHandler(authcontroller.authenticatedUser.bind(authcontroller))
@@ -82,10 +82,18 @@ export class AuthRoute extends BaseRoute {
 
     this.router.get(
       "/google/callback",
-       googleAuthService
+      googleAuthService
         .getPassport()
-        .authenticate("google", {session:false, failureRedirect: config.client.uri }),
-         asyncHandler(googleAuthController.googleAuth.bind(googleAuthController))
+        .authenticate("google", {
+          session: false,
+          failureRedirect: config.client.uri,
+        }),
+      asyncHandler(googleAuthController.googleAuth.bind(googleAuthController))
+    );
+
+    this.router.post(
+      "/common/login",
+      asyncHandler(authcontroller.companyLogin.bind(authcontroller))
     );
   }
 }

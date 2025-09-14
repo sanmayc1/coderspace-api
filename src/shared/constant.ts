@@ -39,13 +39,15 @@ export const ERROR_MESSAGES = {
   INVALID_AUTH_PROVIDER: "Invalid_auth_provider",
   INVALID_REQUEST: "Invalid request",
   ACCOUNT_NOT_VERIFIED:"Account not verified. Please complete OTP verification",
-  ACCOUNT_NOT_FOUND:'Account not found'
+  ACCOUNT_NOT_FOUND:'Account not found',
+  DIFFERENT_AUTHPROVIDER:"This account was registered using Google/GitHub. Password reset is not available",
+  AUTH_ACCESS_DENIED:"Login access denied"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
   SEND_OTP_TO_MAIL: "Successufully send otp to registered email",
   OTP_VERIFIED: "Otp verified successfully",
-  USER_LOGIN: "User successfully login",
+  LOGIN: "successfully logined",
   SEND_PASSWORD_REST_LINK: "Successufully send password rest link to email",
   PASSWORD_REST: "Password rest successfully",
   ACCOUNT_DETAILS: "Account details fetched successfully",

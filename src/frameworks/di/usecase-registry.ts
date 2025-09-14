@@ -10,6 +10,7 @@ import { ForgetPasswordUsecase } from "../../useCases/auth/forget-password.useca
 import { GitHubAuthUsecase } from "../../useCases/auth/github-auth.usecase.js";
 import { AuthUserUsecase } from "../../useCases/auth/auth-user.usecase.js";
 import { GoogleAuthUsecase } from "../../useCases/auth/google-auth.usecase.js";
+import { LoginCompanyUsecase } from "../../useCases/auth/login-company.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -29,5 +30,6 @@ export class UsecaseRegistery {
     container.register("IGithHubAuthUsecase",{useClass:GitHubAuthUsecase})
     container.register("IAuthUserUsecase",{useClass:AuthUserUsecase})
     container.register("IGoogleAuthUsecase",{useClass:GoogleAuthUsecase})
+    container.register("ILoginCompanyUsecase",{useClass:LoginCompanyUsecase})
   }
 }

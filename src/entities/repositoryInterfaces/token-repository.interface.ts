@@ -9,5 +9,5 @@ export interface ITokenRepository {
     expiry: Date
   ): Promise<void>;
 
-  deleteAllTokenByUserId(userId:string):Promise<void>
+  deleteAllTokenByAccountId(accountId:string):Promise<void>
 }

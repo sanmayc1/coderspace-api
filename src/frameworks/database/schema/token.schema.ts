@@ -13,10 +13,10 @@ export const tokenSchema = new Schema<ITokenModel>(
       required: true,
       index: true,
     },
-    userId: {
+    accountId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: "Account",
     },
     expiry: {
       type: Date,

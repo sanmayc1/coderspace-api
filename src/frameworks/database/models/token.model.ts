@@ -5,7 +5,7 @@ import { tokenSchema } from "../schema/token.schema.js";
 export interface ITokenModel
   extends Omit<IRefreshTokenEntity, "_id" | "userId"> {
   _id: ObjectId;
-  userId: ObjectId;
+  accountId: ObjectId;
 }
 
 export const TokenModel = model("Token",tokenSchema)
