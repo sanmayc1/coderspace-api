@@ -6,9 +6,30 @@ import { userMapperRepo } from "../../frameworks/database/dtoMappers/dto.mapper.
 
 @injectable()
 export class UserRepository implements IUserRepository {
+  async getAllUsers(
+    skip: number,
+    limit: number
+  ): Promise<{ users: IUserEntity[] | []; count: number }> {
+    const doc = await UserModel.find().populate({
+      path: "accountId",
+      match: { isVerified: true },
+    });
+
+    const count = await UserModel.find()
+      .populate({
+        path: "accountId",
+        match: { isVerified: true },
+      })
+      .countDocuments();
+
+    return {
+      users: doc.map((user) => userMapperRepo.toEntity(user)),
+      count,
+    };
+  }
   async findByAccountId(id: string): Promise<IUserEntity | null> {
-    const doc = await UserModel.findOne({accountId:id})
-    return doc ? userMapperRepo.toEntity(doc):null
+    const doc = await UserModel.findOne({ accountId: id });
+    return doc ? userMapperRepo.toEntity(doc) : null;
   }
 
   async updateById(userId: string, data: Partial<IUserEntity>): Promise<void> {
@@ -21,7 +42,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findByUsername(username: string): Promise<IUserEntity | null> {
-    const user = await UserModel.findOne({ username })
+    const user = await UserModel.findOne({ username });
     return user ? userMapperRepo.toEntity(user) : user;
   }
 
@@ -29,5 +50,4 @@ export class UserRepository implements IUserRepository {
     const user = await UserModel.create(data);
     return userMapperRepo.toEntity(user);
   }
-  
 }

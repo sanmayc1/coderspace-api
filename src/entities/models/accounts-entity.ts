@@ -10,4 +10,5 @@ export interface IAccountsEntity {
     authProvider?:TAuthProviders
     profileUrl?:string
     name:string
+    isBlocked?:boolean
 }

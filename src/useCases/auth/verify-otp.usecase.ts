@@ -3,14 +3,12 @@ import { IVerifyOtpUsecase } from "../Interfaces/auth/verify-otp.usecase.interfa
 import { IOtpService } from "../../entities/services/otp-service.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
 import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class VerifyOtpUsecase implements IVerifyOtpUsecase {
   constructor(
     @inject("IOtpService") private _otpService: IOtpService,
-    @inject("IUserRepository") private _userRepo: IUserRepository,
         @inject("IAccountRepository")
         private _accountRepository: IAccountsRepository
   ) {}
@@ -31,5 +29,6 @@ export class VerifyOtpUsecase implements IVerifyOtpUsecase {
     }
 
     await this._accountRepository.setAccountVerified(email);
+    
   }
 }

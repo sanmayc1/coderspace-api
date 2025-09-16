@@ -6,14 +6,14 @@ interface PlanHistory {
   expireAt: Date;
 }
 
-interface Rating {
+export interface Rating {
   _id: string;
   rating: number;
 }
 
 export interface IUserEntity {
   _id?: string;
-  accountId:string | Pick<IAccountsEntity , "email">
+  accountId:string | IAccountsEntity 
   username: string;
   level?: number;
   xpCoin?: number;

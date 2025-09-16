@@ -4,7 +4,7 @@ import {
   HTTP_STATUS,
   SUCCESS_MESSAGES,
 } from "../../../shared/constant.js";
-import type { IRegisterUserUsecase } from "../../../useCases/Interfaces/auth/register-usecase.interface.js";
+import type { IRegisterUserUsecase } from "../../../useCases/Interfaces/auth/register-user-usecase.interface.js";
 import { setCookies } from "../../../shared/utils/cookie-helper.js";
 import type { ISendOtpUsecase } from "../../../useCases/Interfaces/auth/send-otp.usecase.js";
 import type { IVerifyOtpUsecase } from "../../../useCases/Interfaces/auth/verify-otp.usecase.interface.js";

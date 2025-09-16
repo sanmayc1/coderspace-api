@@ -32,4 +32,8 @@ export const accountsSchema = new Schema<IAccountsModel>({
   profileUrl: {
     type: String,
   },
+  isBlocked:{
+    type:Boolean,
+    default:false
+  }
 });

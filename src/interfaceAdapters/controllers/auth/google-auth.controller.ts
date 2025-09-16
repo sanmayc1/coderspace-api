@@ -29,7 +29,7 @@ export class GoogleAuthController {
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken as string);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN,data.refreshToken as string );
-    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId as string);
+    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId as string,true);
 
     res.redirect(`${config.client.uri}`);
   }

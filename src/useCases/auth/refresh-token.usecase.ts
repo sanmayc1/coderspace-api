@@ -26,18 +26,18 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
     if (!isValid) {
       throw new CustomError(HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.TOKEN_EXPIRE);
     }
-    
+
     const newPayload: IJwtPayload = {
       accountId: payload.accountId,
       isProfileComplete: payload.isProfileComplete,
       role: payload.role,
-      deviceId
+      deviceId,
     };
-
     const timeInSeconds = Math.floor(new Date().getTime() / 1000);
     const expireIn = Math.max((payload.exp ?? 0) - timeInSeconds, 1);
     const accessToken = this._jwtService.signAccess(newPayload);
     const newRefreshToken = this._jwtService.signRefresh(newPayload, expireIn);
+
     await this._tokenRepo.updateToken(newRefreshToken, deviceId);
 
     return { accessToken, refreshToken: newRefreshToken };

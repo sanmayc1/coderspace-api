@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import mongoose, {  Types } from "mongoose";
 import { IAccountsEntity } from "../../../entities/models/accounts-entity.js";
 import { IOtpEntity } from "../../../entities/models/otp.entity.js";
 import { IUserEntity } from "../../../entities/models/user.entity.js";
@@ -7,6 +7,8 @@ import { IAccountsModel } from "../models/account.model .js";
 import { IOtpModel } from "../models/otp.model.js";
 import { IUserModel } from "../models/user.model.js";
 import { IWalletModel } from "../models/wallet.model.js";
+import { ICompanyModel } from "../models/company.model.js";
+import { ICompanyEntity } from "../../../entities/models/company-entity.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -34,7 +36,10 @@ export const userMapperRepo = {
       position: data.position,
       profession: data.profession,
       skills: data.skills,
-      accountId: String(data.accountId),
+      accountId:
+        data.accountId instanceof Types.ObjectId
+          ? String(data.accountId)
+          : (data.accountId as IAccountsEntity),
     };
   },
 };
@@ -50,13 +55,13 @@ export const walletMapper = {
       accountId: String(data.accountId),
     };
   },
-  toModel(data:Partial<IWalletEnitity>):Partial<IWalletModel>{
+  toModel(data: Partial<IWalletEnitity>): Partial<IWalletModel> {
     return {
-        ...(data.accountId && {accountId:new Types.ObjectId(data.accountId) }),
-        ...(data.balance && {balance: data.balance }),
-        ...(data.contestAmount && {contestAmount:data.contestAmount})
-    }
-  }
+      ...(data.accountId && { accountId: new Types.ObjectId(data.accountId) }),
+      ...(data.balance && { balance: data.balance }),
+      ...(data.contestAmount && { contestAmount: data.contestAmount }),
+    };
+  },
 };
 
 export const otpMapper = {
@@ -81,19 +86,37 @@ export const accountRepositoryMapper = {
       isVerified: data.isVerified,
       profileUrl: data.profileUrl || "",
       role: data.role,
+      isBlocked:data.isBlocked
     };
   },
   toModel(data: Partial<IAccountsEntity>): Partial<IAccountsModel> {
     return {
-      ...(data.email !== undefined && { email: data.email } ),
-      ...(data.name !== undefined && { name: data.name }),
-      ...(data.password !== undefined && { password: data.password }),
-      ...(data.authProvider !== undefined
-        && { authProvider: data.authProvider }),
-      ...(data.isVerified !== undefined && { isVerified: data.isVerified } ),
-      ...(data.profileUrl !== undefined && { profileUrl: data.profileUrl } ),
-      ...(data.role !== undefined && { role: data.role } ),
-      
+      ...(data.email && { email: data.email }),
+      ...(data.name && { name: data.name }),
+      ...(data.password && { password: data.password }),
+      ...(data.authProvider && { authProvider: data.authProvider }),
+      ...(data.isVerified && { isVerified: data.isVerified }),
+      ...(data.profileUrl && { profileUrl: data.profileUrl }),
+      ...(data.role && { role: data.role }),
+    };
+  },
+};
+
+export const companyRepositoryMapper = {
+  toEntity(data: ICompanyModel): ICompanyEntity {
+    return {
+      accountId: String(data._id),
+      gstin: data.gstin,
+      createdAt: data.createdAt,
+      updtedAt: data.updtedAt,
+    };
+  },
+  toModel(data: Partial<ICompanyEntity>): Partial<ICompanyModel> {
+    return {
+      ...(data.accountId && {
+        accountId: new mongoose.Types.ObjectId(data.accountId),
+      }),
+      ...(data.gstin && { gstin: data.gstin }),
     };
   },
 };

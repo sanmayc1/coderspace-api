@@ -1,6 +1,7 @@
 import { model, Document, ObjectId } from "mongoose";
 import { IUserEntity } from "../../../entities/models/user.entity.js";
 import { userSchema } from "../schema/user.schema.js";
+import { IAccountsEntity } from "../../../entities/models/accounts-entity.js";
 
 
 export interface IUserModel
@@ -18,7 +19,7 @@ export interface IUserModel
     >,
     Document {
   _id: ObjectId;
-  accountId: ObjectId;
+  accountId: ObjectId |IAccountsEntity;
   isProfileComplete: boolean;
   level: number;
   notification: boolean;

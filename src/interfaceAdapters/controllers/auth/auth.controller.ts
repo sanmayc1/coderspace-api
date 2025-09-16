@@ -1,4 +1,5 @@
 import { ILoginCompanyUsecase } from "../../../useCases/Interfaces/auth/login-company.usecase.interface.js";
+import { IRegisterCompanyUsecase } from "../../../useCases/Interfaces/auth/register-company.js";
 import {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -25,6 +26,7 @@ import {
   LoginSchema,
   commonResponse,
 } from "./index.js";
+import { CompanyRegisterSchema } from "./validation/company-validation-schema.js";
 
 @injectable()
 export class AuthController {
@@ -42,7 +44,10 @@ export class AuthController {
     @inject("IForgetPasswordUsecase")
     private _forgetPassword: IForgetPasswordUsecase,
     @inject("IAuthUserUsecase") private _authUserUsecase: IAuthUserUsecase,
-    @inject("ILoginCompanyUsecase") private _loginCompanyUsecase:ILoginCompanyUsecase
+    @inject("ILoginCompanyUsecase")
+    private _loginCompanyUsecase: ILoginCompanyUsecase,
+    @inject("IRegisterCompanyUsecase")
+    private _registerCompanyUsecase: IRegisterCompanyUsecase
   ) {}
 
   // Signup Controller
@@ -113,6 +118,14 @@ export class AuthController {
   async tokenRefresh(req: Request, res: Response) {
     const token = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
     const deviceId = req.signedCookies[COOKIES_NAMES.DEVICE_ID];
+
+    if (!token) {
+      res
+        .status(HTTP_STATUS.UNAUTHORIZED)
+        .json(commonResponse(false, ERROR_MESSAGES.TOKEN_MISSING));
+      return;
+    }
+
     const { accessToken, refreshToken } =
       await this._refreshTokenUsecase.execute(token, deviceId);
 
@@ -167,7 +180,7 @@ export class AuthController {
       .json(commonResponse(true, SUCCESS_MESSAGES.ACCOUNT_DETAILS, response));
   }
 
-  async companyLogin(req: Request, res: Response) {
+  async companyOrAdminLogin(req: Request, res: Response) {
     const { email, password } = req.body;
     const validated = LoginSchema.parse({ email, password });
 
@@ -180,5 +193,21 @@ export class AuthController {
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.LOGIN, data.response));
+  }
+
+  async companyRegister(req: Request, res: Response) {
+    const validated = CompanyRegisterSchema.parse({
+      name: req.body.companyName,
+      email: req.body.email,
+      gstin: req.body.gstin,
+      password: req.body.password,
+    });
+
+    const email = await this._registerCompanyUsecase.execute(validated);
+    setCookies(res, COOKIES_NAMES.SIGNUP, email, true);
+    res
+      .status(HTTP_STATUS.CREATED)
+      .json(commonResponse(true, SUCCESS_MESSAGES.COMPANY_REGISTERED));
+
   }
 }

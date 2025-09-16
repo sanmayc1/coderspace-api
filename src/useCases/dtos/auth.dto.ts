@@ -44,3 +44,11 @@ export interface IGoogleAuthUsecaseInputDto {
   emails: { value: string; verified?: boolean }[];
   photos?: { value: string }[];
 }  
+
+
+export interface RegisterCompanyRequestDto {
+  name: string;
+  gstin: string;
+  email: string;
+  password: string;
+}

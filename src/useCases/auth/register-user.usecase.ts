@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
-import { IRegisterUserUsecase } from "../Interfaces/auth/register-usecase.interface.js";
+import { IRegisterUserUsecase } from "../Interfaces/auth/register-user-usecase.interface.js";
 import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
 import { CustomError } from "../../entities/utils/errors/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";

@@ -4,5 +4,5 @@ import { TRole } from "../../../shared/constant.js";
 
 
 export interface IAuthMiddleware {
-    handle(role:TRole):(req: Request, res: Response, next: NextFunction) => Promise<void>
+    handle(role:TRole[]):(req: Request, res: Response, next: NextFunction) => Promise<void>
 }

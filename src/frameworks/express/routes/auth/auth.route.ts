@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
 import { asyncHandler } from "../../../../shared/async-handler.js";
 import {
-  authcontroller,
+  authController,
   authMiddleware,
   githubAuthController,
   googleAuthController,
@@ -19,48 +19,48 @@ export class AuthRoute extends BaseRoute {
   protected initializeRoutes(): void {
     this.router.post(
       "/signup",
-      asyncHandler(authcontroller.signup.bind(authcontroller))
+      asyncHandler(authController.signup.bind(authController))
     );
     this.router.post(
       "/otp",
-      asyncHandler(authcontroller.sendOtp.bind(authcontroller))
+      asyncHandler(authController.sendOtp.bind(authController))
     );
 
     this.router.patch(
       "/verify",
-      asyncHandler(authcontroller.verifyOtp.bind(authcontroller))
+      asyncHandler(authController.verifyOtp.bind(authController))
     );
 
     this.router.post(
       "/login",
-      asyncHandler(authcontroller.login.bind(authcontroller))
+      asyncHandler(authController.login.bind(authController))
     );
 
     this.router.post(
       "/password/forget",
-      asyncHandler(authcontroller.forgetPasword.bind(authcontroller))
+      asyncHandler(authController.forgetPasword.bind(authController))
     );
 
     this.router.patch(
       "/password/reset",
-      asyncHandler(authcontroller.resetPassword.bind(authcontroller))
+      asyncHandler(authController.resetPassword.bind(authController))
     );
 
     this.router.post(
       "/refresh",
-      asyncHandler(authcontroller.tokenRefresh.bind(authcontroller))
+      asyncHandler(authController.tokenRefresh.bind(authController))
     );
 
     this.router.post(
       "/logout",
-      asyncHandler(authMiddleware.handle("user").bind(authMiddleware)),
-      asyncHandler(authcontroller.logout.bind(authcontroller))
+      asyncHandler(authMiddleware.handle(["admin","company","user"]).bind(authMiddleware)),
+      asyncHandler(authController.logout.bind(authController))
     );
 
     this.router.get(
       "/me",
-      asyncHandler(authMiddleware.handle("user").bind(authMiddleware)),
-      asyncHandler(authcontroller.authenticatedUser.bind(authcontroller))
+      asyncHandler(authMiddleware.handle(["user","admin","company"]).bind(authMiddleware)),
+      asyncHandler(authController.authenticatedUser.bind(authController))
     );
 
     this.router.get(
@@ -93,7 +93,11 @@ export class AuthRoute extends BaseRoute {
 
     this.router.post(
       "/common/login",
-      asyncHandler(authcontroller.companyLogin.bind(authcontroller))
+      asyncHandler(authController.companyOrAdminLogin.bind(authController))
     );
+
+    this.router.post("/company/register",
+      asyncHandler(authController.companyRegister.bind(authController))
+    )
   }
 }

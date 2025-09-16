@@ -19,7 +19,7 @@ export class AuthUserUsecase implements IAuthUserUsecase {
     const { accountId } = user;
 
     const account = await this._accountRepository.findById(accountId);
-   
+
     if (!account) {
       throw new CustomError(
         HTTP_STATUS.BAD_REQUEST,
@@ -27,20 +27,23 @@ export class AuthUserUsecase implements IAuthUserUsecase {
       );
     }
 
-    const userProfile = await this._userRepository.findByAccountId(
-      account._id as string
-    );
-
-    
-
-    if (!userProfile) {
-      throw new CustomError(
-        HTTP_STATUS.BAD_REQUEST,
-        ERROR_MESSAGES.ACCOUNT_NOT_FOUND
+    if (user.role === "user") {
+      const userProfile = await this._userRepository.findByAccountId(
+        account._id as string
       );
+
+      if (!userProfile) {
+        throw new CustomError(
+          HTTP_STATUS.BAD_REQUEST,
+          ERROR_MESSAGES.ACCOUNT_NOT_FOUND
+        );
+      }
+      const response = authUserUsecaseMapper.toOutput(account, userProfile);
+
+      return response;
     }
 
-    const response = authUserUsecaseMapper.toOutput(account, userProfile);
+    const response = authUserUsecaseMapper.toOutput(account);
 
     return response;
   }

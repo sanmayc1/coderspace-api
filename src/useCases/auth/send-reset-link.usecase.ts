@@ -44,7 +44,7 @@ export class SendRestPasswordLink implements ISendRestPasswordLink {
       60 * 10
     );
     const link = `${config.client.uri}/auth/password?token=${token}`;
-    const content = passwordRestTemplate(account.name, link);
+    const content = passwordRestTemplate(account.name.charAt(0).toUpperCase() + account.name.slice(1), link);
     await this._emailService.sendMail(
       account.email,
       content,

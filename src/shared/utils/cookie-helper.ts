@@ -14,5 +14,6 @@ export const setCookies = (
     secure: isProduction,
     sameSite: isProduction && sameSite === "none" ? "none":'lax',
     signed: signed,
+    path:"/"
   });
 };

@@ -1,12 +1,22 @@
+import { injectable } from "tsyringe";
 import { BaseRoute } from "../base-route.js";
+import { asyncHandler } from "../../../../shared/async-handler.js";
+import {
+  authMiddleware,
+  userProfileController,
+} from "../../../di/di-resolver.js";
 
+@injectable()
 export class UserRoutes extends BaseRoute {
-    constructor(){
-        super()
-    }
+  constructor() {
+    super();
+  }
 
-    protected initializeRoutes(): void {
-       this.router.post("/")
-    }
-
+  protected initializeRoutes(): void {
+    this.router.get(
+      "/",
+      asyncHandler(authMiddleware.handle(["user"]).bind(authMiddleware)),
+      asyncHandler(userProfileController.getUser.bind(userProfileController))
+    );
+  }
 }

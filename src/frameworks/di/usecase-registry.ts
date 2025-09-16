@@ -3,7 +3,7 @@ import { RegisterUserUsecase } from "../../useCases/auth/register-user.usecase.j
 import { SendOtpUsecase } from "../../useCases/auth/send-otp.usercase.js";
 import { VerifyOtpUsecase } from "../../useCases/auth/verify-otp.usecase.js";
 import { LoginUserUsecase } from "../../useCases/auth/login-user.usecase.js";
-import { RefreshTokenUsecase } from "../../useCases/auth/refresh-tokenUsecase.js";
+import { RefreshTokenUsecase } from "../../useCases/auth/refresh-token.usecase.js";
 import { LogoutUsecase } from "../../useCases/auth/logout.usecase.js";
 import { SendRestPasswordLink } from "../../useCases/auth/send-reset-link.usecase.js";
 import { ForgetPasswordUsecase } from "../../useCases/auth/forget-password.usecase.js";
@@ -11,6 +11,9 @@ import { GitHubAuthUsecase } from "../../useCases/auth/github-auth.usecase.js";
 import { AuthUserUsecase } from "../../useCases/auth/auth-user.usecase.js";
 import { GoogleAuthUsecase } from "../../useCases/auth/google-auth.usecase.js";
 import { LoginCompanyUsecase } from "../../useCases/auth/login-company.usecase.js";
+import { RegisterCompanyUsecase } from "../../useCases/auth/register-company.usecase.js";
+import { GetUsersUsecase } from "../../useCases/admin/user-management/get-users.usecase.js";
+import { GetUserUsecase } from "../../useCases/user/user-profile/user-profile.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -31,5 +34,8 @@ export class UsecaseRegistery {
     container.register("IAuthUserUsecase",{useClass:AuthUserUsecase})
     container.register("IGoogleAuthUsecase",{useClass:GoogleAuthUsecase})
     container.register("ILoginCompanyUsecase",{useClass:LoginCompanyUsecase})
+    container.register("IRegisterCompanyUsecase",{useClass:RegisterCompanyUsecase})
+    container.register("IGetUsersUsecase",{useClass:GetUsersUsecase})
+    container.register("IGetUserUsecase",{useClass:GetUserUsecase})
   }
 }

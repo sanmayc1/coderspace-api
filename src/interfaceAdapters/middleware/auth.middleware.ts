@@ -19,14 +19,14 @@ export class AuthMiddleware implements IAuthMiddleware {
   ) {}
 
   handle(
-    role: TRole
+    role: TRole[]
   ): (req: Request, res: Response, next: NextFunction) => Promise<void> {
     return async (req: Request, res: Response, next: NextFunction) => {
       const accessToken = req.cookies[COOKIES_NAMES.ACCESS_TOKEN];
       if (!accessToken) {
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
-          .json({ success: false, message: ERROR_MESSAGES.TOKEN_MISSING });
+          .json({ success: false, message: ERROR_MESSAGES.TOKEN_EXPIRE });
         return;
       }
 
@@ -52,7 +52,7 @@ export class AuthMiddleware implements IAuthMiddleware {
         return;
       }
 
-      if (payload.role !== role) {
+      if (!role.includes(payload.role as TRole)) {
         res
           .status(HTTP_STATUS.FORBIDDEN)
           .json({ success: false, message: ERROR_MESSAGES.ACCESS_DENIED });

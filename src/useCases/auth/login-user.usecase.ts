@@ -65,6 +65,14 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       );
     }
 
+    if (account.role !== "user") {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        ERROR_MESSAGES.AUTH_ACCESS_DENIED,
+        "password"
+      );
+    }
+
     const user = await this._userRepository.findByAccountId(
       account._id as string
     );

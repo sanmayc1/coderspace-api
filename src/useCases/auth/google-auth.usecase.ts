@@ -41,7 +41,7 @@ export class GoogleAuthUsecase implements IGoogleAuthUsecase {
       console.log("account-entity",accountEntity)
       account = await this._accountRepository.create(accountEntity);
 
-      const baseUsername = account.email.split("@")[0];
+      const baseUsername = `@${account.email.split("@")[0]}`;
       let username = "";
       let exists: IUserEntity | null | boolean = true;
 
@@ -50,7 +50,7 @@ export class GoogleAuthUsecase implements IGoogleAuthUsecase {
         username = baseUsername + ending;
         exists = await this._userRepository.findByUsername(username);
       }
-      console.log("username",username)
+  
       user = await this._userRepository.save({
         accountId: account._id,
         username,

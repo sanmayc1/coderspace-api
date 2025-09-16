@@ -3,7 +3,7 @@ export interface ITokenRepository {
   deleteByTokenAndDeviceId(token: string, deviceId: string): Promise<void>;
   updateToken(token: string, deviceId: string): Promise<void>;
   saveToken(
-    userId: string,
+    accounId: string,
     deviceId: string,
     token: string,
     expiry: Date
