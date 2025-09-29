@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IAuthMiddleware } from "./interfaces/auth-middleware.interface.js";
-import { IJwtService } from "../../entities/services/jwt-service.interface.js";
+import { IJwtService } from "../../domain/services/jwt-service.interface.js";
 import {
   COOKIES_NAMES,
   ERROR_MESSAGES,
@@ -8,14 +8,18 @@ import {
   TRole,
 } from "../../shared/constant.js";
 import { NextFunction, Request, Response } from "express";
-import { IBlackListTokenRepository } from "../../entities/repositoryInterfaces/blacklist-token.interface.js";
+import { IBlackListTokenRepository } from "../../domain/repositoryInterfaces/blacklist-token.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
+import { commonResponse, CustomError } from "../controllers/auth/index.js";
 
 @injectable()
 export class AuthMiddleware implements IAuthMiddleware {
   constructor(
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IBlackListTokenRepository")
-    private _blacklistRepo: IBlackListTokenRepository
+    private _blacklistRepository: IBlackListTokenRepository,
+    @inject("IAccountRepository")
+    private _accountsRepository: IAccountsRepository
   ) {}
 
   handle(
@@ -23,6 +27,7 @@ export class AuthMiddleware implements IAuthMiddleware {
   ): (req: Request, res: Response, next: NextFunction) => Promise<void> {
     return async (req: Request, res: Response, next: NextFunction) => {
       const accessToken = req.cookies[COOKIES_NAMES.ACCESS_TOKEN];
+      const refreshToken = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
       if (!accessToken) {
         res
           .status(HTTP_STATUS.UNAUTHORIZED)
@@ -31,6 +36,14 @@ export class AuthMiddleware implements IAuthMiddleware {
       }
 
       const payload = this._jwtService.verifyAccess(accessToken);
+      const refreshPayload = this._jwtService.verifyRefresh(refreshToken);
+
+      if (payload === null && refreshPayload === null) {
+        res
+          .status(HTTP_STATUS.FORBIDDEN)
+          .json(commonResponse(false, ERROR_MESSAGES.FORCE_LOGOUT));
+        return;
+      }
 
       if (payload === null) {
         res
@@ -41,14 +54,26 @@ export class AuthMiddleware implements IAuthMiddleware {
 
       // Checking access token is blacklisted
 
-      const isBlacklisted = await this._blacklistRepo.find(
+      const isBlacklisted = await this._blacklistRepository.find(
         `blacklist:${accessToken}`
       );
 
       if (isBlacklisted) {
         res
-          .status(HTTP_STATUS.UNAUTHORIZED)
+          .status(HTTP_STATUS.FORBIDDEN)
           .json({ success: false, message: ERROR_MESSAGES.TOKEN_BLACKLIST });
+        return;
+      }
+      const account = await this._accountsRepository.findById(
+        payload.accountId
+      );
+
+      if (account?.isBlocked) {
+        res
+          .status(HTTP_STATUS.FORBIDDEN)
+          .json(
+            commonResponse(false, ERROR_MESSAGES.ACCOUNT_BLOCKED_FORCE_LOGOUT)
+          );
         return;
       }
 

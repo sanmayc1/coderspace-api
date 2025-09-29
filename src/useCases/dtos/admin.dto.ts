@@ -23,7 +23,12 @@ export interface IGetUsersUsecaseInputDto{
     page:number
     sort:string
     search?:string
-    badge?:TBadge
-    level?:number
+    limit:number
     blocked?:boolean
+}
+
+export interface IUpdateUserUsecaseInputDto {
+    userId:string
+    badge:string
+    level:number
 }

@@ -36,4 +36,4 @@ export const accountsSchema = new Schema<IAccountsModel>({
     type:Boolean,
     default:false
   }
-});
+},{timestamps:true});

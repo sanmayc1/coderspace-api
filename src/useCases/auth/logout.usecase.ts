@@ -1,13 +1,11 @@
 import { inject, injectable } from "tsyringe";
 import { ILogoutUsecase } from "../Interfaces/auth/logout.usecase.interface.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
-import { IBlackListTokenRepository } from "../../entities/repositoryInterfaces/blacklist-token.interface.js";
-import { IJwtService } from "../../entities/services/jwt-service.interface.js";
+import { IBlackListTokenRepository } from "../../domain/repositoryInterfaces/blacklist-token.interface.js";
+import { IJwtService } from "../../domain/services/jwt-service.interface.js";
 
 @injectable()
 export class LogoutUsecase implements ILogoutUsecase {
   constructor(
-    @inject("ITokenRepository") private _tokenRepo: ITokenRepository,
     @inject("IBlackListTokenRepository")
     private _blacklistRepo: IBlackListTokenRepository,
     @inject("IJwtService") private _jwtService: IJwtService
@@ -15,17 +13,27 @@ export class LogoutUsecase implements ILogoutUsecase {
   async executes(
     refreshToken: string,
     accessToken: string,
-    deviceId: string
   ): Promise<void> {
-    const payload = this._jwtService.verifyAccess(accessToken);
+    const accessPayload = this._jwtService.verifyAccess(accessToken);
+    const refreshPayload = this._jwtService.verifyAccess(refreshToken);
+    const now = Math.floor(Date.now() / 1000);
 
-    const expire = Math.max(
-      (payload ? payload?.exp ?? 0 : 0) -
-        Math.floor(new Date().getTime() / 1000)
-    );
+    const accessExpire = accessPayload?.exp
+      ? Math.max(accessPayload.exp - now, 0)
+      : 0;
 
-    await this._blacklistRepo.save(`blacklist:${accessToken}`, expire);
-    await this._tokenRepo.deleteByTokenAndDeviceId(refreshToken, deviceId);
-    
+    const refreshExpire = refreshPayload?.exp
+      ? Math.max(refreshPayload.exp - now, 0)
+      : 0;
+    if (accessExpire > 0) {
+      await this._blacklistRepo.save(`blacklist:${accessToken}`, accessExpire);
+    }
+
+    if (refreshExpire > 0) {
+      await this._blacklistRepo.save(
+        `blacklist:${refreshToken}`,
+        refreshExpire
+      );
+    }
   }
 }

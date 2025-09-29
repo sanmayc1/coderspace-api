@@ -1,4 +1,4 @@
-import {  injectable } from "tsyringe";
+import { injectable } from "tsyringe";
 import { BaseRoute } from "../base-route.js";
 import {
   authMiddleware,
@@ -15,9 +15,23 @@ export class UserManagementRoute extends BaseRoute {
   protected initializeRoutes(): void {
     this.router.get(
       "/",
-      asyncHandler(authMiddleware.handle(["admin"]).bind(authMiddleware)),
       asyncHandler(
         userManagementController.getAllUsers.bind(userManagementController)
+      )
+    );
+    this.router.patch(
+      "/:id",
+      asyncHandler(
+        userManagementController.updateUserProfile.bind(
+          userManagementController
+        )
+      )
+    );
+
+    this.router.patch(
+      "/:id/status",
+      asyncHandler(
+        userManagementController.updateUserStatus.bind(userManagementController)
       )
     );
   }

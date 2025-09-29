@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IBlackListTokenRepository } from "../../entities/repositoryInterfaces/blacklist-token.interface.js";
+import { IBlackListTokenRepository } from "../../domain/repositoryInterfaces/blacklist-token.interface.js";
 import { redis } from "../../frameworks/cache/redis.js";
 
 

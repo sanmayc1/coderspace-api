@@ -1,4 +1,4 @@
-import { IEmailService } from "../../entities/services/email-service.interface.js";
+import { IEmailService } from "../../domain/services/email-service.interface.js";
 import { createTransport } from "nodemailer";
 import { config } from "../../shared/config.js";
 

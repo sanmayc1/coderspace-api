@@ -14,6 +14,10 @@ import { LoginCompanyUsecase } from "../../useCases/auth/login-company.usecase.j
 import { RegisterCompanyUsecase } from "../../useCases/auth/register-company.usecase.js";
 import { GetUsersUsecase } from "../../useCases/admin/user-management/get-users.usecase.js";
 import { GetUserUsecase } from "../../useCases/user/user-profile/user-profile.usecase.js";
+import { UpdateSuggestionLevelUsecase } from "../../useCases/user/user-profile/update-suggestion-level.js";
+import { LoginAdminUsecase } from "../../useCases/auth/login-admin.usecase.js";
+import { UpdateUserUsecase } from "../../useCases/admin/user-management/update-user.usecase.js";
+import { UpdateUserStatusUsecase } from "../../useCases/admin/user-management/update-user-status.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -37,5 +41,9 @@ export class UsecaseRegistery {
     container.register("IRegisterCompanyUsecase",{useClass:RegisterCompanyUsecase})
     container.register("IGetUsersUsecase",{useClass:GetUsersUsecase})
     container.register("IGetUserUsecase",{useClass:GetUserUsecase})
+    container.register("IUpdateSuggestionLevelUsecase",{useClass:UpdateSuggestionLevelUsecase})
+    container.register("ILoginAdminUsecase",{useClass:LoginAdminUsecase})
+    container.register("IUpdateUserUsecase",{useClass:UpdateUserUsecase})
+    container.register("IUpdateUserStatusUsecase",{useClass:UpdateUserStatusUsecase})
   }
 }

@@ -1,4 +1,4 @@
-import { IPasswordRestRepository } from "../../entities/repositoryInterfaces/password-reset.interface.js";
+import { IPasswordRestRepository } from "../../domain/repositoryInterfaces/password-reset.interface.js";
 import { redis } from "../../frameworks/cache/redis.js";
 
 export class PasswordRestRepository implements IPasswordRestRepository {

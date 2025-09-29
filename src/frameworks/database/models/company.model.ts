@@ -1,5 +1,5 @@
 import { Document, model, ObjectId, Types } from "mongoose";
-import { ICompanyEntity } from "../../../entities/models/company-entity.js";
+import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
 import { companySchema } from "../schema/company.schema.js";
 
 

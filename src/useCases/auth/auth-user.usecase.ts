@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { IJwtPayload } from "../../entities/models/jwt-payload.enitity.js";
+import { IJwtPayload } from "../../domain/entities/jwt-payload.enitity.js";
 import { IAuthResponseDto } from "../dtos/auth.dto.js";
 import { IAuthUserUsecase } from "../Interfaces/auth/auth-user.usecase.interface.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
+import { IUserRepository } from "../../domain/repositoryInterfaces/user-repository.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { authUserUsecaseMapper } from "../mappers/mappers.js";
+import { authUserUsecaseMapper } from "../dtos/mappers/mappers.js";
 
 @injectable()
 export class AuthUserUsecase implements IAuthUserUsecase {

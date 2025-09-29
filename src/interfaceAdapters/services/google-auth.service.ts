@@ -1,5 +1,5 @@
 import passport,{PassportStatic} from "passport";
-import { IGoogleAuthService } from "../../entities/services/google-auth-service.interface.js";
+import { IGoogleAuthService } from "../../domain/services/google-auth-service.interface.js";
 import {
   Strategy as GoogleStrategy,
   VerifyCallback,

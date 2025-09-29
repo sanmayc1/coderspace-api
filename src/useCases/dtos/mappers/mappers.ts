@@ -1,15 +1,15 @@
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
-import { IUserEntity } from "../../entities/models/user.entity.js";
-import { TBadge, TRole } from "../../shared/constant.js";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { IUserEntity } from "../../../domain/entities/user.entity.js";
+import { TBadge, TRole } from "../../../shared/constant.js";
 import {
   IGetUsersUsecaseOutputDto,
   IGetUsersUsecaseUserDto,
-} from "../dtos/admin.dto.js";
+} from "../admin.dto.js";
 import {
   IAuthResponseDto,
   IGoogleAuthUsecaseInputDto,
-} from "../dtos/auth.dto.js";
-import { IGetUserUsecaseOutputDto } from "../dtos/user.dto.js";
+} from "../auth.dto.js";
+import { IGetUserUsecaseOutputDto } from "../user.dto.js";
 
 export const authUserUsecaseMapper = {
   toOutput(account: IAccountsEntity, user?: IUserEntity): IAuthResponseDto {

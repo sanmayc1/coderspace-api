@@ -32,3 +32,6 @@ export const passwordSchema = z
   .regex(/[@$!%*?&]/, {
     message: "Password must contain at least one special character",
   });
+  
+
+export const noValueCheckSchema = z.string().min(1, "Value cannot be empty");

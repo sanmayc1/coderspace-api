@@ -1,5 +1,5 @@
 import {  injectable } from "tsyringe";
-import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
+import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
 import { hash, compare } from "bcrypt";
 
 @injectable()

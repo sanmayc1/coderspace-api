@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import { IRegisterCompanyUsecase } from "../Interfaces/auth/register-company.js";
 import { RegisterCompanyRequestDto } from "../dtos/auth.dto.js";
-import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
-import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
-import { ICompanyRepository } from "../../entities/repositoryInterfaces/company-repository.interface.js";
-import { accountDtoMapper } from "../mappers/account.mapper.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
+import { IWalletRepository } from "../../domain/repositoryInterfaces/wallet-repository.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
+import { ICompanyRepository } from "../../domain/repositoryInterfaces/company-repository.interface.js";
+import { accountDtoMapper } from "../dtos/mappers/account.mapper.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 
 @injectable()

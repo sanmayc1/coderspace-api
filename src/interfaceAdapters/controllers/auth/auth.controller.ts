@@ -1,3 +1,4 @@
+import { ILoginAdminUsecase } from "../../../useCases/Interfaces/auth/login-admin.usecase.js";
 import { ILoginCompanyUsecase } from "../../../useCases/Interfaces/auth/login-company.usecase.interface.js";
 import { IRegisterCompanyUsecase } from "../../../useCases/Interfaces/auth/register-company.js";
 import {
@@ -47,7 +48,8 @@ export class AuthController {
     @inject("ILoginCompanyUsecase")
     private _loginCompanyUsecase: ILoginCompanyUsecase,
     @inject("IRegisterCompanyUsecase")
-    private _registerCompanyUsecase: IRegisterCompanyUsecase
+    private _registerCompanyUsecase: IRegisterCompanyUsecase,
+    @inject("ILoginAdminUsecase") private _adminLoginUsecase: ILoginAdminUsecase
   ) {}
 
   // Signup Controller
@@ -126,11 +128,13 @@ export class AuthController {
       return;
     }
 
-    const { accessToken, refreshToken } =
-      await this._refreshTokenUsecase.execute(token, deviceId);
+    const accessToken = await this._refreshTokenUsecase.execute(
+      token,
+      deviceId
+    );
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, accessToken);
-    setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, refreshToken);
+
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.TOKEN_REFRESH));
@@ -141,9 +145,8 @@ export class AuthController {
   async logout(req: Request, res: Response) {
     const refreshToken = req.cookies[COOKIES_NAMES.REFRESH_TOKEN];
     const accessToken = req.cookies[COOKIES_NAMES.ACCESS_TOKEN];
-    const deviceId = req.signedCookies[COOKIES_NAMES.DEVICE_ID];
 
-    await this._logoutUsecase.executes(refreshToken, accessToken, deviceId);
+    await this._logoutUsecase.executes(refreshToken, accessToken);
 
     res.clearCookie(COOKIES_NAMES.ACCESS_TOKEN);
     res.clearCookie(COOKIES_NAMES.REFRESH_TOKEN);
@@ -180,11 +183,26 @@ export class AuthController {
       .json(commonResponse(true, SUCCESS_MESSAGES.ACCOUNT_DETAILS, response));
   }
 
-  async companyOrAdminLogin(req: Request, res: Response) {
+  async companyLogin(req: Request, res: Response) {
     const { email, password } = req.body;
     const validated = LoginSchema.parse({ email, password });
 
     const data = await this._loginCompanyUsecase.execute(validated);
+
+    setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken);
+    setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken);
+    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId, true);
+
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.LOGIN, data.response));
+  }
+
+  async adminLogin(req: Request, res: Response) {
+    const { email, password } = req.body;
+    const validated = LoginSchema.parse({ email, password });
+
+    const data = await this._adminLoginUsecase.execute(validated);
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken);
     setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken);
@@ -208,6 +226,5 @@ export class AuthController {
     res
       .status(HTTP_STATUS.CREATED)
       .json(commonResponse(true, SUCCESS_MESSAGES.COMPANY_REGISTERED));
-
   }
 }

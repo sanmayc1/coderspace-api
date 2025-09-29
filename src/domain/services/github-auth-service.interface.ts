@@ -1,4 +1,4 @@
-import { IGitHubResponse } from "../models/github-response.entity.js";
+import { IGitHubResponse } from "../entities/github-response.entity.js";
 
 
 export interface IGitHubAuthService {

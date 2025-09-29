@@ -29,11 +29,9 @@ export interface IUserEntity {
   isPremiumActive?: boolean;
   planHistory?: PlanHistory ;
   isProfileComplete?: boolean;
-  position?: string;
-  experience?: number;
   domain?: Rating[] ;
   skills?: Rating[] ;
-  profession?: string;
+  suggestionLevel?:"easy"|"medium"|"hard"
   createdAt?: Date;
-  updtedAt?: Date;
+  updatedAt?: Date;
 }

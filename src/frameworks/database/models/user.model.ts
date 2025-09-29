@@ -1,7 +1,7 @@
-import { model, Document, ObjectId } from "mongoose";
-import { IUserEntity } from "../../../entities/models/user.entity.js";
+import { model, Document, ObjectId, Types } from "mongoose";
+import { IUserEntity } from "../../../domain/entities/user.entity.js";
 import { userSchema } from "../schema/user.schema.js";
-import { IAccountsEntity } from "../../../entities/models/accounts-entity.js";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
 
 
 export interface IUserModel
@@ -18,8 +18,8 @@ export interface IUserModel
       | "globalScore"
     >,
     Document {
-  _id: ObjectId;
-  accountId: ObjectId |IAccountsEntity;
+  _id: Types.ObjectId;
+  accountId: Types.ObjectId |IAccountsEntity;
   isProfileComplete: boolean;
   level: number;
   notification: boolean;

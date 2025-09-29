@@ -1,20 +1,57 @@
 import { injectable } from "tsyringe";
-import { IUserEntity } from "../../entities/models/user.entity.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
-import { UserModel } from "../../frameworks/database/models/user.model.js";
+import { IUserEntity } from "../../domain/entities/user.entity.js";
+import { IUserRepository } from "../../domain/repositoryInterfaces/user-repository.interface.js";
+import {
+  IUserModel,
+  UserModel,
+} from "../../frameworks/database/models/user.model.js";
 import { userMapperRepo } from "../../frameworks/database/dtoMappers/dto.mapper.js";
+import { BaseRepository } from "./base-repository.js";
+import { USER_SORTING } from "../../shared/utils/mongo-utils.js";
 
 @injectable()
-export class UserRepository implements IUserRepository {
+export class UserRepository
+  extends BaseRepository<IUserModel, IUserEntity>
+  implements IUserRepository
+{
+  constructor() {
+    super(UserModel, userMapperRepo.toEntity, userMapperRepo.toModel);
+  }
   async getAllUsers(
     skip: number,
-    limit: number
+    limit: number,
+    search: string,
+    sort: string
   ): Promise<{ users: IUserEntity[] | []; count: number }> {
-    const doc = await UserModel.find().populate({
-      path: "accountId",
-      match: { isVerified: true },
-    });
+    const filter = {
+      "accountId.isVerified": true,
+      $or: [
+        { "accountId.name": new RegExp(search, "i") },
+        { "accountId.email": new RegExp(search, "i") },
+        {"username":new RegExp(search, "i") }
+      ],
+    };
 
+    const sortOption = USER_SORTING[sort as keyof typeof USER_SORTING];
+    const doc = await UserModel.aggregate([
+      {
+        $lookup: {
+          from: "accounts",
+          localField: "accountId",
+          foreignField: "_id",
+          as: "accountId",
+        },
+      },
+      { $unwind: { path: "$accountId", preserveNullAndEmptyArrays: true } },
+      {$match:filter},
+      ...(sortOption
+        ? [{ $sort: sortOption as { [key: string]: -1 | 1 } }]
+        : []),
+      { $skip: skip },
+      { $limit: limit },
+    ]);
+
+   
     const count = await UserModel.find()
       .populate({
         path: "accountId",
@@ -32,22 +69,12 @@ export class UserRepository implements IUserRepository {
     return doc ? userMapperRepo.toEntity(doc) : null;
   }
 
-  async updateById(userId: string, data: Partial<IUserEntity>): Promise<void> {
-    await UserModel.findByIdAndUpdate(userId, data);
-  }
 
-  async findById(userId: string): Promise<IUserEntity | null> {
-    const user = await UserModel.findById(userId);
-    return user ? userMapperRepo.toEntity(user) : null;
-  }
 
   async findByUsername(username: string): Promise<IUserEntity | null> {
     const user = await UserModel.findOne({ username });
     return user ? userMapperRepo.toEntity(user) : user;
   }
 
-  async save(data: Partial<IUserEntity>): Promise<IUserEntity> {
-    const user = await UserModel.create(data);
-    return userMapperRepo.toEntity(user);
-  }
+
 }

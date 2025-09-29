@@ -1,10 +1,10 @@
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
-import { IUserEntity } from "../../entities/models/user.entity.js";
-import { TRole } from "../../shared/constant.js";
-import { IAuthResponseDto } from "../dtos/auth.dto.js"; 
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { IUserEntity } from "../../../domain/entities/user.entity.js";
+import { TRole } from "../../../shared/constant.js";
+import { IAuthResponseDto } from "../auth.dto.js"; 
 
 
-export const LoginUserUsecaseMapper = {
+export const LoginUsecaseMapper = {
   toResponse(account:IAccountsEntity,user?:IUserEntity): IAuthResponseDto {
     return {
       accountId: account._id as string,

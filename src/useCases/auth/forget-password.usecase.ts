@@ -1,11 +1,10 @@
 import { inject, injectable } from "tsyringe";
-import { IPasswordRestRepository } from "../../entities/repositoryInterfaces/password-reset.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IPasswordRestRepository } from "../../domain/repositoryInterfaces/password-reset.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { IForgetPasswordUsecase } from "../Interfaces/auth/forget-password.usecase.interface.js";
-import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
+import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
@@ -15,7 +14,6 @@ export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
     @inject("IAccountRepository")
     private _accountRepository: IAccountsRepository,
     @inject("IBcrypt") private _bcrypt: IBcrypt,
-    @inject("ITokenRepository") private _tokenRepository: ITokenRepository
   ) {}
   async execute(token: string, newPassword: string): Promise<void> {
     const accountId = await this._passwordRestRepository.find(`reset:${token}`);
@@ -41,6 +39,5 @@ export class ForgetPasswordUsecase implements IForgetPasswordUsecase {
       password: hasedPassword,
     });
     await this._passwordRestRepository.del(`reset:${token}`);
-    await this._tokenRepository.deleteAllTokenByAccountId(accountId);
   }
 }

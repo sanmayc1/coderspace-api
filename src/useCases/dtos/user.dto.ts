@@ -1,4 +1,5 @@
-import { Rating } from "../../entities/models/user.entity.js"
+import { Rating } from "../../domain/entities/user.entity.js"
+import { DIFFICULTY, TDifficulty } from "../../shared/constant.js"
 
 
 
@@ -14,4 +15,9 @@ export interface IGetUserUsecaseOutputDto {
     about?:string
     premiumActive:boolean
     skills:Rating[]
+}
+
+export interface IUpdateSuggestionLevelInputDto{
+    level:TDifficulty
+    accountId:string
 }

@@ -1,30 +1,34 @@
 import { inject, injectable } from "tsyringe";
-import { ITokenEntity } from "../../entities/models/token.entity.js";
 import { IRefreshTokenUsecase } from "../Interfaces/auth/refresh-token.usecase.interface.js";
-import { IJwtService } from "../../entities/services/jwt-service.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IJwtService } from "../../domain/services/jwt-service.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IJwtPayload } from "../../entities/models/jwt-payload.enitity.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
+import { IJwtPayload } from "../../domain/entities/jwt-payload.enitity.js";
+import { IBlackListTokenRepository } from "../../domain/repositoryInterfaces/blacklist-token.interface.js";
 
 @injectable()
 export class RefreshTokenUsecase implements IRefreshTokenUsecase {
   constructor(
     @inject("IJwtService") private _jwtService: IJwtService,
-    @inject("ITokenRepository")
-    private _tokenRepo: ITokenRepository
+    @inject("IBlackListTokenRepository")
+    private _blacklistRepository: IBlackListTokenRepository
   ) {}
-  async execute(refreshToken: string, deviceId: string): Promise<ITokenEntity> {
+  async execute(refreshToken: string, deviceId: string): Promise<string> {
     const payload = this._jwtService.verifyRefresh(refreshToken);
 
     if (payload === null) {
       throw new CustomError(HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.TOKEN_EXPIRE);
     }
 
-    const isValid = await this._tokenRepo.tokenExists(refreshToken, deviceId);
+    const valid = await this._blacklistRepository.find(
+      `blacklist:${refreshToken}`
+    );
 
-    if (!isValid) {
-      throw new CustomError(HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.TOKEN_EXPIRE);
+    if (valid) {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        ERROR_MESSAGES.TOKEN_BLACKLIST
+      );
     }
 
     const newPayload: IJwtPayload = {
@@ -33,13 +37,9 @@ export class RefreshTokenUsecase implements IRefreshTokenUsecase {
       role: payload.role,
       deviceId,
     };
-    const timeInSeconds = Math.floor(new Date().getTime() / 1000);
-    const expireIn = Math.max((payload.exp ?? 0) - timeInSeconds, 1);
+
     const accessToken = this._jwtService.signAccess(newPayload);
-    const newRefreshToken = this._jwtService.signRefresh(newPayload, expireIn);
 
-    await this._tokenRepo.updateToken(newRefreshToken, deviceId);
-
-    return { accessToken, refreshToken: newRefreshToken };
+    return accessToken;
   }
 }

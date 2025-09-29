@@ -1,13 +1,13 @@
 import { inject, injectable } from "tsyringe";
 import { ISendRestPasswordLink } from "../Interfaces/auth/send-reset-link.js";
-import { IPasswordRestRepository } from "../../entities/repositoryInterfaces/password-reset.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IPasswordRestRepository } from "../../domain/repositoryInterfaces/password-reset.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
+import { IUniqueIdService } from "../../domain/services/uuid.interface.js";
 import { passwordRestTemplate } from "../../shared/email-templates.js";
 import { config } from "../../shared/config.js";
-import { IEmailService } from "../../entities/services/email-service.interface.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
+import { IEmailService } from "../../domain/services/email-service.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class SendRestPasswordLink implements ISendRestPasswordLink {

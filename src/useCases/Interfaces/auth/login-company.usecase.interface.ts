@@ -1,7 +1,7 @@
-import { IAccountsEntity } from "../../../entities/models/accounts-entity.js";
-import { ILoginCompanyUsecaseOutputDto} from "../../dtos/auth.dto.js";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { ILoginUsecaseOutputDto} from "../../dtos/auth.dto.js";
 
 
 export interface ILoginCompanyUsecase {
-  execute(data:Pick<IAccountsEntity , "email" | "password">): Promise<ILoginCompanyUsecaseOutputDto>;
+  execute(data:Pick<IAccountsEntity , "email" | "password">): Promise<ILoginUsecaseOutputDto>;
 }

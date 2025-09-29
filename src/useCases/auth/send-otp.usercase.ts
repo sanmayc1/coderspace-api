@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 import { ISendOtpUsecase } from "../Interfaces/auth/send-otp.usecase.js";
-import { IOtpService } from "../../entities/services/otp-service.interface.js";
-import { IEmailService } from "../../entities/services/email-service.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IOtpService } from "../../domain/services/otp-service.interface.js";
+import { IEmailService } from "../../domain/services/email-service.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
 import { otpEmailTemplate } from "../../shared/email-templates.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class SendOtpUsecase implements ISendOtpUsecase {

@@ -1,17 +1,16 @@
 import { inject, injectable } from "tsyringe";
 import { ILoginUserUsecase } from "../Interfaces/auth/login-user.usecase.interface.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IUserRepository } from "../../domain/repositoryInterfaces/user-repository.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
-import { IJwtService } from "../../entities/services/jwt-service.interface.js";
-import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
-import { LoginUserUsecaseMapper } from "../mappers/register.usecase.mapper.js";
-import { ILoginUserUsecaseOutputDto } from "../dtos/auth.dto.js";
-import { IUserEntity } from "../../entities/models/user.entity.js";
+import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
+import { IJwtService } from "../../domain/services/jwt-service.interface.js";
+import { IUniqueIdService } from "../../domain/services/uuid.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsEntity } from "../../domain/entities/accounts-entity.js";
+import { LoginUsecaseMapper } from "../dtos/mappers/register.usecase.mapper.js";
+import { ILoginUsecaseOutputDto } from "../dtos/auth.dto.js";
+import { IUserEntity } from "../../domain/entities/user.entity.js";
 
 @injectable()
 export class LoginUserUsecase implements ILoginUserUsecase {
@@ -20,13 +19,12 @@ export class LoginUserUsecase implements ILoginUserUsecase {
     @inject("IBcrypt") private _bcrypt: IBcrypt,
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
-    @inject("ITokenRepository") private _tokenRepository: ITokenRepository,
     @inject("IAccountRepository")
     private _accountRepository: IAccountsRepository
   ) {}
   async execute(
     data: Pick<IAccountsEntity, "email" | "password">
-  ): Promise<ILoginUserUsecaseOutputDto> {
+  ): Promise<ILoginUsecaseOutputDto> {
     const account = await this._accountRepository.findByEmail(data.email);
 
     if (!account) {
@@ -73,6 +71,14 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       );
     }
 
+    if (account.isBlocked){
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN, 
+        ERROR_MESSAGES.ACCOUNT_BLOCKED,
+          "password"
+      );
+    }
+
     const user = await this._userRepository.findByAccountId(
       account._id as string
     );
@@ -92,18 +98,9 @@ export class LoginUserUsecase implements ILoginUserUsecase {
       deviceId,
     });
 
-    const payload = this._jwtService.verifyRefresh(refreshToken);
 
-    const expire = new Date((payload?.exp ?? 0) * 1000);
 
-    await this._tokenRepository.saveToken(
-      account._id as string,
-      deviceId,
-      refreshToken,
-      expire
-    );
-
-    const response = LoginUserUsecaseMapper.toResponse(
+    const response = LoginUsecaseMapper.toResponse(
       account,
       user as IUserEntity
     );

@@ -24,7 +24,7 @@ export const otpEmailTemplate = (otp: string) => `
               <tr>
                 <td align="center">
                   <img
-                    src="https://i.postimg.cc/RZqjQ8n6/Untitled-design.png"
+                    src="https://res.cloudinary.com/dtfvzlvlj/image/upload/v1758044166/logo_zxho4h.png"
                     alt="logo"
                     style="width: 50%"
                   />
@@ -108,7 +108,7 @@ export const passwordRestTemplate = (name:string, link:string) => `<html>
               <tr>
                 <td align="center">
                   <img
-                    src="https://i.postimg.cc/RZqjQ8n6/Untitled-design.png"
+                    src="https://res.cloudinary.com/dtfvzlvlj/image/upload/v1758044166/logo_zxho4h.png"
                     alt="logo"
                     style="width: 50%"
                   />

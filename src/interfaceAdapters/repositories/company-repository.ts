@@ -1,6 +1,6 @@
 import { injectable } from "tsyringe";
-import { ICompanyEntity } from "../../entities/models/company-entity.js";
-import { ICompanyRepository } from "../../entities/repositoryInterfaces/company-repository.interface.js";
+import { ICompanyEntity } from "../../domain/entities/company-entity.js";
+import { ICompanyRepository } from "../../domain/repositoryInterfaces/company-repository.interface.js";
 import {
   CompanyModel,
   ICompanyModel,

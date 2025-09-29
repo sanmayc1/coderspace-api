@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 import { IUserModel } from "../models/user.model.js";
-import { BADGE } from "../../../shared/constant.js";
+import { BADGE, DIFFICULTY } from "../../../shared/constant.js";
 
 export const userSchema = new Schema<IUserModel>(
   {
@@ -61,24 +61,19 @@ export const userSchema = new Schema<IUserModel>(
       type: Boolean,
       default: false,
     },
-    position: {
-      type: String,
-    },
-    experience: {
-      type: Number,
-    },
     domain: {
       type: Array,
     },
     skills: {
       type: Array,
     },
-    profession: {
-      type: String,
-    },
     accountId:{
       type:Schema.Types.ObjectId,
       ref:"Account"
+    },
+    suggestionLevel:{
+      type:String,
+      enum:DIFFICULTY
     }
   },
   { timestamps: true }

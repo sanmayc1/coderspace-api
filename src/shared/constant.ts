@@ -1,10 +1,38 @@
 export type TRole = "admin" | "user" | "company";
 export type TAuthProviders = "google" | "github" | "local";
 export type TBadge = "silver" | "gold" | "platinum";
+export type TDifficulty = "easy" | "medium" | "hard";
 
 export const ROLES = ["admin", "user", "company"];
 export const AUTHPROVIDER = ["github", "google", "local"];
 export const BADGE = ["silver", "gold", "platinum"];
+export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
+
+type TPrimitiveType = "int" | "float" | "string" | "boolean";
+
+interface IObjectField {
+  name: string;
+  type: TParameterType;
+}
+
+interface IPrimitiveParameter {
+  kind: "primitive";
+  type: TPrimitiveType;
+}
+
+interface IArrayParameter {
+  kind: "array";
+  elemetType: TParameterType;
+}
+
+interface IObjectParameter {
+  kind: "object";
+  fields: IObjectField[];
+}
+
+export type TParameterType = IPrimitiveParameter | IArrayParameter | IObjectParameter;
+
+
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -46,6 +74,16 @@ export const ERROR_MESSAGES = {
   AUTH_ACCESS_DENIED: "Login access denied",
   GSTIN_EXIST: "GSTIN already exists",
   USER_NOT_FOUND: "User not found",
+  INVALID_BODY: "Invalid body",
+  INVALID_QUERY:"Oops! Something went wrong with your request",
+  PAGE_NOT_NUMBER:"Page must be a positive number",
+  LIMIT_NOT_NUMBER: "Limit must be a positive number",
+  INVALID_SORT : "Invalid sort value",
+  INVALID_SEARCH:"Search query contains invalid characters",
+  UPTODATE:"Same data received, no changes applied",
+  ACCOUNT_BLOCKED:"Account blocked contact support",
+  ACCOUNT_BLOCKED_FORCE_LOGOUT:"Your Account blocked by admin",
+  FORCE_LOGOUT:"Session Expired"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -58,8 +96,11 @@ export const SUCCESS_MESSAGES = {
   ACCOUNT_DETAILS: "Account details fetched successfully",
   LOGOUT: "Logout successfully",
   TOKEN_REFRESH: "Access token refreshed successfully",
-  USERS_FETCHED:"Users fetched Successfully",
-  USER_FETCHED:"User fetched Successfully"
+  USERS_FETCHED: "Users fetched Successfully",
+  USER_FETCHED: "User fetched Successfully",
+  SUGGESTION_LEVEL: "Suggestion level updated successfully",
+  UPDATED:"Successfully Updated",
+  STATUS_UPDATED:"User Status updated successfully"
 };
 
 export const COOKIES_NAMES = {

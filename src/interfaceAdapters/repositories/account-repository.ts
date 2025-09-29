@@ -1,5 +1,5 @@
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsEntity } from "../../domain/entities/accounts-entity.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
 import { accountRepositoryMapper } from "../../frameworks/database/dtoMappers/dto.mapper.js";
 import { AccountsModel, IAccountsModel } from "../../frameworks/database/models/account.model .js";
 import { BaseRepository } from "./base-repository.js";

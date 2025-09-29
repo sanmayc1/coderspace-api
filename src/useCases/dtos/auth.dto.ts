@@ -1,4 +1,4 @@
-import { ITokenEntity } from "../../entities/models/token.entity.js";
+import { ITokenEntity } from "../../domain/entities/token.entity.js";
 import { TRole } from "../../shared/constant.js";
 
 export interface RegisterUserRequestDto {
@@ -9,14 +9,11 @@ export interface RegisterUserRequestDto {
 }
 
 
-export interface ILoginUserUsecaseOutputDto extends ITokenEntity {
+export interface ILoginUsecaseOutputDto extends ITokenEntity {
   deviceId: string;
   response: IAuthResponseDto;
 }
 
-export interface ILoginCompanyUsecaseOutputDto extends ILoginUserUsecaseOutputDto  {
-
-}
 
 export interface IAuthProviderUsecaseOutputDto {
   statusCode: number;

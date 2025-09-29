@@ -1,4 +1,4 @@
-import { IJwtPayload } from "../models/jwt-payload.enitity.js";
+import { IJwtPayload } from "../entities/jwt-payload.enitity.js";
 
 
 export interface IJwtService {

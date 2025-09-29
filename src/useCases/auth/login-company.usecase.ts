@@ -1,15 +1,14 @@
 import { ILoginCompanyUsecase } from "../Interfaces/auth/login-company.usecase.interface.js";
 import { inject, injectable } from "tsyringe";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
-import { IJwtService } from "../../entities/services/jwt-service.interface.js";
-import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
-import { LoginUserUsecaseMapper } from "../mappers/register.usecase.mapper.js";
-import { ILoginCompanyUsecaseOutputDto } from "../dtos/auth.dto.js";
+import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
+import { IJwtService } from "../../domain/services/jwt-service.interface.js";
+import { IUniqueIdService } from "../../domain/services/uuid.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsEntity } from "../../domain/entities/accounts-entity.js";
+import { LoginUsecaseMapper } from "../dtos/mappers/register.usecase.mapper.js";
+import { ILoginUsecaseOutputDto } from "../dtos/auth.dto.js";
 
 @injectable()
 export class LoginCompanyUsecase implements ILoginCompanyUsecase {
@@ -17,13 +16,12 @@ export class LoginCompanyUsecase implements ILoginCompanyUsecase {
     @inject("IBcrypt") private _bcrypt: IBcrypt,
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
-    @inject("ITokenRepository") private _tokenRepository: ITokenRepository,
     @inject("IAccountRepository")
     private _accountRepository: IAccountsRepository
   ) {}
   async execute(
     data: Pick<IAccountsEntity, "email" | "password">
-  ): Promise<ILoginCompanyUsecaseOutputDto> {
+  ): Promise<ILoginUsecaseOutputDto> {
     const account = await this._accountRepository.findByEmail(data.email);
 
     if (!account) {
@@ -62,10 +60,18 @@ export class LoginCompanyUsecase implements ILoginCompanyUsecase {
       );
     }
 
-    if (account.role === "user") {
+    if (account.role !== "company") {
       throw new CustomError(
         HTTP_STATUS.FORBIDDEN,
         ERROR_MESSAGES.AUTH_ACCESS_DENIED,
+        "password"
+      );
+    }
+
+    if (account.isBlocked) {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        ERROR_MESSAGES.ACCOUNT_BLOCKED,
         "password"
       );
     }
@@ -83,18 +89,8 @@ export class LoginCompanyUsecase implements ILoginCompanyUsecase {
       deviceId,
     });
 
-    const payload = this._jwtService.verifyRefresh(refreshToken);
 
-    const expire = new Date((payload?.exp ?? 0) * 1000);
-
-    await this._tokenRepository.saveToken(
-      account._id as string,
-      deviceId,
-      refreshToken,
-      expire
-    );
-
-    const response = LoginUserUsecaseMapper.toResponse(account);
+    const response = LoginUsecaseMapper.toResponse(account);
 
     return {
       accessToken,

@@ -1,4 +1,4 @@
-import { IOtpEntity } from "../models/otp.entity.js"
+import { IOtpEntity } from "../entities/otp.entity.js"
 
 
 export interface IOtpService{

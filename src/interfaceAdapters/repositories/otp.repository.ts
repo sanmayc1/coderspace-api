@@ -1,5 +1,5 @@
-import { IOtpEntity } from "../../entities/models/otp.entity.js";
-import { IOtpRespository } from "../../entities/repositoryInterfaces/otp.interface.js";
+import { IOtpEntity } from "../../domain/entities/otp.entity.js";
+import { IOtpRespository } from "../../domain/repositoryInterfaces/otp.interface.js";
 import { otpMapper } from "../../frameworks/database/dtoMappers/dto.mapper.js";
 import { OtpModel } from "../../frameworks/database/models/otp.model.js";
 

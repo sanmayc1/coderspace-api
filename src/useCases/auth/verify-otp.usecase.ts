@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 import { IVerifyOtpUsecase } from "../Interfaces/auth/verify-otp.usecase.interface.js";
-import { IOtpService } from "../../entities/services/otp-service.interface.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { IOtpService } from "../../domain/services/otp-service.interface.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
 
 @injectable()
 export class VerifyOtpUsecase implements IVerifyOtpUsecase {

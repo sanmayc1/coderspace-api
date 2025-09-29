@@ -1,21 +1,22 @@
-import mongoose, {  Types } from "mongoose";
-import { IAccountsEntity } from "../../../entities/models/accounts-entity.js";
-import { IOtpEntity } from "../../../entities/models/otp.entity.js";
-import { IUserEntity } from "../../../entities/models/user.entity.js";
-import { IWalletEnitity } from "../../../entities/models/wallet.entity.js";
+import mongoose, { Types } from "mongoose";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { IOtpEntity } from "../../../domain/entities/otp.entity.js";
+import { IUserEntity } from "../../../domain/entities/user.entity.js";
+import { IWalletEnitity } from "../../../domain/entities/wallet.entity.js";
 import { IAccountsModel } from "../models/account.model .js";
 import { IOtpModel } from "../models/otp.model.js";
 import { IUserModel } from "../models/user.model.js";
 import { IWalletModel } from "../models/wallet.model.js";
 import { ICompanyModel } from "../models/company.model.js";
-import { ICompanyEntity } from "../../../entities/models/company-entity.js";
+import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
+import { TBadge } from "../../../shared/constant.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
     return {
       _id: String(data._id),
       createdAt: data.createdAt,
-      updtedAt: data.updtedAt,
+      updatedAt: data.updatedAt,
       username: data.username,
       isProfileComplete: data.isProfileComplete,
       level: data.level,
@@ -26,20 +27,45 @@ export const userMapperRepo = {
       about: data.about,
       dateOfBirth: data.dateOfBirth,
       domain: data.domain,
-      experience: data.experience,
+      suggestionLevel: data.suggestionLevel,
       githubUrl: data.githubUrl,
       globalScore: data.globalScore,
       linkedinUrl: data.linkedinUrl,
       location: data.location,
       phone: data.phone,
       planHistory: data.planHistory,
-      position: data.position,
-      profession: data.profession,
       skills: data.skills,
       accountId:
         data.accountId instanceof Types.ObjectId
           ? String(data.accountId)
           : (data.accountId as IAccountsEntity),
+    };
+  },
+  toModel(data: Partial<IUserEntity>): Partial<IUserModel> {
+    return {
+      ...(data.about && { about: data.about }),
+      ...(data.accountId && {
+        accountId: new mongoose.Types.ObjectId(data.accountId as string),
+      }),
+      ...(data.badge && { badge: data.badge as TBadge }),
+      ...(data.dateOfBirth && { dateOfBirth: data.dateOfBirth }),
+      ...(data.domain && { domain: data.domain }),
+      ...(data.suggestionLevel && { suggestionLevel: data.suggestionLevel }),
+      ...(data.githubUrl && { githubUrl: data.githubUrl }),
+      ...(data.globalScore && { globalScore: data.globalScore }),
+      ...(data.isPremiumActive && { isPremiumActive: data.isPremiumActive }),
+      ...(data.isProfileComplete && {
+        isProfileComplete: data.isProfileComplete,
+      }),
+      ...(data.level && { level: data.level }),
+      ...(data.linkedinUrl && { linkedinUrl: data.linkedinUrl }),
+      ...(data.location && { location: data.location }),
+      ...(data.notification && { notification: data.notification }),
+      ...(data.phone && { phone: data.phone }),
+      ...(data.planHistory && { planHistory: data.planHistory }),
+      ...(data.skills && { skills: data.skills }),
+      ...(data.username && { username: data.username as string }),
+      ...(data.xpCoin && { xpCoin: data.xpCoin as number }),
     };
   },
 };
@@ -86,7 +112,7 @@ export const accountRepositoryMapper = {
       isVerified: data.isVerified,
       profileUrl: data.profileUrl || "",
       role: data.role,
-      isBlocked:data.isBlocked
+      isBlocked: data.isBlocked,
     };
   },
   toModel(data: Partial<IAccountsEntity>): Partial<IAccountsModel> {
@@ -95,9 +121,10 @@ export const accountRepositoryMapper = {
       ...(data.name && { name: data.name }),
       ...(data.password && { password: data.password }),
       ...(data.authProvider && { authProvider: data.authProvider }),
-      ...(data.isVerified && { isVerified: data.isVerified }),
+      ...(data.isVerified !== undefined && { isVerified: data.isVerified }),
       ...(data.profileUrl && { profileUrl: data.profileUrl }),
       ...(data.role && { role: data.role }),
+      ...(data.isBlocked !==undefined && {isBlocked:data.isBlocked})
     };
   },
 };

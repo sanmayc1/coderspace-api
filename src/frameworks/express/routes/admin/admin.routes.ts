@@ -1,6 +1,7 @@
 import { injectable } from "tsyringe";
 import { BaseRoute } from "../base-route.js";
-import { userManagementRoute } from "../../../di/di-resolver.js";
+import { authMiddleware, userManagementRoute } from "../../../di/di-resolver.js";
+import { asyncHandler } from "../../../../shared/async-handler.js";
 
 @injectable()
 export class AdminRoutes extends BaseRoute {
@@ -9,6 +10,6 @@ export class AdminRoutes extends BaseRoute {
   }
 
   protected initializeRoutes(): void {
-    this.router.use("/users", userManagementRoute.router);
+    this.router.use("/users",asyncHandler(authMiddleware.handle(["admin"]).bind(authMiddleware)), userManagementRoute.router);
   }
 }

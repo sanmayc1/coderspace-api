@@ -3,7 +3,7 @@ import { ILoger } from "../services/logger/logger-service-interface.js";
 import {  NextFunction, Request, Response } from "express";
 import {  ZodError } from "zod";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { CustomError } from "../../entities/utils/errors/custom-error.js";
+import { CustomError } from "../../domain/utils/custom-error.js";
 
 @injectable()
 export class ErrorMiddleware {

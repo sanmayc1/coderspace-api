@@ -53,7 +53,7 @@ export class AuthRoute extends BaseRoute {
 
     this.router.post(
       "/logout",
-      asyncHandler(authMiddleware.handle(["admin","company","user"]).bind(authMiddleware)),
+      // asyncHandler(authMiddleware.handle(["admin","company","user"]).bind(authMiddleware)), 
       asyncHandler(authController.logout.bind(authController))
     );
 
@@ -92,8 +92,13 @@ export class AuthRoute extends BaseRoute {
     );
 
     this.router.post(
-      "/common/login",
-      asyncHandler(authController.companyOrAdminLogin.bind(authController))
+      "/company/login",
+      asyncHandler(authController.companyLogin.bind(authController))
+    );
+
+        this.router.post(
+      "/admin/login",
+      asyncHandler(authController.adminLogin.bind(authController))
     );
 
     this.router.post("/company/register",

@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
+import { IUniqueIdService } from "../../domain/services/uuid.interface.js";
 import {v4 as uuid} from "uuid"
 
 

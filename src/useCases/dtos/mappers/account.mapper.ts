@@ -1,5 +1,5 @@
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
-import { RegisterCompanyRequestDto, RegisterUserRequestDto } from "../dtos/auth.dto.js";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { RegisterCompanyRequestDto, RegisterUserRequestDto } from "../auth.dto.js";
 
 
 export const accountDtoMapper = {

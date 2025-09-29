@@ -1,9 +1,9 @@
 import axios from "axios";
-import { IGitHubAuthService } from "../../entities/services/github-auth-service.interface.js";
+import { IGitHubAuthService } from "../../domain/services/github-auth-service.interface.js";
 import { config } from "../../shared/config.js";
 import { injectable } from "tsyringe";
 import { HTTP_STATUS } from "../../shared/constant.js";
-import { IGitHubResponse } from "../../entities/models/github-response.entity.js";
+import { IGitHubResponse } from "../../domain/entities/github-response.entity.js";
 
 @injectable()
 export class GitHubAuthService implements IGitHubAuthService {

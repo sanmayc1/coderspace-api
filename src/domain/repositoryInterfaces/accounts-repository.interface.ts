@@ -1,4 +1,4 @@
-import { IAccountsEntity } from "../models/accounts-entity.js";
+import { IAccountsEntity } from "../entities/accounts-entity.js";
 import { IBaseRepository } from "./base-repository.interface.js";
 
 

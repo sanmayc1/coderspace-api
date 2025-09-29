@@ -28,6 +28,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1",
     "tsyringe": "^4.10.0",
     "typescript-eslint": "^8.39.1",
     "uuid": "^11.1.0",

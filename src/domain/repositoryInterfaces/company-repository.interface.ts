@@ -1,4 +1,4 @@
-import { ICompanyEntity } from "../models/company-entity.js";
+import { ICompanyEntity } from "../entities/company-entity.js";
 import { IBaseRepository } from "./base-repository.interface.js";
 
 export interface ICompanyRepository extends IBaseRepository<ICompanyEntity> {

@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { IBaseRepository } from "../../entities/repositoryInterfaces/base-repository.interface.js";
+import { IBaseRepository } from "../../domain/repositoryInterfaces/base-repository.interface.js";
 
 export class BaseRepository<TDoc,TEntity> implements IBaseRepository< TEntity> {
   private model: Model<TDoc>;

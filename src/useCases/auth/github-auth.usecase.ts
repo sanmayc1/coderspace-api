@@ -1,17 +1,16 @@
 import { inject, injectable } from "tsyringe";
 import { IGithHubAuthUsecase } from "../Interfaces/auth/github-auth.usecase.interface.js";
 import { ERROR_MESSAGES, HTTP_STATUS, TRole } from "../../shared/constant.js";
-import { IGitHubAuthService } from "../../entities/services/github-auth-service.interface.js";
-import { IUserRepository } from "../../entities/repositoryInterfaces/user-repository.interface.js";
-import { IWalletRepository } from "../../entities/repositoryInterfaces/wallet-repository.interface.js";
-import { IJwtService } from "../../entities/services/jwt-service.interface.js";
-import { IUniqueIdService } from "../../entities/services/uuid.interface.js";
-import { ITokenRepository } from "../../entities/repositoryInterfaces/token-repository.interface.js";
-import { IUserEntity } from "../../entities/models/user.entity.js";
-import { IAccountsRepository } from "../../entities/repositoryInterfaces/accounts-repository.interface.js";
-import { IAccountsEntity } from "../../entities/models/accounts-entity.js";
+import { IGitHubAuthService } from "../../domain/services/github-auth-service.interface.js";
+import { IUserRepository } from "../../domain/repositoryInterfaces/user-repository.interface.js";
+import { IWalletRepository } from "../../domain/repositoryInterfaces/wallet-repository.interface.js";
+import { IJwtService } from "../../domain/services/jwt-service.interface.js";
+import { IUniqueIdService } from "../../domain/services/uuid.interface.js";
+import { IUserEntity } from "../../domain/entities/user.entity.js";
+import { IAccountsRepository } from "../../domain/repositoryInterfaces/accounts-repository.interface.js";
+import { IAccountsEntity } from "../../domain/entities/accounts-entity.js";
 import { IAuthProviderUsecaseOutputDto } from "../dtos/auth.dto.js";
-import { IJwtPayload } from "../../entities/models/jwt-payload.enitity.js";
+import { IJwtPayload } from "../../domain/entities/jwt-payload.enitity.js";
 
 @injectable()
 export class GitHubAuthUsecase implements IGithHubAuthUsecase {
@@ -22,7 +21,6 @@ export class GitHubAuthUsecase implements IGithHubAuthUsecase {
     @inject("IWalletRepository") private _walletRepository: IWalletRepository,
     @inject("IJwtService") private _jwtService: IJwtService,
     @inject("IUniqueIdService") private _uniqueIdService: IUniqueIdService,
-    @inject("ITokenRepository") private _tokenRepository: ITokenRepository,
     @inject("IAccountRepository")
     private _accountRepository: IAccountsRepository
   ) {}
@@ -69,7 +67,7 @@ export class GitHubAuthUsecase implements IGithHubAuthUsecase {
       };
 
       account = await this._accountRepository.create(newAccount);
-      user = await this._userRepository.save({
+      user = await this._userRepository.create({
         accountId: account._id,
         username,
         githubUrl: userProfile.html_url,
@@ -96,16 +94,6 @@ export class GitHubAuthUsecase implements IGithHubAuthUsecase {
     const accessToken = this._jwtService.signAccess(payload);
     const refreshToken = this._jwtService.signRefresh(payload);
 
-    const tokenDecoded = this._jwtService.verifyRefresh(refreshToken);
-
-    const expire = new Date((tokenDecoded?.exp ?? 0) * 1000);
-
-    await this._tokenRepository.saveToken(
-      account._id as string,
-      deviceId,
-      refreshToken,
-      expire
-    );
 
     return {
       statusCode: HTTP_STATUS.OK,
