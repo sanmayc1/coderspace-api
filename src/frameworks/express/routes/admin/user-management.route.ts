@@ -1,7 +1,8 @@
 import { injectable } from "tsyringe";
 import { BaseRoute } from "../base-route.js";
 import {
-  authMiddleware,
+
+  
   userManagementController,
 } from "../../../di/di-resolver.js";
 import { asyncHandler } from "../../../../shared/async-handler.js";

@@ -12,6 +12,8 @@ import { AdminRoutes } from "../express/routes/admin/admin.routes.js";
 import { UserManagementRoute } from "../express/routes/admin/user-management.route.js";
 import { UserRoutes } from "../express/routes/user/user.route.js";
 import { UserProfileController } from "../../interfaceAdapters/controllers/user/user-profile.controller.js";
+import { CompanyRoutes } from "../express/routes/company/company.routes.js";
+import { CompanyController } from "../../interfaceAdapters/controllers/company/company.controller.js";
 
 DependencyInjection.registerAll();
 
@@ -27,5 +29,8 @@ export const userManagementController = container.resolve(
 );
 export const userProfileController = container.resolve(UserProfileController);
 export const userManagementRoute = container.resolve(UserManagementRoute);
+export const companyController  = container.resolve(CompanyController)
 export const adminRoutes = container.resolve(AdminRoutes);
 export const userRoutes = container.resolve(UserRoutes);
+export const companyRoutes = container.resolve(CompanyRoutes)
+

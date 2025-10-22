@@ -20,6 +20,11 @@ export class CompanyRepository
       companyRepositoryMapper.toModel
     );
   }
+  async findByAccountId(accountId: string): Promise<ICompanyEntity | null> {
+    const doc = await CompanyModel.findOne({ accountId });
+    return doc ? companyRepositoryMapper.toEntity(doc) : null;
+  }
+  
   async findByGstin(gstin: string): Promise<ICompanyEntity | null> {
     const doc = await CompanyModel.findOne({ gstin });
     return doc ? companyRepositoryMapper.toEntity(doc) : null;
