@@ -24,6 +24,7 @@ export class UserProfileController {
 
     res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.USER_FETCHED,response))
   }
+  
 
  async updateSuggestionLevel(req:Request,res:Response){
     const {level } = req.body

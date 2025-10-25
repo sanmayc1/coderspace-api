@@ -21,7 +21,7 @@ export class BaseRepository<TDoc,TEntity> implements IBaseRepository< TEntity> {
     return this.toDomain(doc)
   }
   async updateById(id: string, data: Partial<TEntity>): Promise<TEntity | null> {
-    const doc = await this.model.findByIdAndUpdate(id, this.toModel(data)).exec();
+    const doc = await this.model.findByIdAndUpdate(id, this.toModel(data),{new:true}).exec();
     return  doc ? this.toDomain(doc) :null
   }
   async deleteById(id: string): Promise<TEntity | null> {

@@ -1,6 +1,5 @@
 
 
-
 export interface IGetCompanyUsecaseOutputDto{
     companyName:string
     gstin:string

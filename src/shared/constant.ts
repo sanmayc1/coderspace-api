@@ -8,31 +8,7 @@ export const AUTHPROVIDER = ["github", "google", "local"];
 export const BADGE = ["silver", "gold", "platinum"];
 export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
 export type TView = "public" | "private"
-
-type TPrimitiveType = "int" | "float" | "string" | "boolean";
-
-interface IObjectField {
-  name: string;
-  type: TParameterType;
-}
-
-interface IPrimitiveParameter {
-  kind: "primitive";
-  type: TPrimitiveType;
-}
-
-
-interface IArrayParameter {
-  kind: "array";
-  elemetType: TParameterType;
-}
-
-interface IObjectParameter {
-  kind: "object";
-  fields: IObjectField[];
-}
-
-export type TParameterType = IPrimitiveParameter | IArrayParameter | IObjectParameter;
+export const VIEW:TView[] = ["public","private"]
 
 
 

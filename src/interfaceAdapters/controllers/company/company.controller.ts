@@ -15,7 +15,7 @@ export class CompanyController {
   ) {}
 
   async getCompany(req: Request, res: Response): Promise<void> {
-    const accountId = (req.user as IJwtPayload).accountId;
+    const accountId = req.user?.accountId as string;
 
     const response = await this._getCompanyUsecase.execute(accountId);
 
