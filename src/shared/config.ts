@@ -20,7 +20,7 @@ export const config = {
   },
   smtp: {
     user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
+    pass: process.env.EMAIL_PASSWORD,
   },
   redis: {
     username: process.env.REDIS_USER,
