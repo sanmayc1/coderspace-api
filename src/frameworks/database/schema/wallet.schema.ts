@@ -2,10 +2,10 @@ import { Schema } from "mongoose";
 import { IWalletModel } from "../models/wallet.model.js";
 
 export const walletSchema = new Schema<IWalletModel>({
-  userId: {
+  accountId: {
     required: true,
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Account",
     index: true,
   },
   balance: {
@@ -15,10 +15,5 @@ export const walletSchema = new Schema<IWalletModel>({
   contestAmount: {
     type: Number,
     default: 0,
-  },
-  userType: {
-    type: String,
-    required: true,
-    enum: ["user", "company", "admin"],
-  },
+  }
 });

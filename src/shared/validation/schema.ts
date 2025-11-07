@@ -5,7 +5,7 @@ export const nameSchema = z
   .string()
   .min(1, { message: "Name must be at least 2 characters long" })
   .trim()
-  .regex(/^[a-zA-Z]+$/, {
+  .regex(/^[a-zA-Z]/, {
     message: "Name must contain only alphabetic characters",
   });
 
@@ -32,3 +32,6 @@ export const passwordSchema = z
   .regex(/[@$!%*?&]/, {
     message: "Password must contain at least one special character",
   });
+  
+
+export const noValueCheckSchema = z.string().min(1, "Value cannot be empty");

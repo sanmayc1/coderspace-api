@@ -1,22 +1,9 @@
 import { Schema } from "mongoose";
 import { IUserModel } from "../models/user.model.js";
+import { BADGE, DIFFICULTY } from "../../../shared/constant.js";
 
 export const userSchema = new Schema<IUserModel>(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      index: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
     phone: {
       type: String
     },
@@ -33,14 +20,6 @@ export const userSchema = new Schema<IUserModel>(
     level: {
       type: Number,
       default: 0,
-    },
-    profileUrl: {
-      type: String,
-    },
-    role: {
-      type: String,
-      enum: ["admin", "user"],
-      default: "user",
     },
     location: {
       type: String,
@@ -64,13 +43,8 @@ export const userSchema = new Schema<IUserModel>(
     },
     badge: {
       type: String,
-      enum: ["silver", "gold", "platinum"],
+      enum: BADGE ,
       default: "silver",
-    },
-    authProvider: {
-      type: String,
-      enum: ["google", "github", "local"],
-      default: "local",
     },
     about: {
       type: String,
@@ -85,13 +59,7 @@ export const userSchema = new Schema<IUserModel>(
     },
     isProfileComplete: {
       type: Boolean,
-      default: true,
-    },
-    position: {
-      type: String,
-    },
-    experience: {
-      type: Number,
+      default: false,
     },
     domain: {
       type: Array,
@@ -99,14 +67,14 @@ export const userSchema = new Schema<IUserModel>(
     skills: {
       type: Array,
     },
-    profession: {
-      type: String,
+    accountId:{
+      type:Schema.Types.ObjectId,
+      ref:"Account"
     },
-    isVerified:{
-      type:Boolean,
-      default:false
+    suggestionLevel:{
+      type:String,
+      enum:DIFFICULTY
     }
-  
   },
   { timestamps: true }
 );

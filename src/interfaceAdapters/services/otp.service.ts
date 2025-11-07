@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { IOtpService } from "../../entities/services/otpService.interface.js";
-import { IBcrypt } from "../../entities/services/bcrypt.interface.js";
-import { IOtpRespository } from "../../entities/repositoryInterfaces/otp.interface.js";
-import { IOtpEntity } from "../../entities/models/otp.entity.js";
+import { IOtpService } from "../../domain/services/otp-service.interface.js";
+import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
+import { IOtpRespository } from "../../domain/repositoryInterfaces/otp.interface.js";
+import { IOtpEntity } from "../../domain/entities/otp.entity.js";
 
 @injectable()
 export class OtpService implements IOtpService {

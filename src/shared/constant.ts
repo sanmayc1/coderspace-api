@@ -1,12 +1,43 @@
+export type TRole = "admin" | "user" | "company";
+export type TAuthProviders = "google" | "github" | "local";
+export type TBadge = "silver" | "gold" | "platinum";
+export type TDifficulty = "easy" | "medium" | "hard";
+
+export const ROLES = ["admin", "user", "company"];
+export const AUTHPROVIDER = ["github", "google", "local"];
+export const BADGE = ["silver", "gold", "platinum"];
+export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
+
+type TPrimitiveType = "int" | "float" | "string" | "boolean";
+
+interface IObjectField {
+  name: string;
+  type: TParameterType;
+}
+
+interface IPrimitiveParameter {
+  kind: "primitive";
+  type: TPrimitiveType;
+}
+
+interface IArrayParameter {
+  kind: "array";
+  elemetType: TParameterType;
+}
+
+interface IObjectParameter {
+  kind: "object";
+  fields: IObjectField[];
+}
+
+export type TParameterType = IPrimitiveParameter | IArrayParameter | IObjectParameter;
 
 
-export type TRole = "admin" | "user";
-
-export const ROLES = ["admin", "user"];
 
 export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
+  NO_CONTENT: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -18,23 +49,64 @@ export const HTTP_STATUS = {
 
 export const ERROR_MESSAGES = {
   SERVER_ERROR: "An error occurred, please try again later.",
-  VALIDATION_ERROR: "Validation error occurred.",
+  VALIDATION_ERROR: "Validation error occurred",
   EMAIL_EXIST: "Email already exists",
-  USER_NAME_EXIST: "Username already exists",
-  EMAIL_NOT_EXIST: "Email not exist",
+  USERNAME_EXIST: "Username already exists",
+  EMAIL_NOT_EXIST: "Email does not exist",
   OTP_EXPIRE: "Your One-Time Password has expired. Please request a new OTP.",
-  INVALID_OTP:"The OTP you entered is incorrect. Please try again.",
-  NO_COOKIES:"please register first",
-  INVALID_CREDENTIALS:"invalid credentials"
-
+  INVALID_OTP: "Oops! Entered OTP is incorrect",
+  NO_COOKIES: "Please register first",
+  INVALID_CREDENTIALS: "Invalid credentials",
+  TOKEN_MISSING: "Authorization token is required",
+  TOKEN_EXPIRE: "Invalid or expired token",
+  ACCESS_DENIED: "You do not have permission to access this resource",
+  TOKEN_BLACKLIST: "Token has been revoked or blacklisted",
+  REST_LINK_EXPIRE: "Invalid or expired password reset link",
+  INVALID_AUTH_STATE: "Invalid_auth_state",
+  INVALID_AUTH_CODE: "Invalid_auth_code",
+  INVALID_AUTH_PROVIDER: "Invalid_auth_provider",
+  INVALID_REQUEST: "Invalid request",
+  ACCOUNT_NOT_VERIFIED:
+    "Account not verified. Please complete OTP verification",
+  ACCOUNT_NOT_FOUND: "Account not found",
+  DIFFERENT_AUTHPROVIDER:
+    "This account was registered using Google/GitHub. Password reset is not available",
+  AUTH_ACCESS_DENIED: "Login access denied",
+  GSTIN_EXIST: "GSTIN already exists",
+  USER_NOT_FOUND: "User not found",
+  INVALID_BODY: "Invalid body",
+  INVALID_QUERY:"Oops! Something went wrong with your request",
+  PAGE_NOT_NUMBER:"Page must be a positive number",
+  LIMIT_NOT_NUMBER: "Limit must be a positive number",
+  INVALID_SORT : "Invalid sort value",
+  INVALID_SEARCH:"Search query contains invalid characters",
+  UPTODATE:"Same data received, no changes applied",
+  ACCOUNT_BLOCKED:"Account blocked contact support",
+  ACCOUNT_BLOCKED_FORCE_LOGOUT:"Your Account blocked by admin",
+  FORCE_LOGOUT:"Session Expired"
 };
-
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
+  COMPANY_REGISTERED: "Company registered successfully",
   SEND_OTP_TO_MAIL: "Successufully send otp to registered email",
-  OTP_VERIFIED:"Otp verified successfully"
+  OTP_VERIFIED: "Otp verified successfully",
+  LOGIN: "successfully logined",
+  SEND_PASSWORD_REST_LINK: "Successufully send password rest link to email",
+  PASSWORD_REST: "Password rest successfully",
+  ACCOUNT_DETAILS: "Account details fetched successfully",
+  LOGOUT: "Logout successfully",
+  TOKEN_REFRESH: "Access token refreshed successfully",
+  USERS_FETCHED: "Users fetched Successfully",
+  USER_FETCHED: "User fetched Successfully",
+  SUGGESTION_LEVEL: "Suggestion level updated successfully",
+  UPDATED:"Successfully Updated",
+  STATUS_UPDATED:"User Status updated successfully"
 };
 
 export const COOKIES_NAMES = {
   SIGNUP: "_secure_signup",
+  REFRESH_TOKEN: "_secure_rt_auth",
+  ACCESS_TOKEN: "_secure_at_auth",
+  DEVICE_ID: "_dvid",
+  GITHUB_SESSION: "_secure_gth",
 };

@@ -1,7 +1,7 @@
-import SMTPPool from "nodemailer/lib/smtp-pool/index.js";
-import { IEmailService } from "../../entities/services/emailService.interface.js";
+import { IEmailService } from "../../domain/services/email-service.interface.js";
 import { createTransport } from "nodemailer";
 import { config } from "../../shared/config.js";
+
 
 export class EmailService implements IEmailService {
   private transport;
@@ -16,11 +16,11 @@ export class EmailService implements IEmailService {
       },
     });
   }
-  async sendMail(email: string, content: string): Promise<void> {
+  async sendMail(email: string, content: string,subject:string): Promise<void> {
     this.transport.sendMail({
       from: `"CoderSpace" <${config.smtp.user}>`,
       to: email,
-      subject: "Verification",
+      subject,
       html: content,
     });
   }

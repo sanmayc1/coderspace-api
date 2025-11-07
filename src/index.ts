@@ -8,10 +8,9 @@ import { RedisService } from "./frameworks/cache/redis.js";
   try {
     const app = new Server();
     const mongoDb = new MongoConnect();
-    const redis = new RedisService();
 
     mongoDb.connect();
-    redis.connect();
+    RedisService.getInstance();
     app.start();
   } catch (error) {
     console.error("Failed to start application", error);

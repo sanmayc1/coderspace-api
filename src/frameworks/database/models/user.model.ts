@@ -1,23 +1,33 @@
-import { model, Document, ObjectId } from "mongoose";
-import { IUserEntity } from "../../../entities/models/user.entity.js";
+import { model, Document, ObjectId, Types } from "mongoose";
+import { IUserEntity } from "../../../domain/entities/user.entity.js";
 import { userSchema } from "../schema/user.schema.js";
-import { TRole } from "../../../shared/constant.js";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+
 
 export interface IUserModel
-  extends Omit<IUserEntity, "_id" | "role"|"isProfileComplete"|"password"|"isVerified"|"level"|"notifiacation"|"xpCoin"|"authProvider"|"badge"|"isPremiumActive">,
+  extends Omit<
+      IUserEntity,
+      | "_id"
+      | "isProfileComplete"
+      | "level"
+      | "notifiacation"
+      | "xpCoin"
+      | "badge"
+      | "isPremiumActive"
+      | "accountId"
+      | "globalScore"
+    >,
     Document {
-  _id: ObjectId;
-  role: TRole;
+  _id: Types.ObjectId;
+  accountId: Types.ObjectId |IAccountsEntity;
   isProfileComplete: boolean;
-  password: string;
-  isVerified: boolean;
   level: number;
   notification: boolean;
   xpCoin: number;
-  authProvider:"google" | "github" | "local",
-  badge:"silver" | "gold" | "platinum",
-  isPremiumActive:boolean
-  
+  badge: "silver" | "gold" | "platinum";
+  isPremiumActive: boolean;
+  globalScore:number
+
 }
 
 export const UserModel = model<IUserModel>("User", userSchema);

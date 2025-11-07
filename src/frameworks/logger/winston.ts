@@ -7,7 +7,7 @@ const productionTransport = [
     db: config.database.mongoDb,
     collection: "error_logs",
     level: "error",
-    expireAfterSeconds: 60 * 60 * 24 * 7,
+    expireAfterSeconds: 60 * 60 * 24 * 2,
   }),
 ];
 
@@ -22,7 +22,7 @@ const developmentTransport = [
     db: config.database.mongoDb,
     collection: "error_logs",
     level: "error",
-    expireAfterSeconds: 60 * 60 * 24 * 7,
+    expireAfterSeconds: 60 * 60 * 24 * 2,
   })
 ];
 
