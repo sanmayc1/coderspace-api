@@ -1,4 +1,5 @@
 import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
 import { IUserEntity } from "../../../domain/entities/user.entity.js";
 import { TBadge, TRole } from "../../../shared/constant.js";
 import {
@@ -9,6 +10,7 @@ import {
   IAuthResponseDto,
   IGoogleAuthUsecaseInputDto,
 } from "../auth.dto.js";
+import { IGetCompanyUsecaseOutputDto } from "../company.dto.js";
 import { IGetUserUsecaseOutputDto } from "../user.dto.js";
 
 export const authUserUsecaseMapper = {
@@ -85,3 +87,18 @@ export const getUserUsecaseMapper = {
     };
   },
 };
+
+
+
+export const getCompanyUsecaseMapper  = {
+ 
+  toResponse(account:IAccountsEntity,company:ICompanyEntity):IGetCompanyUsecaseOutputDto{
+    return {
+      companyName:account.name,
+      email:account.email,
+      gstin:company.gstin,
+      profileUrl:account.profileUrl || ""
+    }
+  }
+
+}

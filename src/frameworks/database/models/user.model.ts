@@ -1,4 +1,4 @@
-import { model, Document, ObjectId, Types } from "mongoose";
+import { model, Document, Types } from "mongoose";
 import { IUserEntity } from "../../../domain/entities/user.entity.js";
 import { userSchema } from "../schema/user.schema.js";
 import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";

@@ -7,30 +7,8 @@ export const ROLES = ["admin", "user", "company"];
 export const AUTHPROVIDER = ["github", "google", "local"];
 export const BADGE = ["silver", "gold", "platinum"];
 export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
-
-type TPrimitiveType = "int" | "float" | "string" | "boolean";
-
-interface IObjectField {
-  name: string;
-  type: TParameterType;
-}
-
-interface IPrimitiveParameter {
-  kind: "primitive";
-  type: TPrimitiveType;
-}
-
-interface IArrayParameter {
-  kind: "array";
-  elemetType: TParameterType;
-}
-
-interface IObjectParameter {
-  kind: "object";
-  fields: IObjectField[];
-}
-
-export type TParameterType = IPrimitiveParameter | IArrayParameter | IObjectParameter;
+export type TView = "public" | "private"
+export const VIEW:TView[] = ["public","private"]
 
 
 
@@ -69,6 +47,7 @@ export const ERROR_MESSAGES = {
   ACCOUNT_NOT_VERIFIED:
     "Account not verified. Please complete OTP verification",
   ACCOUNT_NOT_FOUND: "Account not found",
+    COMPANY_NOT_FOUND: "Company not found",
   DIFFERENT_AUTHPROVIDER:
     "This account was registered using Google/GitHub. Password reset is not available",
   AUTH_ACCESS_DENIED: "Login access denied",
@@ -100,7 +79,8 @@ export const SUCCESS_MESSAGES = {
   USER_FETCHED: "User fetched Successfully",
   SUGGESTION_LEVEL: "Suggestion level updated successfully",
   UPDATED:"Successfully Updated",
-  STATUS_UPDATED:"User Status updated successfully"
+  STATUS_UPDATED:"User Status updated successfully",
+  COMPANY_FETCHED:"Company fetched Successfully"
 };
 
 export const COOKIES_NAMES = {

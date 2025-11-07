@@ -4,4 +4,5 @@ export interface IBaseRepository< TEntity> {
   create(data: Partial<TEntity>): Promise<TEntity>;
   updateById(id: string, data: Partial<TEntity>): Promise<TEntity | null>;
   deleteById(id: string): Promise<TEntity | null>;
+
 }

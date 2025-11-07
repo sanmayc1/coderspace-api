@@ -1,3 +1,4 @@
+import { IExample } from "../../domain/entities/problem-entity.js"
 import { TBadge } from "../../shared/constant.js"
 
 
@@ -31,4 +32,16 @@ export interface IUpdateUserUsecaseInputDto {
     userId:string
     badge:string
     level:number
+}
+
+
+export interface ICreateProblemUsecaseInputDto{
+    title:string
+    description:string
+    difficulty:string
+    skills:string[]
+    premium:boolean
+    domain:string
+    constrain:string
+    examples:IExample[]
 }

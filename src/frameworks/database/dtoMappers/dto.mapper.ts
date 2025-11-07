@@ -10,6 +10,10 @@ import { IWalletModel } from "../models/wallet.model.js";
 import { ICompanyModel } from "../models/company.model.js";
 import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
 import { TBadge } from "../../../shared/constant.js";
+import { IProblemModel } from "../models/problem.model.js";
+import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
+import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
+import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -75,7 +79,7 @@ export const walletMapper = {
     return {
       _id: String(data._id),
       balance: data.balance,
-      contestAmount: data.balance,
+      contestAmount: data.contestAmount,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
       accountId: String(data.accountId),
@@ -124,7 +128,7 @@ export const accountRepositoryMapper = {
       ...(data.isVerified !== undefined && { isVerified: data.isVerified }),
       ...(data.profileUrl && { profileUrl: data.profileUrl }),
       ...(data.role && { role: data.role }),
-      ...(data.isBlocked !==undefined && {isBlocked:data.isBlocked})
+      ...(data.isBlocked !== undefined && { isBlocked: data.isBlocked }),
     };
   },
 };
@@ -144,6 +148,46 @@ export const companyRepositoryMapper = {
         accountId: new mongoose.Types.ObjectId(data.accountId),
       }),
       ...(data.gstin && { gstin: data.gstin }),
+    };
+  },
+};
+
+export const problemRepositoryMapper = {
+  toEntity(data: IProblemModel): IProblemEntity {
+    return {
+      _id: String(data._id),
+      title: data.title,
+      constraints: data.constraints,
+      description: data.description,
+      difficulty: data.difficulty,
+      domainId:
+        data.domainId instanceof Types.ObjectId
+          ? String(data.domainId)
+          : (data.domainId as IDomainEntity),
+      examples: data.examples || [],
+      isPremium: data.isPremium,
+      skillsIds:
+        data.skillsIds?.map((s) =>
+          s instanceof Types.ObjectId ? String(s) : (s as ISkillEntity)
+        ) ,
+      view: data.view,
+    };
+  },
+  toModel(data: Partial<IProblemEntity>): Partial<IProblemModel> {
+    return {
+      ...(data.title && { title: data.title }),
+      ...(data.description && { description: data.description }),
+      ...(data.constraints && { constraints: data.constraints }),
+      ...(data.difficulty && { difficulty: data.difficulty }),
+      ...(data.domainId && {
+        domainId: new Types.ObjectId(String(data.domainId)),
+      }),
+      ...(data.examples && { examples: data.examples }),
+      ...(data.isPremium !== undefined && { isPremium: data.isPremium }),
+      ...(data.skillsIds && {
+        skillsIds: data.skillsIds.map((s) => new Types.ObjectId(String(s))),
+      }),
+      ...(data.view && { view: data.view }),
     };
   },
 };

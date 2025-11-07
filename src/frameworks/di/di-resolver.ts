@@ -12,20 +12,37 @@ import { AdminRoutes } from "../express/routes/admin/admin.routes.js";
 import { UserManagementRoute } from "../express/routes/admin/user-management.route.js";
 import { UserRoutes } from "../express/routes/user/user.route.js";
 import { UserProfileController } from "../../interfaceAdapters/controllers/user/user-profile.controller.js";
+import { CompanyRoutes } from "../express/routes/company/company.routes.js";
+import { CompanyController } from "../../interfaceAdapters/controllers/company/company.controller.js";
+import { ProblemManagementRoutes } from "../express/routes/admin/problem-management.route.js";
+import { ProblemManagementController } from "../../interfaceAdapters/controllers/admin/problem.management.controller.js";
 
 DependencyInjection.registerAll();
 
-export const authController = container.resolve(AuthController);
+// Middleware
 export const errorMiddleware = container.resolve(ErrorMiddleware);
 export const authMiddleware = container.resolve(AuthMiddleware);
-export const githubAuthController = container.resolve(GithHubAuthController);
+
+// Services
 export const googleAuthService = container.resolve(GoogleAuthService);
+
+// Controllers
+export const authController = container.resolve(AuthController);
+export const githubAuthController = container.resolve(GithHubAuthController);
 export const googleAuthController = container.resolve(GoogleAuthController);
-export const authRoutes = container.resolve(AuthRoute);
 export const userManagementController = container.resolve(
   UserManagementController
 );
+export const companyController  = container.resolve(CompanyController)
 export const userProfileController = container.resolve(UserProfileController);
+export const problemManagementController = container.resolve(ProblemManagementController)
+
+// Routes 
+export const authRoutes = container.resolve(AuthRoute);
 export const userManagementRoute = container.resolve(UserManagementRoute);
+export const problemManagementRoutes = container.resolve(ProblemManagementRoutes)
 export const adminRoutes = container.resolve(AdminRoutes);
 export const userRoutes = container.resolve(UserRoutes);
+export const companyRoutes = container.resolve(CompanyRoutes)
+
+

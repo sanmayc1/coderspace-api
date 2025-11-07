@@ -1,5 +1,5 @@
 import { Rating } from "../../domain/entities/user.entity.js"
-import { DIFFICULTY, TDifficulty } from "../../shared/constant.js"
+import {  TDifficulty } from "../../shared/constant.js"
 
 
 

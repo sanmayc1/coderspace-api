@@ -6,6 +6,7 @@ import { config } from "../../shared/config.js";
 import {
   adminRoutes,
   authRoutes,
+  companyRoutes,
   errorMiddleware,
   userRoutes,
 } from "../di/di-resolver.js";
@@ -38,6 +39,7 @@ export class Server {
     this._app.use("/api/v1/auth", authRoutes.router);
     this._app.use("/api/v1/admin", adminRoutes.router);
     this._app.use("/api/v1/user", userRoutes.router);
+    this._app.use("/api/v1/company",companyRoutes.router)
     this._io.on("connection",async (socket:Socket) => {
        
       const accessToken = socket.handshake.headers.cookie?.split(";")[0].split('=')[1]
