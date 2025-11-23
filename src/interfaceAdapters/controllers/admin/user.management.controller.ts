@@ -105,4 +105,6 @@ export class UserManagementController {
     res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.STATUS_UPDATED))
 
   }
+
+
 }

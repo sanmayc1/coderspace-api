@@ -7,6 +7,7 @@ import { PasswordRestRepository } from "../../interfaceAdapters/repositories/pas
 import { AccountRepository } from "../../interfaceAdapters/repositories/account-repository.js";
 import { CompanyRepository } from "../../interfaceAdapters/repositories/company-repository.js";
 import { ProblemRepository } from "../../interfaceAdapters/repositories/problem-repository.js";
+import { DomainRepository } from "../../interfaceAdapters/repositories/domain-repository.js";
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -18,5 +19,6 @@ export class RepositoryRegistery {
     container.register("IAccountRepository",{useClass:AccountRepository})
     container.register("ICompanyRepository",{useClass:CompanyRepository})
     container.register("IProblemRepository",{useClass:ProblemRepository})
+    container.register("IDomainRepository",{useClass:DomainRepository})
   }
 }

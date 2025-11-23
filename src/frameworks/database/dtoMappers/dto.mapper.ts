@@ -14,6 +14,7 @@ import { IProblemModel } from "../models/problem.model.js";
 import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
 import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
 import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
+import { IDomainModel } from "../models/domain.model.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -166,10 +167,9 @@ export const problemRepositoryMapper = {
           : (data.domainId as IDomainEntity),
       examples: data.examples || [],
       isPremium: data.isPremium,
-      skillsIds:
-        data.skillsIds?.map((s) =>
-          s instanceof Types.ObjectId ? String(s) : (s as ISkillEntity)
-        ) ,
+      skillsIds: data.skillsIds?.map((s) =>
+        s instanceof Types.ObjectId ? String(s) : (s as ISkillEntity)
+      ),
       view: data.view,
     };
   },
@@ -188,6 +188,22 @@ export const problemRepositoryMapper = {
         skillsIds: data.skillsIds.map((s) => new Types.ObjectId(String(s))),
       }),
       ...(data.view && { view: data.view }),
+    };
+  },
+};
+
+export const domainRepositoryMapper = {
+  toModel(data: Partial<IDomainEntity>): Partial<IDomainModel> {
+    return {
+      title: data.title,
+    };
+  },
+  toEntity(data: IDomainModel): IDomainEntity {
+    return {
+      title: data.title,
+      _id: String(data._id),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     };
   },
 };

@@ -62,7 +62,8 @@ export const ERROR_MESSAGES = {
   UPTODATE:"Same data received, no changes applied",
   ACCOUNT_BLOCKED:"Account blocked contact support",
   ACCOUNT_BLOCKED_FORCE_LOGOUT:"Your Account blocked by admin",
-  FORCE_LOGOUT:"Session Expired"
+  FORCE_LOGOUT:"Session Expired",
+  DOMAIN_EXIST:"Domain already exits"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -80,7 +81,8 @@ export const SUCCESS_MESSAGES = {
   SUGGESTION_LEVEL: "Suggestion level updated successfully",
   UPDATED:"Successfully Updated",
   STATUS_UPDATED:"User Status updated successfully",
-  COMPANY_FETCHED:"Company fetched Successfully"
+  COMPANY_FETCHED:"Company fetched Successfully",
+  DOMAIN_CREATED:"Domain successfully created"
 };
 
 export const COOKIES_NAMES = {

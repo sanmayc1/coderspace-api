@@ -19,6 +19,7 @@ import { LoginAdminUsecase } from "../../useCases/auth/login-admin.usecase.js";
 import { UpdateUserUsecase } from "../../useCases/admin/user-management/update-user.usecase.js";
 import { UpdateUserStatusUsecase } from "../../useCases/admin/user-management/update-user-status.usecase.js";
 import { GetCompanyUsecase } from "../../useCases/company/get.company.usecase.js";
+import { CreateDomainUsecase } from "../../useCases/admin/skills-and-domain-management/create-domain.js";
 
 
 export class UsecaseRegistery {
@@ -47,5 +48,6 @@ export class UsecaseRegistery {
     container.register("IUpdateUserUsecase",{useClass:UpdateUserUsecase})
     container.register("IUpdateUserStatusUsecase",{useClass:UpdateUserStatusUsecase})
     container.register("IGetCompanyUsecase",{useClass:GetCompanyUsecase})
+    container.register("ICreateDomainUsecase",{useClass:CreateDomainUsecase})
   }
 }
