@@ -25,6 +25,8 @@ import { DeleteDomainUsecase } from "../../useCases/admin/skills-and-domain-mana
 import { CreateSkillUsecase } from "../../useCases/admin/skills-and-domain-management/create-skill.usecase.js";
 import { DeleteSkillUsecase } from "../../useCases/admin/skills-and-domain-management/delete-skill.usecase.js";
 import { GetAllSkillsUsecase } from "../../useCases/admin/skills-and-domain-management/get-all-skills.usecase.js";
+import { CreateProblemUsecase } from "../../useCases/admin/problem-management/create-problem.usecase.js";
+import { GetAllProblemsUsecase } from "../../useCases/admin/problem-management/get-all-problems.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -59,5 +61,7 @@ export class UsecaseRegistery {
     container.register("ICreateSkillUsecase",{useClass:CreateSkillUsecase})
     container.register("IDeleteSkillUsecase",{useClass:DeleteSkillUsecase})
     container.register("IGetAllSkillsUsecase",{useClass:GetAllSkillsUsecase})
+    container.register("ICreateProblemUsecase",{useClass:CreateProblemUsecase})
+    container.register("IGetAllProblemsUsecase",{useClass:GetAllProblemsUsecase})
   }
 }

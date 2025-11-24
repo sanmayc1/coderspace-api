@@ -16,6 +16,7 @@ import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
 import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
 import { IDomainModel } from "../models/domain.model.js";
 import { ISkillModel } from "../models/skill.model.js";
+import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -172,6 +173,10 @@ export const problemRepositoryMapper = {
         s instanceof Types.ObjectId ? String(s) : (s as ISkillEntity)
       ),
       view: data.view,
+      addedLanguagesId: data.addedLanguagesId?.map((l) =>
+        l instanceof Types.ObjectId ? String(l) : (l as ILanguageEntity)
+      ),
+      problemNumber:data.problemNumber
     };
   },
   toModel(data: Partial<IProblemEntity>): Partial<IProblemModel> {
@@ -189,6 +194,12 @@ export const problemRepositoryMapper = {
         skillsIds: data.skillsIds.map((s) => new Types.ObjectId(String(s))),
       }),
       ...(data.view && { view: data.view }),
+      ...(data.addedLanguagesId && {
+        addedLanguagesId: data.addedLanguagesId.map(
+          (l) => new Types.ObjectId(String(l))
+        ),
+      }),
+      ...(data.problemNumber && {problemNumber:data.problemNumber})
     };
   },
 };
@@ -208,8 +219,6 @@ export const domainRepositoryMapper = {
     };
   },
 };
-
-
 
 export const skillRepositoryMapper = {
   toModel(data: Partial<ISkillEntity>): Partial<ISkillModel> {

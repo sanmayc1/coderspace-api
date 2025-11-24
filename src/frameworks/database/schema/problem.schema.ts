@@ -49,13 +49,18 @@ export const problemSchema = new Schema<IProblemModel>({
     },
   ],
   examples: [exampleSchema],
-  isPremium:{
-    type:Boolean,
-    default:false
+  isPremium: {
+    type: Boolean,
+    default: false,
   },
-  view:{
-    type:String,
-    enum:VIEW,
-    default:"private"
+  view: {
+    type: String,
+    enum: VIEW,
+    default: "private",
   },
-});
+  addedLanguagesId: [{ type: Types.ObjectId, ref: "Language", default: [] }],
+  problemNumber: {
+    type: Number,
+    required: true,
+  },
+},{timestamps:true});

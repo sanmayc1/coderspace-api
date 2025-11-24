@@ -2,6 +2,8 @@ export type TRole = "admin" | "user" | "company";
 export type TAuthProviders = "google" | "github" | "local";
 export type TBadge = "silver" | "gold" | "platinum";
 export type TDifficulty = "easy" | "medium" | "hard";
+export type TLanguages = "javascript" |"java"|"python"|"c++"
+export const LANGUAGES:TLanguages[] = ["c++","java","javascript","python"]
 
 export const ROLES = ["admin", "user", "company"];
 export const AUTHPROVIDER = ["github", "google", "local"];
@@ -9,6 +11,23 @@ export const BADGE = ["silver", "gold", "platinum"];
 export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
 export type TView = "public" | "private";
 export const VIEW: TView[] = ["public", "private"];
+
+
+type FilterOp = "eq" | "ne" | "lt" | "lte" | "gt" | "gte" | "in"|"contains";
+
+interface FilterCondition {
+  op: FilterOp;
+  value: any;
+}
+
+export type GenericFilter = Record<string,  FilterCondition | FilterCondition[]>;
+
+type SortOrder = "asc" | "desc";
+
+export type Sort = Record<string, SortOrder>;
+
+export type Projection = string[];
+
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -89,6 +108,8 @@ export const SUCCESS_MESSAGES = {
   SKILL_CREATED: "Skill successfully created",
   GET_ALL_SKILLS: "Skills fetched successfully",
   SKILL_DELETED: "Skill successfully deleted",
+  PROBLEM_CREATED:"Problem created successfully",
+  GET_ALL_PROBLEMS:"Fetched all problems"
 };
 
 export const COOKIES_NAMES = {
@@ -98,3 +119,5 @@ export const COOKIES_NAMES = {
   DEVICE_ID: "_dvid",
   GITHUB_SESSION: "_secure_gth",
 };
+
+
