@@ -19,7 +19,12 @@ import { LoginAdminUsecase } from "../../useCases/auth/login-admin.usecase.js";
 import { UpdateUserUsecase } from "../../useCases/admin/user-management/update-user.usecase.js";
 import { UpdateUserStatusUsecase } from "../../useCases/admin/user-management/update-user-status.usecase.js";
 import { GetCompanyUsecase } from "../../useCases/company/get.company.usecase.js";
-import { CreateDomainUsecase } from "../../useCases/admin/skills-and-domain-management/create-domain.js";
+import { CreateDomainUsecase } from "../../useCases/admin/skills-and-domain-management/create-domain.usecase.js";
+import { GetAllDomains } from "../../useCases/admin/skills-and-domain-management/get-all-domains.usecase.js";
+import { DeleteDomainUsecase } from "../../useCases/admin/skills-and-domain-management/delete-domain.usecase.js";
+import { CreateSkillUsecase } from "../../useCases/admin/skills-and-domain-management/create-skill.usecase.js";
+import { DeleteSkillUsecase } from "../../useCases/admin/skills-and-domain-management/delete-skill.usecase.js";
+import { GetAllSkillsUsecase } from "../../useCases/admin/skills-and-domain-management/get-all-skills.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -49,5 +54,10 @@ export class UsecaseRegistery {
     container.register("IUpdateUserStatusUsecase",{useClass:UpdateUserStatusUsecase})
     container.register("IGetCompanyUsecase",{useClass:GetCompanyUsecase})
     container.register("ICreateDomainUsecase",{useClass:CreateDomainUsecase})
+    container.register("IGetAllDomains",{useClass:GetAllDomains})
+    container.register("IDeleteDomainUsecase",{useClass:DeleteDomainUsecase})
+    container.register("ICreateSkillUsecase",{useClass:CreateSkillUsecase})
+    container.register("IDeleteSkillUsecase",{useClass:DeleteSkillUsecase})
+    container.register("IGetAllSkillsUsecase",{useClass:GetAllSkillsUsecase})
   }
 }

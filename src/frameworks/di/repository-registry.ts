@@ -8,6 +8,7 @@ import { AccountRepository } from "../../interfaceAdapters/repositories/account-
 import { CompanyRepository } from "../../interfaceAdapters/repositories/company-repository.js";
 import { ProblemRepository } from "../../interfaceAdapters/repositories/problem-repository.js";
 import { DomainRepository } from "../../interfaceAdapters/repositories/domain-repository.js";
+import { SkillRepository } from "../../interfaceAdapters/repositories/skill-repository.js";
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -20,5 +21,6 @@ export class RepositoryRegistery {
     container.register("ICompanyRepository",{useClass:CompanyRepository})
     container.register("IProblemRepository",{useClass:ProblemRepository})
     container.register("IDomainRepository",{useClass:DomainRepository})
+    container.register("ISkillRepository",{useClass:SkillRepository})
   }
 }

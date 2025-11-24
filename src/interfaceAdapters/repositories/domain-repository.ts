@@ -19,8 +19,13 @@ export class DomainRepository
       domainRepositoryMapper.toModel
     );
   }
+  async  getAll(): Promise<IDomainEntity[]> {
+         return await DomainModel.find()
+    }
    async findByTitle(title: string): Promise<IDomainEntity | null> {
         return await DomainModel.findOne({title})
     }
+
+    
 
 }

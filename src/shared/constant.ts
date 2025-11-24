@@ -7,10 +7,8 @@ export const ROLES = ["admin", "user", "company"];
 export const AUTHPROVIDER = ["github", "google", "local"];
 export const BADGE = ["silver", "gold", "platinum"];
 export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
-export type TView = "public" | "private"
-export const VIEW:TView[] = ["public","private"]
-
-
+export type TView = "public" | "private";
+export const VIEW: TView[] = ["public", "private"];
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -47,23 +45,26 @@ export const ERROR_MESSAGES = {
   ACCOUNT_NOT_VERIFIED:
     "Account not verified. Please complete OTP verification",
   ACCOUNT_NOT_FOUND: "Account not found",
-    COMPANY_NOT_FOUND: "Company not found",
+  COMPANY_NOT_FOUND: "Company not found",
   DIFFERENT_AUTHPROVIDER:
     "This account was registered using Google/GitHub. Password reset is not available",
   AUTH_ACCESS_DENIED: "Login access denied",
   GSTIN_EXIST: "GSTIN already exists",
   USER_NOT_FOUND: "User not found",
   INVALID_BODY: "Invalid body",
-  INVALID_QUERY:"Oops! Something went wrong with your request",
-  PAGE_NOT_NUMBER:"Page must be a positive number",
+  INVALID_QUERY: "Oops! Something went wrong with your request",
+  PAGE_NOT_NUMBER: "Page must be a positive number",
   LIMIT_NOT_NUMBER: "Limit must be a positive number",
-  INVALID_SORT : "Invalid sort value",
-  INVALID_SEARCH:"Search query contains invalid characters",
-  UPTODATE:"Same data received, no changes applied",
-  ACCOUNT_BLOCKED:"Account blocked contact support",
-  ACCOUNT_BLOCKED_FORCE_LOGOUT:"Your Account blocked by admin",
-  FORCE_LOGOUT:"Session Expired",
-  DOMAIN_EXIST:"Domain already exits"
+  INVALID_SORT: "Invalid sort value",
+  INVALID_SEARCH: "Search query contains invalid characters",
+  UPTODATE: "Same data received, no changes applied",
+  ACCOUNT_BLOCKED: "Account blocked contact support",
+  ACCOUNT_BLOCKED_FORCE_LOGOUT: "Your Account blocked by admin",
+  FORCE_LOGOUT: "Session Expired",
+  DOMAIN_EXIST: "Domain already exits",
+  DOMAIN_NOT_FOUND: "Domain not found",
+  SKILL_EXIST: "Skill already exits",
+  SKILL_NOT_FOUND: "Skill not found",
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -79,10 +80,15 @@ export const SUCCESS_MESSAGES = {
   USERS_FETCHED: "Users fetched Successfully",
   USER_FETCHED: "User fetched Successfully",
   SUGGESTION_LEVEL: "Suggestion level updated successfully",
-  UPDATED:"Successfully Updated",
-  STATUS_UPDATED:"User Status updated successfully",
-  COMPANY_FETCHED:"Company fetched Successfully",
-  DOMAIN_CREATED:"Domain successfully created"
+  UPDATED: "Successfully Updated",
+  STATUS_UPDATED: "User Status updated successfully",
+  COMPANY_FETCHED: "Company fetched Successfully",
+  DOMAIN_CREATED: "Domain successfully created",
+  GET_ALL_DOMAINS: "Domains fetched successfully",
+  DOMAIN_DELETED: "Domain successfully deleted",
+  SKILL_CREATED: "Skill successfully created",
+  GET_ALL_SKILLS: "Skills fetched successfully",
+  SKILL_DELETED: "Skill successfully deleted",
 };
 
 export const COOKIES_NAMES = {

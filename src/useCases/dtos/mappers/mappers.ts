@@ -1,10 +1,14 @@
 import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
 import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
+import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
+import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
 import { IUserEntity } from "../../../domain/entities/user.entity.js";
 import { TBadge, TRole } from "../../../shared/constant.js";
 import {
+  IDomainDto,
   IGetUsersUsecaseOutputDto,
   IGetUsersUsecaseUserDto,
+  ISkillDto,
 } from "../admin.dto.js";
 import {
   IAuthResponseDto,
@@ -101,4 +105,24 @@ export const getCompanyUsecaseMapper  = {
     }
   }
 
+}
+
+
+export const getAllDomainsUsecaseMapper = {
+  toResponse(data:IDomainEntity):IDomainDto{
+    return{
+      id:String(data._id),
+      title:data.title
+    }
+  }
+}
+
+
+export const getAllSkillsUsecaseMapper = {
+  toResponse(data:ISkillEntity):ISkillDto{
+    return{
+      id:String(data._id),
+      title:data.title
+    }
+  }
 }

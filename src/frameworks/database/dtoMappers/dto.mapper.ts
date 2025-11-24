@@ -15,6 +15,7 @@ import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
 import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
 import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
 import { IDomainModel } from "../models/domain.model.js";
+import { ISkillModel } from "../models/skill.model.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -199,6 +200,24 @@ export const domainRepositoryMapper = {
     };
   },
   toEntity(data: IDomainModel): IDomainEntity {
+    return {
+      title: data.title,
+      _id: String(data._id),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+};
+
+
+
+export const skillRepositoryMapper = {
+  toModel(data: Partial<ISkillEntity>): Partial<ISkillModel> {
+    return {
+      title: data.title,
+    };
+  },
+  toEntity(data: ISkillModel): ISkillEntity {
     return {
       title: data.title,
       _id: String(data._id),

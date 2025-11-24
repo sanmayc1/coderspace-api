@@ -1,3 +1,4 @@
+import { IDomainEntity } from "../../domain/entities/domain-entity.js"
 import { IExample } from "../../domain/entities/problem-entity.js"
 import { TBadge } from "../../shared/constant.js"
 
@@ -44,4 +45,24 @@ export interface ICreateProblemUsecaseInputDto{
     domain:string
     constrain:string
     examples:IExample[]
+}
+
+export interface IGetAllDomainsUsecaseOutput {
+    domains:IDomainDto[]
+}
+
+export interface IGetAllSkillsUsecaseOutput {
+    skills:ISkillDto[]
+}
+
+export interface IDomainDto{
+    id:string
+    title:string
+}
+
+
+
+export interface ISkillDto{
+    id:string
+    title:string
 }
