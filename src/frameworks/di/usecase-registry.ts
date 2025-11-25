@@ -28,6 +28,11 @@ import { GetAllSkillsUsecase } from "../../useCases/admin/skills-and-domain-mana
 import { CreateProblemUsecase } from "../../useCases/admin/problem-management/create-problem.usecase.js";
 import { GetAllProblemsUsecase } from "../../useCases/admin/problem-management/get-all-problems.usecase.js";
 import { AddLanguageUsecase } from "../../useCases/admin/problem-management/add-language.usecase.js";
+import { GetLanguageDetailsUsecase } from "../../useCases/admin/problem-management/get-language.details.usecase.js";
+import { UpdateLanguageUseCase } from "../../useCases/admin/problem-management/update-language.usecase.js";
+import { AddSingleTestcaseUsecase } from "../../useCases/admin/problem-management/add-single-testcase.usecase.js";
+import { GetAllTestcaseUsecase } from "../../useCases/admin/problem-management/get-all-testcase.usecase.js";
+import { DeleteTestcaseUsecase } from "../../useCases/admin/problem-management/delete-testcase.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -65,5 +70,10 @@ export class UsecaseRegistery {
     container.register("ICreateProblemUsecase",{useClass:CreateProblemUsecase})
     container.register("IGetAllProblemsUsecase",{useClass:GetAllProblemsUsecase})
     container.register("IAddLanguageUsecase" ,{useClass:AddLanguageUsecase})
+    container.register("IGetLanguageDetailsUsecase",{useClass:GetLanguageDetailsUsecase})
+    container.register("IUpdateLanguageUsecase",{useClass:UpdateLanguageUseCase})
+    container.register("IAddSingleTestcaseUsecase",{useClass:AddSingleTestcaseUsecase})
+    container.register("IGetAllTestcaseUsecase",{useClass:GetAllTestcaseUsecase})
+    container.register("IDeleteTestcaseUsecase",{useClass:DeleteTestcaseUsecase})
   }
 }

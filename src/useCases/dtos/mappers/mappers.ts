@@ -4,11 +4,14 @@ import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
 import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
 import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
 import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
+import { ITestcaseEntity } from "../../../domain/entities/testcase-entity.js";
 import { IUserEntity } from "../../../domain/entities/user.entity.js";
 import { TBadge, TLanguages, TRole } from "../../../shared/constant.js";
 import {
   IDomainDto,
   IGetAllProblemUsecaseOutputDto,
+  IGetAllTestcaseUsecaseOutputDto,
+  IGetLanguageDetailsUsecaseOutput,
   IGetUsersUsecaseOutputDto,
   IGetUsersUsecaseUserDto,
   ISkillDto,
@@ -134,7 +137,10 @@ export const getAllProblemsUsecaseMapper = {
       currentPage,
       totalPages,
       problems: problems.map((s) => ({
-        languages:(s.addedLanguagesId as ILanguageEntity[]).map((l)=>l.language),
+        languages: (s.addedLanguagesId as ILanguageEntity[]).map((l) => ({
+          language: l.language,
+          id: String(l._id),
+        })),
         id: s._id as string,
         number: s.problemNumber as number,
         title: s.title,
@@ -143,3 +149,28 @@ export const getAllProblemsUsecaseMapper = {
     };
   },
 };
+
+export const getLanguageDetailsUsecaseMapper = {
+  toResponse(data: ILanguageEntity): IGetLanguageDetailsUsecaseOutput {
+    return {
+      id: String(data._id),
+      language:data.language,
+      fnName:data.functionName as string,
+      solution:data.solution as string,
+      tmpCode:data.templateCode as string
+    };
+  },
+};
+
+
+export const getAllTestcaseUsecaseMapper ={
+  toRespone(data:ITestcaseEntity):IGetAllTestcaseUsecaseOutputDto{
+   return {
+    id:data._id as string,
+    input:data.input,
+    output:data.output,
+    ...(data.example ?{example:data.example} :{})
+    
+   }
+  }
+}

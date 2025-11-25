@@ -44,3 +44,35 @@ export const querySchema = z.object({
   sortBy: z.string().optional().default("createdAt"),
   search: z.string().optional().default(""),
 });
+
+
+export const mongoObjectIdSchema = z.object({
+  id:objectId
+})
+
+
+
+export const languageRequestSchema = z.object({
+  languageId: objectId,
+  templateCode: z
+    .string()
+    .min(1, "templateCode is required")
+    .max(100_000, "templateCode too large"),
+  fnName: z
+    .string()
+    .min(1, "fnName is required")
+    .max(200, "fnName too long")
+    .regex(/^[A-Za-z_$][A-Za-z0-9_$]*$/, "fnName must be a valid identifier"),
+  solution: z
+    .string()
+    .min(0) 
+    .max(200_000, "solution too large"),
+});
+
+
+export const testcaseSchema = z.object({
+  input: z.string().min(1, "Input is required"),
+  output: z.string().min(1, "Output is required"),
+  problemId: objectId,
+  example: z.boolean().optional(),
+})  

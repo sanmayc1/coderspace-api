@@ -18,6 +18,8 @@ import { IDomainModel } from "../models/domain.model.js";
 import { ISkillModel } from "../models/skill.model.js";
 import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
 import { ILanguageModel } from "../models/language.model.js";
+import { ITestcaseEntity } from "../../../domain/entities/testcase-entity.js";
+import { ITestcaseModel } from "../models/testcase.model.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -253,6 +255,27 @@ export const langaugeRepositoryMapper = {
       functionName: data.functionName,
       solution: data.solution,
       templateCode: data.templateCode,
+    };
+  },
+};
+
+
+export const testcaseRepositoryMapper = {
+  toModel(data: Partial<ITestcaseEntity>): Partial<ITestcaseModel> {
+    return {
+      input: data.input,
+      output: data.output,
+      problemId: new Types.ObjectId(data.problemId ) ,
+      example: data.example ,
+    };
+  },
+  toEntity(data: ITestcaseModel): ITestcaseEntity {
+    return {
+      _id: String(data._id),
+      input: data.input,
+      output: data.output,
+      problemId: String(data.problemId),
+      example: data.example,
     };
   },
 };

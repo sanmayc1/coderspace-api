@@ -2,8 +2,8 @@ export type TRole = "admin" | "user" | "company";
 export type TAuthProviders = "google" | "github" | "local";
 export type TBadge = "silver" | "gold" | "platinum";
 export type TDifficulty = "easy" | "medium" | "hard";
-export type TLanguages = "javascript" |"java"|"python"|"c++"
-export const LANGUAGES:TLanguages[] = ["c++","java","javascript","python"]
+export type TLanguages = "javascript" | "java" | "python" | "cpp";
+export const LANGUAGES: TLanguages[] = ["cpp", "java", "javascript", "python"];
 
 export const ROLES = ["admin", "user", "company"];
 export const AUTHPROVIDER = ["github", "google", "local"];
@@ -12,22 +12,20 @@ export const DIFFICULTY: TDifficulty[] = ["easy", "medium", "hard"];
 export type TView = "public" | "private";
 export const VIEW: TView[] = ["public", "private"];
 
-
-type FilterOp = "eq" | "ne" | "lt" | "lte" | "gt" | "gte" | "in"|"contains";
+type FilterOp = "eq" | "ne" | "lt" | "lte" | "gt" | "gte" | "in" | "contains";
 
 interface FilterCondition {
   op: FilterOp;
   value: any;
 }
 
-export type GenericFilter = Record<string,  FilterCondition | FilterCondition[]>;
+export type GenericFilter = Record<string, FilterCondition | FilterCondition[]>;
 
 type SortOrder = "asc" | "desc";
 
 export type Sort = Record<string, SortOrder>;
 
 export type Projection = string[];
-
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -84,7 +82,9 @@ export const ERROR_MESSAGES = {
   DOMAIN_NOT_FOUND: "Domain not found",
   SKILL_EXIST: "Skill already exits",
   SKILL_NOT_FOUND: "Skill not found",
-  LANGUAGE_NOT_AVAILABLE:"Selected language is not available"
+  LANGUAGE_NOT_AVAILABLE: "Selected language is not available",
+  LANGUAGES_NOT_FOUND: "Language is not found",
+  TESTCASE_NOT_FOUND:"Testcase is not found"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -109,9 +109,14 @@ export const SUCCESS_MESSAGES = {
   SKILL_CREATED: "Skill successfully created",
   GET_ALL_SKILLS: "Skills fetched successfully",
   SKILL_DELETED: "Skill successfully deleted",
-  PROBLEM_CREATED:"Problem created successfully",
-  GET_ALL_PROBLEMS:"Fetched all problems",
-  LANGUAGE_ADDED:"Language Successfully added"
+  PROBLEM_CREATED: "Problem created successfully",
+  GET_ALL_PROBLEMS: "Fetched all problems",
+  LANGUAGE_ADDED: "Language Successfully added",
+  LANGUAGES_FETCHED: "Language successfully fetched",
+  LANGUAGE_UPDATED: "Language updated successfully",
+  SINGLE_TESTCASE_ADDED: "Single testcase added successfully",
+  GET_TESTCASES:"Testcase successfully fetched",
+  TESTCASE_DELETED:"Testcase successfully deleted"
 };
 
 export const COOKIES_NAMES = {
@@ -122,4 +127,40 @@ export const COOKIES_NAMES = {
   GITHUB_SESSION: "_secure_gth",
 };
 
+export const templateCodes:Record<TLanguages,string> = {
+  java: `
+class Solution {
+    public int solve(int n) {
+        
 
+        return 0;
+    }
+}
+`,
+  cpp: `
+class Solution {
+public:
+    int solve(int n) {
+       
+
+        return 0;
+    }
+};
+`,
+
+  python: `
+class Solution:
+    def solve(self, n):
+        
+
+        return 0
+`,
+
+  javascript: `
+var solve = function(n) {
+    
+
+    return 0;
+}
+`,
+};

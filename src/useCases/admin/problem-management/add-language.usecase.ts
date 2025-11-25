@@ -3,6 +3,7 @@ import { IProblemRepository } from "../../../domain/repositoryInterfaces/problem
 import { IAddLanguageUsecaseInputDto } from "../../dtos/admin.dto.js";
 import { IAddLanguageUsecase } from "../../Interfaces/admin/problem-management/add-language.usecase.interface.js";
 import { ILanguageRepository } from "../../../domain/repositoryInterfaces/language-repository.interface.js";
+import { templateCodes } from "../../../shared/constant.js";
 
 @injectable()
 export class AddLanguageUsecase implements IAddLanguageUsecase {
@@ -13,11 +14,17 @@ export class AddLanguageUsecase implements IAddLanguageUsecase {
     private _languageRepository: ILanguageRepository
   ) {}
   async execute(data: IAddLanguageUsecaseInputDto): Promise<void> {
-   
-   const newLanguage = await this._languageRepository.create({language:data.language})
+    const templateCode = templateCodes[data.language];
+    const newLanguage = await this._languageRepository.create({
+      language: data.language,
+      templateCode,
+      solution: templateCode,
+      functionName: "solve",
+    });
 
-   await this._problemRepository.addLanguage(data.problemId,newLanguage._id as string)
-
-
+    await this._problemRepository.addLanguage(
+      data.problemId,
+      newLanguage._id as string
+    );
   }
 }
