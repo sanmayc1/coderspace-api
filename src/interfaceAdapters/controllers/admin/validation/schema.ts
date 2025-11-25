@@ -76,3 +76,8 @@ export const testcaseSchema = z.object({
   problemId: objectId,
   example: z.boolean().optional(),
 })  
+
+
+export const updateProblemSchema = createProblemSchema.extend({
+  problemId: objectId,
+});

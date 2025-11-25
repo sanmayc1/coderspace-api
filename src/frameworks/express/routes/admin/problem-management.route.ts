@@ -27,6 +27,25 @@ export class ProblemManagementRoutes extends BaseRoute {
         )
       )
     );
+
+    this.router.get(
+      "/:id",
+      asyncHandler(
+        problemManagementController.getProblem.bind(
+          problemManagementController
+        )
+      )
+    );
+
+    this.router.patch(
+      "/",
+      asyncHandler(
+        problemManagementController.updateProblem.bind(
+          problemManagementController
+        )
+      )
+    );
+
     this.router.post(
       "/language",
       asyncHandler(

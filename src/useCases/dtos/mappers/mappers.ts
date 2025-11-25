@@ -12,6 +12,7 @@ import {
   IGetAllProblemUsecaseOutputDto,
   IGetAllTestcaseUsecaseOutputDto,
   IGetLanguageDetailsUsecaseOutput,
+  IGetProblemUsecaseOutput,
   IGetUsersUsecaseOutputDto,
   IGetUsersUsecaseUserDto,
   ISkillDto,
@@ -154,23 +155,44 @@ export const getLanguageDetailsUsecaseMapper = {
   toResponse(data: ILanguageEntity): IGetLanguageDetailsUsecaseOutput {
     return {
       id: String(data._id),
-      language:data.language,
-      fnName:data.functionName as string,
-      solution:data.solution as string,
-      tmpCode:data.templateCode as string
+      language: data.language,
+      fnName: data.functionName as string,
+      solution: data.solution as string,
+      tmpCode: data.templateCode as string,
     };
   },
 };
 
+export const getAllTestcaseUsecaseMapper = {
+  toRespone(data: ITestcaseEntity): IGetAllTestcaseUsecaseOutputDto {
+    return {
+      id: data._id as string,
+      input: data.input,
+      output: data.output,
+      ...(data.example ? { example: data.example } : {}),
+    };
+  },
+};
 
-export const getAllTestcaseUsecaseMapper ={
-  toRespone(data:ITestcaseEntity):IGetAllTestcaseUsecaseOutputDto{
-   return {
-    id:data._id as string,
-    input:data.input,
-    output:data.output,
-    ...(data.example ?{example:data.example} :{})
-    
-   }
-  }
-}
+export const getProblemUsecaseMapper = {
+  toResponse(data: IProblemEntity): IGetProblemUsecaseOutput {
+    return {
+      constrain: data.constraints,
+      description: data.description,
+      difficulty: data.difficulty,
+      domain: String(data.domainId),
+      examples: data.examples.map((e) => ({
+        explanation: e.explanation,
+        input: e.input,
+        output: e.output,
+        id: e.id,
+      })),
+      premium: data.isPremium,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        id: String(s._id),
+        title: s.title,
+      })),
+      title: data.title,
+    };
+  },
+};

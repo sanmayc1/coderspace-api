@@ -115,3 +115,19 @@ export interface IGetAllTestcaseUsecaseOutputDto {
   output: string;
   example?: boolean;
 }
+
+
+export interface IGetProblemUsecaseOutput{
+  title: string;
+  description: string;
+  difficulty: string;
+  skills: ISkillDto[];
+  premium: boolean;
+  domain: string;
+  constrain: string;
+  examples: IExample[];
+}
+
+export interface IUpdateProblemUsecaseInput extends ICreateProblemUsecaseInputDto {
+  problemId:string
+}

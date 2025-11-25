@@ -33,6 +33,8 @@ import { UpdateLanguageUseCase } from "../../useCases/admin/problem-management/u
 import { AddSingleTestcaseUsecase } from "../../useCases/admin/problem-management/add-single-testcase.usecase.js";
 import { GetAllTestcaseUsecase } from "../../useCases/admin/problem-management/get-all-testcase.usecase.js";
 import { DeleteTestcaseUsecase } from "../../useCases/admin/problem-management/delete-testcase.usecase.js";
+import { GetProblemUsecase } from "../../useCases/admin/problem-management/get-problem.usecase.js";
+import { UpdateProblemUsecase } from "../../useCases/admin/problem-management/update-problem.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -75,5 +77,7 @@ export class UsecaseRegistery {
     container.register("IAddSingleTestcaseUsecase",{useClass:AddSingleTestcaseUsecase})
     container.register("IGetAllTestcaseUsecase",{useClass:GetAllTestcaseUsecase})
     container.register("IDeleteTestcaseUsecase",{useClass:DeleteTestcaseUsecase})
+    container.register("IGetProblemUsecase" ,{useClass:GetProblemUsecase})
+    container.register("IUpdateProblemUsecase",{useClass:UpdateProblemUsecase})
   }
 }

@@ -84,7 +84,8 @@ export const ERROR_MESSAGES = {
   SKILL_NOT_FOUND: "Skill not found",
   LANGUAGE_NOT_AVAILABLE: "Selected language is not available",
   LANGUAGES_NOT_FOUND: "Language is not found",
-  TESTCASE_NOT_FOUND:"Testcase is not found"
+  TESTCASE_NOT_FOUND:"Testcase is not found",
+  PROBLEM_NOT_FOUND:"Problem not found"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -116,7 +117,9 @@ export const SUCCESS_MESSAGES = {
   LANGUAGE_UPDATED: "Language updated successfully",
   SINGLE_TESTCASE_ADDED: "Single testcase added successfully",
   GET_TESTCASES:"Testcase successfully fetched",
-  TESTCASE_DELETED:"Testcase successfully deleted"
+  TESTCASE_DELETED:"Testcase successfully deleted",
+  GET_PROBLEM:"Problem fetched successfully",
+  PROBLEM_UPDATED:"Problem updated successfully"
 };
 
 export const COOKIES_NAMES = {

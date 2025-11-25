@@ -6,6 +6,7 @@ import {
   mongoObjectIdSchema,
   querySchema,
   testcaseSchema,
+  updateProblemSchema,
 } from "./validation/schema.js";
 import { ICreateProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/create-problem.usecase.interface.js";
 import {
@@ -22,6 +23,8 @@ import { IUpdateLanguageUsecase } from "../../../useCases/Interfaces/admin/probl
 import { IAddSingleTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/add-single-testcase.usecase.interface.js";
 import { IGetAllTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-all-testcases.usecasee.interface.js";
 import { IDeleteTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/delete-testcase.usecase.interface.js";
+import { IGetProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-problem.usecase.interface.js";
+import { IUpdateProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/update-problem.usecase.interface.js";
 
 @injectable()
 export class ProblemManagementController {
@@ -40,7 +43,10 @@ export class ProblemManagementController {
     private _addSingleTestcaseUsecase: IAddSingleTestcaseUsecase,
     @inject("IGetAllTestcaseUsecase")
     private _getAllTestcaseUsecase: IGetAllTestcaseUsecase,
-    @inject("IDeleteTestcaseUsecase") private _deleteTestcaseUsecase:IDeleteTestcaseUsecase
+    @inject("IDeleteTestcaseUsecase")
+    private _deleteTestcaseUsecase: IDeleteTestcaseUsecase,
+    @inject("IGetProblemUsecase") private _getProblemUsecase: IGetProblemUsecase,
+    @inject("IUpdateProblemUsecase") private _updateProblemUsecase:IUpdateProblemUsecase
   ) {}
 
   async createProblem(req: Request, res: Response) {
@@ -127,13 +133,33 @@ export class ProblemManagementController {
       .json(commonResponse(true, SUCCESS_MESSAGES.GET_TESTCASES, response));
   }
 
-  async deleteTestcase(req:Request,res:Response){
-    const {id} = req.params
-    const validated = mongoObjectIdSchema.parse({id})
+  async deleteTestcase(req: Request, res: Response) {
+    const { id } = req.params;
+    const validated = mongoObjectIdSchema.parse({ id });
 
-    await this._deleteTestcaseUsecase.execute(validated.id)
+    await this._deleteTestcaseUsecase.execute(validated.id);
 
-    res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.TESTCASE_DELETED))
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.TESTCASE_DELETED));
+  }
+
+  async getProblem(req: Request, res: Response) {
+    const { id } = req.params;
+    const validated = mongoObjectIdSchema.parse({ id });
+
+    const response = await this._getProblemUsecase.execute(validated.id);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.GET_PROBLEM, response));
+  }
+
+  async updateProblem(req:Request,res:Response){
+     const validatedProblem = updateProblemSchema.parse(req.body)
+      
+     await this._updateProblemUsecase.execute(validatedProblem)
+     
+     res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.PROBLEM_UPDATED))
 
   }
 }

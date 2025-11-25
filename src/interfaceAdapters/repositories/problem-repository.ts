@@ -3,6 +3,7 @@ import { IProblemEntity } from "../../domain/entities/problem-entity.js";
 import {
   IGetAllProblems,
   IGetAllProblemsInput,
+  IGetProblemInput,
   IProblemRepository,
 } from "../../domain/repositoryInterfaces/problem-repository.interface.js";
 import {
@@ -28,6 +29,18 @@ export class ProblemRepository
       problemRepositoryMapper.toEntity,
       problemRepositoryMapper.toModel
     );
+  }
+   
+ async getProblem(id: string, options: IGetProblemInput): Promise<IProblemEntity |null> {
+  const projection = options.projections
+  ? convertToMongoProjection(options.projections)
+  : {};
+  const relations = options.relations ? options.relations.join(" ") : ""
+
+  const doc = await ProblemModel.findOne({_id:id},projection).populate(relations)
+
+  return doc ? problemRepositoryMapper.toEntity(doc): null
+   
   }
   async addLanguage(id: string, languageId: string): Promise<void> {
     await ProblemModel.findByIdAndUpdate(id, {
