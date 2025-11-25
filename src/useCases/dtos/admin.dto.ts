@@ -91,3 +91,8 @@ export interface IGetAllProblemUsecaseOutputDto{
     problems:IGetAllProblemUsecaseProblemDto[]
 
 }
+
+export interface IAddLanguageUsecaseInputDto {
+    language:TLanguages
+    problemId:string
+}

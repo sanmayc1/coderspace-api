@@ -84,6 +84,7 @@ export const ERROR_MESSAGES = {
   DOMAIN_NOT_FOUND: "Domain not found",
   SKILL_EXIST: "Skill already exits",
   SKILL_NOT_FOUND: "Skill not found",
+  LANGUAGE_NOT_AVAILABLE:"Selected language is not available"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -109,7 +110,8 @@ export const SUCCESS_MESSAGES = {
   GET_ALL_SKILLS: "Skills fetched successfully",
   SKILL_DELETED: "Skill successfully deleted",
   PROBLEM_CREATED:"Problem created successfully",
-  GET_ALL_PROBLEMS:"Fetched all problems"
+  GET_ALL_PROBLEMS:"Fetched all problems",
+  LANGUAGE_ADDED:"Language Successfully added"
 };
 
 export const COOKIES_NAMES = {

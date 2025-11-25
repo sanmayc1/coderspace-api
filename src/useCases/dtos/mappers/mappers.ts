@@ -134,7 +134,7 @@ export const getAllProblemsUsecaseMapper = {
       currentPage,
       totalPages,
       problems: problems.map((s) => ({
-        languages:s.addedLanguagesId ? (s.addedLanguagesId as ILanguageEntity[]).map((l)=>l.language):[],
+        languages:(s.addedLanguagesId as ILanguageEntity[]).map((l)=>l.language),
         id: s._id as string,
         number: s.problemNumber as number,
         title: s.title,

@@ -21,11 +21,12 @@ export class GetAllProblemsUsecase implements IGetAllProblemsUsecase {
     const sort: Sort = PROBLEM_SORTING[data.sortBy] || PROBLEM_SORTING.NEWEST;
     const filter: GenericFilter = data.search ? { title: { op: "contains", value: data.search } }:{} ;
     const projections: Projection = ["_id", "title", "problemNumber", "view"];
+    const relations = ["addedLanguagesId"]
     const limit = 4;
     const skip = (data.page - 1) * limit;
 
 
-    const docs = await this._problemRepository.getAllProblems({filter,sort,projections,skip,limit})
+    const docs = await this._problemRepository.getAllProblems({filter,sort,projections,skip,limit,relations})
     const totalPages = Math.ceil(docs.total/limit)
     const response = getAllProblemsUsecaseMapper.toResponse(totalPages,data.page,docs.problems)
     return response

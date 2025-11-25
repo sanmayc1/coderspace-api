@@ -16,6 +16,7 @@ export class ProblemManagementRoutes extends BaseRoute {
     protected initializeRoutes(): void {
       this.router.post('/',problemManagementController.createProblem.bind(problemManagementController))
       this.router.get('/',problemManagementController.getAllProblems.bind(problemManagementController))
+      this.router.post("/language",problemManagementController.addLanguage.bind(problemManagementController))
     }
 
 }

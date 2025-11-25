@@ -29,20 +29,26 @@ export class ProblemRepository
       problemRepositoryMapper.toModel
     );
   }
+  async addLanguage(id: string, languageId: string): Promise<void> {
+    await ProblemModel.findByIdAndUpdate(id, {
+      $push: { addedLanguagesId: languageId },
+    });
+  }
   async getAllProblems(data: IGetAllProblemsInput): Promise<IGetAllProblems> {
     const filter = data.filter ? convertToMongoFilter(data.filter) : {};
     const projection = data.projections
       ? convertToMongoProjection(data.projections)
       : {};
     const sort = data.sort ? convertToMongoSort(data.sort) : {};
+    const relations = data.relations ? data.relations.join(" ") : ""
     const skip = data.skip ?? 0;
 
     const [docs, total] = await Promise.all([
-      ProblemModel.find(filter, projection)
+      ProblemModel.find(filter, projection).populate(relations)
         .sort(sort)
         .skip(skip)
         .limit(data.limit)
-        .lean(), 
+        .lean(),
       ProblemModel.countDocuments(filter),
     ]);
 

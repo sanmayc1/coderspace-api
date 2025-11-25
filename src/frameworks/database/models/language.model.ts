@@ -1,10 +1,10 @@
 import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
-import { accountsSchema } from "../schema/account.schema.js";
 import {Document, model, ObjectId} from 'mongoose'
+import { langaugeSchema } from "../schema/language.schema.js";
 
 
 export interface ILanguageModel extends Omit<ILanguageEntity ,'_id'> ,Document{
   _id:ObjectId
 }
 
-export const AccountsModel = model("Account",accountsSchema)
+export const LanguageModel = model("Language",langaugeSchema)
