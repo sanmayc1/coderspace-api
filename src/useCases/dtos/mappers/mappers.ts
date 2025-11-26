@@ -16,6 +16,9 @@ import {
   IGetUsersUsecaseOutputDto,
   IGetUsersUsecaseUserDto,
   ISkillDto,
+  IUserGetAllProblem,
+  IUserGetAllProblemsUsecaseOutput,
+  IUserGetProblemUsecaseOutput,
 } from "../admin.dto.js";
 import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from "../auth.dto.js";
 import { IGetCompanyUsecaseOutputDto } from "../company.dto.js";
@@ -193,6 +196,45 @@ export const getProblemUsecaseMapper = {
         title: s.title,
       })),
       title: data.title,
+    };
+  },
+};
+
+export const userGetAllProblemsUsecaseMapper = {
+  toResponse(data: IProblemEntity): IUserGetAllProblem {
+    return {
+      difficulty: data.difficulty,
+      id: data._id as string,
+      number: data.problemNumber as number,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        id: String(s._id),
+        title: s.title,
+      })),
+      title: data.title,
+    };
+  },
+};
+
+export const userGetProblemUsecaseMapper = {
+  toResponse(data: IProblemEntity): IUserGetProblemUsecaseOutput {
+    return {
+      constrain: data.constraints,
+      description: data.description,
+      difficulty: data.difficulty,
+      domain: data.domainId as string,
+      examples: data.examples,
+      premium: data.isPremium,
+      number: data.problemNumber as number,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        id: String(s._id),
+        title: s.title,
+      })),
+      templateCodes: (data.addedLanguagesId as ILanguageEntity[]).map((l) => ({
+        id: String(l._id),
+        language: l.language,
+        templateCode: String(l.templateCode),
+      })),
+      title:data.title
     };
   },
 };

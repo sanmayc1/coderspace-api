@@ -3,6 +3,7 @@ import { BaseRoute } from "../base-route.js";
 import { asyncHandler } from "../../../../shared/async-handler.js";
 import {
   authMiddleware,
+  userProblemController,
   userProfileController,
 } from "../../../di/di-resolver.js";
 
@@ -26,5 +27,13 @@ export class UserRoutes extends BaseRoute {
         userProfileController.updateSuggestionLevel.bind(userProfileController)
       )
     );
+
+    this.router.get("/problems",
+      asyncHandler(userProblemController.getAllProblems.bind(userProblemController))
+    )
+
+    this.router.get("/:id/problem",
+      asyncHandler(userProblemController.getProblem.bind(userProblemController))
+    )
   }
 }

@@ -85,7 +85,8 @@ export const ERROR_MESSAGES = {
   LANGUAGE_NOT_AVAILABLE: "Selected language is not available",
   LANGUAGES_NOT_FOUND: "Language is not found",
   TESTCASE_NOT_FOUND:"Testcase is not found",
-  PROBLEM_NOT_FOUND:"Problem not found"
+  PROBLEM_NOT_FOUND:"Problem not found",
+  NO_LANGUAGE_ADDED:"Please add one language to change visibility"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -119,7 +120,8 @@ export const SUCCESS_MESSAGES = {
   GET_TESTCASES:"Testcase successfully fetched",
   TESTCASE_DELETED:"Testcase successfully deleted",
   GET_PROBLEM:"Problem fetched successfully",
-  PROBLEM_UPDATED:"Problem updated successfully"
+  PROBLEM_UPDATED:"Problem updated successfully",
+  VISIBILITY_CHANGED:"Problem visibility changed successfully"
 };
 
 export const COOKIES_NAMES = {

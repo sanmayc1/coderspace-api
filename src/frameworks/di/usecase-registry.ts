@@ -35,6 +35,9 @@ import { GetAllTestcaseUsecase } from "../../useCases/admin/problem-management/g
 import { DeleteTestcaseUsecase } from "../../useCases/admin/problem-management/delete-testcase.usecase.js";
 import { GetProblemUsecase } from "../../useCases/admin/problem-management/get-problem.usecase.js";
 import { UpdateProblemUsecase } from "../../useCases/admin/problem-management/update-problem.usecase.js";
+import { ChangeVisibilityUsecase } from "../../useCases/admin/problem-management/change-visibility.usecase.js";
+import { UserGetAllProblemsUsecase } from "../../useCases/user/problem/user-get-all-problem.usecase.js";
+import { UserGetProblemUsecase } from "../../useCases/user/problem/user-get-problem.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -79,5 +82,8 @@ export class UsecaseRegistery {
     container.register("IDeleteTestcaseUsecase",{useClass:DeleteTestcaseUsecase})
     container.register("IGetProblemUsecase" ,{useClass:GetProblemUsecase})
     container.register("IUpdateProblemUsecase",{useClass:UpdateProblemUsecase})
+    container.register("IChangeVisibilityUsecase",{useClass:ChangeVisibilityUsecase})
+    container.register("IUserGetAllProblemsUsecase",{useClass:UserGetAllProblemsUsecase})
+    container.register("IUserGetProblemUsecase",{useClass:UserGetProblemUsecase})
   }
 }

@@ -18,6 +18,7 @@ import { ProblemManagementRoutes } from "../express/routes/admin/problem-managem
 import { ProblemManagementController } from "../../interfaceAdapters/controllers/admin/problem.management.controller.js";
 import { SkillsAndDomainManagementRoute } from "../express/routes/admin/skills-and-domain-management.route.js";
 import { SkillAndDomainManagementController } from "../../interfaceAdapters/controllers/admin/skills-and-domain-management.controller.js";
+import { UserProblemController } from "../../interfaceAdapters/controllers/user/user-problem.controller.js";
 
 DependencyInjection.registerAll();
 
@@ -39,6 +40,7 @@ export const companyController  = container.resolve(CompanyController)
 export const userProfileController = container.resolve(UserProfileController);
 export const problemManagementController = container.resolve(ProblemManagementController)
 export const skillAndDomainManagementController = container.resolve(SkillAndDomainManagementController)
+export const userProblemController = container.resolve(UserProblemController)
 
 // Routes 
 export const authRoutes = container.resolve(AuthRoute);

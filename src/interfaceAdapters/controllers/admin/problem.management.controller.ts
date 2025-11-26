@@ -25,6 +25,7 @@ import { IGetAllTestcaseUsecase } from "../../../useCases/Interfaces/admin/probl
 import { IDeleteTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/delete-testcase.usecase.interface.js";
 import { IGetProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-problem.usecase.interface.js";
 import { IUpdateProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/update-problem.usecase.interface.js";
+import { IChangeVisibilityUsecase } from "../../../useCases/Interfaces/admin/problem-management/change-visibility.usecase.interface.js";
 
 @injectable()
 export class ProblemManagementController {
@@ -46,7 +47,8 @@ export class ProblemManagementController {
     @inject("IDeleteTestcaseUsecase")
     private _deleteTestcaseUsecase: IDeleteTestcaseUsecase,
     @inject("IGetProblemUsecase") private _getProblemUsecase: IGetProblemUsecase,
-    @inject("IUpdateProblemUsecase") private _updateProblemUsecase:IUpdateProblemUsecase
+    @inject("IUpdateProblemUsecase") private _updateProblemUsecase:IUpdateProblemUsecase,
+    @inject("IChangeVisibilityUsecase") private _changeVisibilityUsecase:IChangeVisibilityUsecase
   ) {}
 
   async createProblem(req: Request, res: Response) {
@@ -160,6 +162,15 @@ export class ProblemManagementController {
      await this._updateProblemUsecase.execute(validatedProblem)
      
      res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.PROBLEM_UPDATED))
+
+  }
+
+  async changeVisibility (req:Request,res:Response){
+    const validated = mongoObjectIdSchema.parse({id:req.body.id})
+
+    await this._changeVisibilityUsecase.execute(validated.id)
+
+    res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.VISIBILITY_CHANGED))
 
   }
 }

@@ -46,6 +46,15 @@ export class ProblemManagementRoutes extends BaseRoute {
       )
     );
 
+    this.router.patch(
+      "/visibility",
+      asyncHandler(
+        problemManagementController.changeVisibility.bind(
+          problemManagementController
+        )
+      )
+    );
+
     this.router.post(
       "/language",
       asyncHandler(

@@ -131,3 +131,37 @@ export interface IGetProblemUsecaseOutput{
 export interface IUpdateProblemUsecaseInput extends ICreateProblemUsecaseInputDto {
   problemId:string
 }
+
+
+
+export interface IUserGetAllProblemsUsecaseOutput {
+  problems:IUserGetAllProblem[]
+  totalPages:number
+  currentPage:number
+}
+
+export interface IUserGetAllProblem{
+  title: string;
+  number:number
+  difficulty: string;
+  skills: ISkillDto[];
+  id:string
+}
+
+
+export interface IUserGetAllProblemsUsecaseInput {
+   search:string,
+   page:number
+}
+
+export interface ITemplateCodes{
+  language:string
+  id:string,
+  templateCode:string
+}
+
+
+export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput{
+  templateCodes:ITemplateCodes[]
+  number:number
+}

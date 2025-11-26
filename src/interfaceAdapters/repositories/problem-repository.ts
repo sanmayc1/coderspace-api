@@ -55,7 +55,7 @@ export class ProblemRepository
     const sort = data.sort ? convertToMongoSort(data.sort) : {};
     const relations = data.relations ? data.relations.join(" ") : ""
     const skip = data.skip ?? 0;
-
+  
     const [docs, total] = await Promise.all([
       ProblemModel.find(filter, projection).populate(relations)
         .sort(sort)
