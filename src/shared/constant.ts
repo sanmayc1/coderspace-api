@@ -121,7 +121,10 @@ export const SUCCESS_MESSAGES = {
   TESTCASE_DELETED:"Testcase successfully deleted",
   GET_PROBLEM:"Problem fetched successfully",
   PROBLEM_UPDATED:"Problem updated successfully",
-  VISIBILITY_CHANGED:"Problem visibility changed successfully"
+  VISIBILITY_CHANGED:"Problem visibility changed successfully",
+  COMPANY_UPDATED:"Company profile updated",
+  CONTEST_CREATED:"Contest created successfully",
+  CONTESTS_FETCHED:"Contests fetched successfully"
 };
 
 export const COOKIES_NAMES = {

@@ -44,6 +44,23 @@ export interface ICreateProblemUsecaseInputDto {
   examples: IExample[];
 }
 
+export interface IContestRewardDto {
+  rank: number;
+  description: string;
+}
+
+export interface ICreateContestUsecaseInputDto {
+  title: string;
+  description: string;
+  domain: string;
+  skills: string[];
+  problems: string[];
+  rewards: IContestRewardDto[];
+  dateAndTime: string;
+  duration: number;
+  visibility: TView;
+}
+
 export interface IGetAllDomainsUsecaseOutput {
   domains: IDomainDto[];
 }

@@ -38,6 +38,9 @@ import { UpdateProblemUsecase } from "../../useCases/admin/problem-management/up
 import { ChangeVisibilityUsecase } from "../../useCases/admin/problem-management/change-visibility.usecase.js";
 import { UserGetAllProblemsUsecase } from "../../useCases/user/problem/user-get-all-problem.usecase.js";
 import { UserGetProblemUsecase } from "../../useCases/user/problem/user-get-problem.usecase.js";
+import { UpdateCompanyUsecase } from "../../useCases/company/update-company.usecase.js";
+import { CreateContestUsecase } from "../../useCases/company/create-contest.usecase.js";
+import { GetCompanyContestsUsecase } from "../../useCases/company/get-company-contests.usecase.js";
 
 
 export class UsecaseRegistery {
@@ -85,5 +88,8 @@ export class UsecaseRegistery {
     container.register("IChangeVisibilityUsecase",{useClass:ChangeVisibilityUsecase})
     container.register("IUserGetAllProblemsUsecase",{useClass:UserGetAllProblemsUsecase})
     container.register("IUserGetProblemUsecase",{useClass:UserGetProblemUsecase})
+    container.register("IUpdateCompanyUsecase",{useClass:UpdateCompanyUsecase})
+    container.register("ICreateContestUsecase",{useClass:CreateContestUsecase})
+    container.register("IGetCompanyContestsUsecase",{useClass:GetCompanyContestsUsecase})
   }
 }

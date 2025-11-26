@@ -20,6 +20,9 @@ import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
 import { ILanguageModel } from "../models/language.model.js";
 import { ITestcaseEntity } from "../../../domain/entities/testcase-entity.js";
 import { ITestcaseModel } from "../models/testcase.model.js";
+import { IContestEntity } from "../../../domain/entities/contest-entity.js";
+import { IContestModel } from "../models/contest.model.js";
+import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -276,6 +279,64 @@ export const testcaseRepositoryMapper = {
       output: data.output,
       problemId: String(data.problemId),
       example: data.example,
+    };
+  },
+};
+
+export const contestRepositoryMapper = {
+  toEntity(data: IContestModel): IContestEntity {
+    return {
+      _id: String(data._id),
+      title: data.title,
+      description: data.description,
+      domainId:
+        data.domainId instanceof Types.ObjectId
+          ? String(data.domainId)
+          : (data.domainId as IDomainEntity),
+      skillsIds: data.skillsIds.map((skill) =>
+        skill instanceof Types.ObjectId ? String(skill) : (skill as ISkillEntity)
+      ),
+      problemsIds: data.problemsIds.map((problem) =>
+        problem instanceof Types.ObjectId
+          ? String(problem)
+          : (problem as IProblemEntity)
+      ),
+      rewards: data.rewards,
+      dateAndTime: data.dateAndTime,
+      duration: data.duration,
+      view: data.view,
+      creatorId:
+        data.creatorId instanceof Types.ObjectId
+          ? String(data.creatorId)
+          : (data.creatorId as IAccountsEntity),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<IContestEntity>): Partial<IContestModel> {
+    return {
+      ...(data.title && { title: data.title }),
+      ...(data.description && { description: data.description }),
+      ...(data.domainId && {
+        domainId: new Types.ObjectId(String(data.domainId)),
+      }),
+      ...(data.skillsIds && {
+        skillsIds: data.skillsIds.map(
+          (skill) => new Types.ObjectId(String(skill))
+        ),
+      }),
+      ...(data.problemsIds && {
+        problemsIds: data.problemsIds.map(
+          (problem) => new Types.ObjectId(String(problem))
+        ),
+      }),
+      ...(data.rewards && { rewards: data.rewards }),
+      ...(data.dateAndTime && { dateAndTime: data.dateAndTime }),
+      ...(data.duration && { duration: data.duration }),
+      ...(data.view && { view: data.view }),
+      ...(data.creatorId && {
+        creatorId: new Types.ObjectId(String(data.creatorId)),
+      }),
     };
   },
 };

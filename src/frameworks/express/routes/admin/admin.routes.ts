@@ -27,7 +27,7 @@ export class AdminRoutes extends BaseRoute {
     );
     this.router.use(
       "/",
-      asyncHandler(authMiddleware.handle(["admin"])).bind(authMiddleware),
+      asyncHandler(authMiddleware.handle(["admin","company"])).bind(authMiddleware),
       skillsAndDomainManagementRoute.router
     );
   }
