@@ -24,7 +24,7 @@ import { GetAllDomains } from "../../useCases/admin/skills-and-domain-management
 import { DeleteDomainUsecase } from "../../useCases/admin/skills-and-domain-management/delete-domain.usecase.js";
 import { CreateSkillUsecase } from "../../useCases/admin/skills-and-domain-management/create-skill.usecase.js";
 import { DeleteSkillUsecase } from "../../useCases/admin/skills-and-domain-management/delete-skill.usecase.js";
-import { GetAllSkillsUsecase } from "../../useCases/admin/skills-and-domain-management/get-all-skills.usecase.js";
+import { GetAllSkillsUsecase } from "../../useCases/common/get-all-skills.usecase.js";
 import { CreateProblemUsecase } from "../../useCases/admin/problem-management/create-problem.usecase.js";
 import { GetAllProblemsUsecase } from "../../useCases/admin/problem-management/get-all-problems.usecase.js";
 import { AddLanguageUsecase } from "../../useCases/admin/problem-management/add-language.usecase.js";
@@ -42,7 +42,6 @@ import { UpdateCompanyUsecase } from "../../useCases/company/update-company.usec
 import { CreateContestUsecase } from "../../useCases/company/create-contest.usecase.js";
 import { GetCompanyContestsUsecase } from "../../useCases/company/get-company-contests.usecase.js";
 
-
 export class UsecaseRegistery {
   static registerUsecase() {
     container.register("IUserRegisterUsecase", {
@@ -55,41 +54,87 @@ export class UsecaseRegistery {
       useClass: RefreshTokenUsecase,
     });
     container.register("ILogoutUsecase", { useClass: LogoutUsecase });
-    container.register("ISendRestPasswordLink",{useClass:SendRestPasswordLink})
-    container.register("IForgetPasswordUsecase",{useClass:ForgetPasswordUsecase})
-    container.register("IGithHubAuthUsecase",{useClass:GitHubAuthUsecase})
-    container.register("IAuthUserUsecase",{useClass:AuthUserUsecase})
-    container.register("IGoogleAuthUsecase",{useClass:GoogleAuthUsecase})
-    container.register("ILoginCompanyUsecase",{useClass:LoginCompanyUsecase})
-    container.register("IRegisterCompanyUsecase",{useClass:RegisterCompanyUsecase})
-    container.register("IGetUsersUsecase",{useClass:GetUsersUsecase})
-    container.register("IGetUserUsecase",{useClass:GetUserUsecase})
-    container.register("IUpdateSuggestionLevelUsecase",{useClass:UpdateSuggestionLevelUsecase})
-    container.register("ILoginAdminUsecase",{useClass:LoginAdminUsecase})
-    container.register("IUpdateUserUsecase",{useClass:UpdateUserUsecase})
-    container.register("IUpdateUserStatusUsecase",{useClass:UpdateUserStatusUsecase})
-    container.register("IGetCompanyUsecase",{useClass:GetCompanyUsecase})
-    container.register("ICreateDomainUsecase",{useClass:CreateDomainUsecase})
-    container.register("IGetAllDomains",{useClass:GetAllDomains})
-    container.register("IDeleteDomainUsecase",{useClass:DeleteDomainUsecase})
-    container.register("ICreateSkillUsecase",{useClass:CreateSkillUsecase})
-    container.register("IDeleteSkillUsecase",{useClass:DeleteSkillUsecase})
-    container.register("IGetAllSkillsUsecase",{useClass:GetAllSkillsUsecase})
-    container.register("ICreateProblemUsecase",{useClass:CreateProblemUsecase})
-    container.register("IGetAllProblemsUsecase",{useClass:GetAllProblemsUsecase})
-    container.register("IAddLanguageUsecase" ,{useClass:AddLanguageUsecase})
-    container.register("IGetLanguageDetailsUsecase",{useClass:GetLanguageDetailsUsecase})
-    container.register("IUpdateLanguageUsecase",{useClass:UpdateLanguageUseCase})
-    container.register("IAddSingleTestcaseUsecase",{useClass:AddSingleTestcaseUsecase})
-    container.register("IGetAllTestcaseUsecase",{useClass:GetAllTestcaseUsecase})
-    container.register("IDeleteTestcaseUsecase",{useClass:DeleteTestcaseUsecase})
-    container.register("IGetProblemUsecase" ,{useClass:GetProblemUsecase})
-    container.register("IUpdateProblemUsecase",{useClass:UpdateProblemUsecase})
-    container.register("IChangeVisibilityUsecase",{useClass:ChangeVisibilityUsecase})
-    container.register("IUserGetAllProblemsUsecase",{useClass:UserGetAllProblemsUsecase})
-    container.register("IUserGetProblemUsecase",{useClass:UserGetProblemUsecase})
-    container.register("IUpdateCompanyUsecase",{useClass:UpdateCompanyUsecase})
-    container.register("ICreateContestUsecase",{useClass:CreateContestUsecase})
-    container.register("IGetCompanyContestsUsecase",{useClass:GetCompanyContestsUsecase})
+    container.register("ISendRestPasswordLink", {
+      useClass: SendRestPasswordLink,
+    });
+    container.register("IForgetPasswordUsecase", {
+      useClass: ForgetPasswordUsecase,
+    });
+    container.register("IGithHubAuthUsecase", { useClass: GitHubAuthUsecase });
+    container.register("IAuthUserUsecase", { useClass: AuthUserUsecase });
+    container.register("IGoogleAuthUsecase", { useClass: GoogleAuthUsecase });
+    container.register("ILoginCompanyUsecase", {
+      useClass: LoginCompanyUsecase,
+    });
+    container.register("IRegisterCompanyUsecase", {
+      useClass: RegisterCompanyUsecase,
+    });
+    container.register("IGetUsersUsecase", { useClass: GetUsersUsecase });
+    container.register("IGetUserUsecase", { useClass: GetUserUsecase });
+    container.register("IUpdateSuggestionLevelUsecase", {
+      useClass: UpdateSuggestionLevelUsecase,
+    });
+    container.register("ILoginAdminUsecase", { useClass: LoginAdminUsecase });
+    container.register("IUpdateUserUsecase", { useClass: UpdateUserUsecase });
+    container.register("IUpdateUserStatusUsecase", {
+      useClass: UpdateUserStatusUsecase,
+    });
+    container.register("IGetCompanyUsecase", { useClass: GetCompanyUsecase });
+    container.register("ICreateDomainUsecase", {
+      useClass: CreateDomainUsecase,
+    });
+    container.register("IGetAllDomains", { useClass: GetAllDomains });
+    container.register("IDeleteDomainUsecase", {
+      useClass: DeleteDomainUsecase,
+    });
+    container.register("ICreateSkillUsecase", { useClass: CreateSkillUsecase });
+    container.register("IDeleteSkillUsecase", { useClass: DeleteSkillUsecase });
+    container.register("IGetAllSkillsUsecase", {
+      useClass: GetAllSkillsUsecase,
+    });
+    container.register("ICreateProblemUsecase", {
+      useClass: CreateProblemUsecase,
+    });
+    container.register("IGetAllProblemsUsecase", {
+      useClass: GetAllProblemsUsecase,
+    });
+    container.register("IAddLanguageUsecase", { useClass: AddLanguageUsecase });
+    container.register("IGetLanguageDetailsUsecase", {
+      useClass: GetLanguageDetailsUsecase,
+    });
+    container.register("IUpdateLanguageUsecase", {
+      useClass: UpdateLanguageUseCase,
+    });
+    container.register("IAddSingleTestcaseUsecase", {
+      useClass: AddSingleTestcaseUsecase,
+    });
+    container.register("IGetAllTestcaseUsecase", {
+      useClass: GetAllTestcaseUsecase,
+    });
+    container.register("IDeleteTestcaseUsecase", {
+      useClass: DeleteTestcaseUsecase,
+    });
+    container.register("IGetProblemUsecase", { useClass: GetProblemUsecase });
+    container.register("IUpdateProblemUsecase", {
+      useClass: UpdateProblemUsecase,
+    });
+    container.register("IChangeVisibilityUsecase", {
+      useClass: ChangeVisibilityUsecase,
+    });
+    container.register("IUserGetAllProblemsUsecase", {
+      useClass: UserGetAllProblemsUsecase,
+    });
+    container.register("IUserGetProblemUsecase", {
+      useClass: UserGetProblemUsecase,
+    });
+    container.register("IUpdateCompanyUsecase", {
+      useClass: UpdateCompanyUsecase,
+    });
+    container.register("ICreateContestUsecase", {
+      useClass: CreateContestUsecase,
+    });
+    container.register("IGetCompanyContestsUsecase", {
+      useClass: GetCompanyContestsUsecase,
+    });
   }
 }

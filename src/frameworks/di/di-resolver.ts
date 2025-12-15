@@ -20,6 +20,9 @@ import { SkillsAndDomainManagementRoute } from "../express/routes/admin/skills-a
 import { SkillAndDomainManagementController } from "../../interfaceAdapters/controllers/admin/skills-and-domain-management.controller.js";
 import { UserProblemController } from "../../interfaceAdapters/controllers/user/user-problem.controller.js";
 import { CompanyContestController } from "../../interfaceAdapters/controllers/company/contest.controller.js";
+import { CommonRoute } from "../express/routes/common/common-route.js";
+import { CommonController } from "../../interfaceAdapters/controllers/common/common.controller.js";
+import { ProblemRoute } from "../express/routes/user/problem/problem.route.js";
 
 DependencyInjection.registerAll();
 
@@ -43,6 +46,7 @@ export const problemManagementController = container.resolve(ProblemManagementCo
 export const skillAndDomainManagementController = container.resolve(SkillAndDomainManagementController)
 export const userProblemController = container.resolve(UserProblemController)
 export const companyContestController = container.resolve(CompanyContestController)
+export const commonController = container.resolve(CommonController)
 
 // Routes 
 export const authRoutes = container.resolve(AuthRoute);
@@ -50,8 +54,12 @@ export const userManagementRoute = container.resolve(UserManagementRoute);
 export const problemManagementRoutes = container.resolve(ProblemManagementRoutes)
 export const skillsAndDomainManagementRoute = container.resolve(SkillsAndDomainManagementRoute)
 export const adminRoutes = container.resolve(AdminRoutes);
+export const problemRoutes = container.resolve(ProblemRoute)
 export const userRoutes = container.resolve(UserRoutes);
 export const companyRoutes = container.resolve(CompanyRoutes)
+export const commonRoutes = container.resolve(CommonRoute)
+
+
 
 
 

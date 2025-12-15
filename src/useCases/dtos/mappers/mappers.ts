@@ -210,6 +210,7 @@ export const userGetAllProblemsUsecaseMapper = {
         id: String(s._id),
         title: s.title,
       })),
+      premium:data.isPremium,
       title: data.title,
     };
   },

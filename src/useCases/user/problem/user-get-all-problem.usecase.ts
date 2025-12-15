@@ -25,12 +25,19 @@ export class UserGetAllProblemsUsecase implements IUserGetAllProblemsUsecase {
       "skillsIds",
       "difficulty",
       "view",
+      "isPremium"
     ];
+
+
     const filter: GenericFilter = {
       title: { op: "contains", value: data.search || "" },
       view: { op: "eq", value: "public" },
+     ...(data.difficulty && { difficulty: { op: "eq", value: data.difficulty || "easy" }}),
+     ...(data.skill && { skillsIds: { op: "in", value: data.skill || "" }}),
     };
-    const limit = 10;
+
+   
+    const limit = 5;
     const skip = (data.page - 1) * limit;
     const sort: Sort = { problemNumber: "asc" };
 

@@ -6,6 +6,7 @@ import { config } from "../../shared/config.js";
 import {
   adminRoutes,
   authRoutes,
+  commonRoutes,
   companyRoutes,
   errorMiddleware,
   userRoutes,
@@ -40,6 +41,7 @@ export class Server {
     this._app.use("/api/v1/admin", adminRoutes.router);
     this._app.use("/api/v1/user", userRoutes.router);
     this._app.use("/api/v1/company",companyRoutes.router)
+    this._app.use("/api/v1/common",commonRoutes.router)
     this._io.on("connection",async (socket:Socket) => {
        
       const accessToken = socket.handshake.headers.cookie?.split(";")[0].split('=')[1]

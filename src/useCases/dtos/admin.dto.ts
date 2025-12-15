@@ -163,12 +163,15 @@ export interface IUserGetAllProblem{
   difficulty: string;
   skills: ISkillDto[];
   id:string
+  premium:boolean
 }
 
 
 export interface IUserGetAllProblemsUsecaseInput {
    search:string,
-   page:number
+   page:number,
+   difficulty?:string,
+   skill?:string
 }
 
 export interface ITemplateCodes{

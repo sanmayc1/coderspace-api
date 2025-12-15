@@ -1,3 +1,4 @@
+import { TDifficulty } from "../../shared/constant.js";
 import { IAccountsEntity } from "./accounts-entity.js";
 
 interface PlanHistory {
@@ -31,7 +32,7 @@ export interface IUserEntity {
   isProfileComplete?: boolean;
   domain?: Rating[] ;
   skills?: Rating[] ;
-  suggestionLevel?:"easy"|"medium"|"hard"
+  suggestionLevel?:TDifficulty
   createdAt?: Date;
   updatedAt?: Date;
 }

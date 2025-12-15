@@ -17,7 +17,6 @@ export class SkillsAndDomainManagementRoute extends BaseRoute {
 
 
      this.router.post("/skill",skillAndDomainManagementController.createSkill.bind(skillAndDomainManagementController))
-     this.router.get("/skills",skillAndDomainManagementController.getAllSkills.bind(skillAndDomainManagementController))
      this.router.delete("/skill/:id",skillAndDomainManagementController.deleteSkill.bind(skillAndDomainManagementController))
      
     }

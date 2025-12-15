@@ -43,7 +43,10 @@ export const querySchema = z.object({
   page: z.string().regex(/^\d+$/).transform(Number).default(1),
   sortBy: z.string().optional().default("createdAt"),
   search: z.string().optional().default(""),
+  difficulty: z.enum(DIFFICULTY).optional(),
+  skill:objectId.optional(),
 });
+
 
 
 export const mongoObjectIdSchema = z.object({
