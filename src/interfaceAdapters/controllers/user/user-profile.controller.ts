@@ -10,8 +10,10 @@ import { IGetUserUsecase } from "../../../useCases/Interfaces/users/user-profile
 import { DIFFICULTY, ERROR_MESSAGES } from "../../../shared/constant.js";
 import { IUpdateSuggestionLevelUsecase } from "../../../useCases/Interfaces/users/user-profile/update-suggestion-level.js";
 import { userProfileUpdateSchema } from "./validation/user.validation.js";
-import cloudinary from "../../../shared/utils/cloudinary.js";
+
 import { IUpdateUserProfileUsecase } from "../../../useCases/Interfaces/users/user-profile/update-user-profile.usecase.interface.js";
+import {  UpdatePasswordSchema } from "../auth/validation/user-validation-schema.js";
+import { IUpdateUserPasswordUsecase } from "../../../useCases/Interfaces/users/user-profile/update-user-password.interface.js";
 
 @injectable()
 export class UserProfileController {
@@ -20,7 +22,9 @@ export class UserProfileController {
     @inject("IUpdateSuggestionLevelUsecase")
     private _updateSuggestionLevelUsecase: IUpdateSuggestionLevelUsecase,
     @inject("IUpdateUserProfileUsecase")
-    private _updateUserProfileUsecase: IUpdateUserProfileUsecase
+    private _updateUserProfileUsecase: IUpdateUserProfileUsecase,
+    @inject("IUpdateUserPasswordUsecase")
+    private _updateUserPasswordUsecase: IUpdateUserPasswordUsecase
   ) {}
 
   async getUser(req: Request, res: Response) {
@@ -63,5 +67,19 @@ export class UserProfileController {
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.USER_PROFILE_UPDATED));
+  }
+
+  async updatePassword(req: Request, res: Response) {
+     const validatedData = UpdatePasswordSchema.parse(req.body)
+
+     console.log(validatedData);
+    await this._updateUserPasswordUsecase.execute({
+      ...validatedData,
+      accountId: req?.user?.accountId as string,
+    });
+
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.PASSWORD_UPDATED));
   }
 }

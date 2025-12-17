@@ -38,6 +38,14 @@ export class UserRoutes extends BaseRoute {
       )
     );
 
+    this.router.patch(
+      "/password",
+      asyncHandler(authMiddleware.handle(["user"]).bind(authMiddleware)),
+      asyncHandler(
+        userProfileController.updatePassword.bind(userProfileController)
+      )
+    );
+
     this.router.use("/problems", problemRoutes.router);
   }
 }

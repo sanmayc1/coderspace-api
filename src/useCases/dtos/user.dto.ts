@@ -16,6 +16,7 @@ export interface IGetUserUsecaseOutputDto {
     premiumActive:boolean
     profileUrl:string
     skills:Rating[]
+    auth:string
 }
 
 export interface IUpdateSuggestionLevelInputDto{
@@ -29,5 +30,12 @@ export interface IUpdateUserProfileInputDto{
     username:string
     about?:string
     profileImage:Express.Multer.File | undefined
+    accountId:string
+}
+
+
+export interface IUpdateUserPasswordInputDto{
+    currentPassword:string
+    newPassword:string
     accountId:string
 }

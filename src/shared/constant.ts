@@ -86,7 +86,8 @@ export const ERROR_MESSAGES = {
   LANGUAGES_NOT_FOUND: "Language is not found",
   TESTCASE_NOT_FOUND:"Testcase is not found",
   PROBLEM_NOT_FOUND:"Problem not found",
-  NO_LANGUAGE_ADDED:"Please add one language to change visibility"
+  NO_LANGUAGE_ADDED:"Please add one language to change visibility",
+  OLD_PASSWORD_AND_NEW_PASSWORD_SAME:"Old password and new password same",
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: "User registered successfully",
@@ -125,7 +126,8 @@ export const SUCCESS_MESSAGES = {
   COMPANY_UPDATED:"Company profile updated",
   CONTEST_CREATED:"Contest created successfully",
   CONTESTS_FETCHED:"Contests fetched successfully",
-  USER_PROFILE_UPDATED:"User profile updated successfully"
+  USER_PROFILE_UPDATED:"User profile updated successfully",
+  PASSWORD_UPDATED:"Password updated successfully"
 };
 
 export const COOKIES_NAMES = {

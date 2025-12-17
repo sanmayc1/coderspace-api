@@ -104,5 +104,7 @@ export class AuthRoute extends BaseRoute {
     this.router.post("/company/register",
       asyncHandler(authController.companyRegister.bind(authController))
     )
+
+
   }
 }

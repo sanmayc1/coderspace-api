@@ -20,6 +20,11 @@ export const PasswordSchema = z.object({
 })
 
 
+export const UpdatePasswordSchema = z.object({
+  currentPassword:passwordSchema,
+  newPassword:passwordSchema
+})
+
 export const LoginSchema = z.object({
   email:z.string().regex(strongEmailRegex, { message: "Invalid email format" }),
   password:z.string().min(7,{message:"Invalid credentials"})
