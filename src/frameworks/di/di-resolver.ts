@@ -33,6 +33,7 @@ export const authMiddleware = container.resolve(AuthMiddleware);
 // Services
 export const googleAuthService = container.resolve(GoogleAuthService);
 
+
 // Controllers
 export const authController = container.resolve(AuthController);
 export const githubAuthController = container.resolve(GithHubAuthController);

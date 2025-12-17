@@ -22,7 +22,7 @@ import { ITestcaseEntity } from "../../../domain/entities/testcase-entity.js";
 import { ITestcaseModel } from "../models/testcase.model.js";
 import { IContestEntity } from "../../../domain/entities/contest-entity.js";
 import { IContestModel } from "../models/contest.model.js";
-import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -38,14 +38,9 @@ export const userMapperRepo = {
       badge: data.badge,
       isPremiumActive: data.isPremiumActive,
       about: data.about,
-      dateOfBirth: data.dateOfBirth,
       domain: data.domain,
       suggestionLevel: data.suggestionLevel,
-      githubUrl: data.githubUrl,
       globalScore: data.globalScore,
-      linkedinUrl: data.linkedinUrl,
-      location: data.location,
-      phone: data.phone,
       planHistory: data.planHistory,
       skills: data.skills,
       accountId:
@@ -61,20 +56,16 @@ export const userMapperRepo = {
         accountId: new mongoose.Types.ObjectId(data.accountId as string),
       }),
       ...(data.badge && { badge: data.badge as TBadge }),
-      ...(data.dateOfBirth && { dateOfBirth: data.dateOfBirth }),
       ...(data.domain && { domain: data.domain }),
       ...(data.suggestionLevel && { suggestionLevel: data.suggestionLevel }),
-      ...(data.githubUrl && { githubUrl: data.githubUrl }),
       ...(data.globalScore && { globalScore: data.globalScore }),
       ...(data.isPremiumActive && { isPremiumActive: data.isPremiumActive }),
       ...(data.isProfileComplete && {
         isProfileComplete: data.isProfileComplete,
       }),
       ...(data.level && { level: data.level }),
-      ...(data.linkedinUrl && { linkedinUrl: data.linkedinUrl }),
-      ...(data.location && { location: data.location }),
       ...(data.notification && { notification: data.notification }),
-      ...(data.phone && { phone: data.phone }),
+     
       ...(data.planHistory && { planHistory: data.planHistory }),
       ...(data.skills && { skills: data.skills }),
       ...(data.username && { username: data.username as string }),

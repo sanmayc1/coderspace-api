@@ -124,7 +124,8 @@ export const SUCCESS_MESSAGES = {
   VISIBILITY_CHANGED:"Problem visibility changed successfully",
   COMPANY_UPDATED:"Company profile updated",
   CONTEST_CREATED:"Contest created successfully",
-  CONTESTS_FETCHED:"Contests fetched successfully"
+  CONTESTS_FETCHED:"Contests fetched successfully",
+  USER_PROFILE_UPDATED:"User profile updated successfully"
 };
 
 export const COOKIES_NAMES = {

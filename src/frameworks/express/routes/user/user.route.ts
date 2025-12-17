@@ -4,9 +4,9 @@ import { asyncHandler } from "../../../../shared/async-handler.js";
 import {
   authMiddleware,
   problemRoutes,
-  userProblemController,
   userProfileController,
 } from "../../../di/di-resolver.js";
+import { upload } from "../../../../shared/utils/multer.js";
 
 @injectable()
 export class UserRoutes extends BaseRoute {
@@ -28,8 +28,16 @@ export class UserRoutes extends BaseRoute {
         userProfileController.updateSuggestionLevel.bind(userProfileController)
       )
     );
-    
 
-    this.router.use("/problems",problemRoutes.router)
+    this.router.patch(
+      "/",
+      upload.single("profileImage"),
+      asyncHandler(authMiddleware.handle(["user"]).bind(authMiddleware)),
+      asyncHandler(
+        userProfileController.updateUserProfile.bind(userProfileController)
+      )
+    );
+
+    this.router.use("/problems", problemRoutes.router);
   }
 }

@@ -8,6 +8,7 @@ import { AuthMiddleware } from "../../interfaceAdapters/middleware/auth.middlewa
 import { UniqueIdService } from "../../interfaceAdapters/services/uuid.service.js";
 import { GitHubAuthService } from "../../interfaceAdapters/services/github-auth.service.js";
 import { GoogleAuthService } from "../../interfaceAdapters/services/google-auth.service.js";
+import { ImageStoreService } from "../../interfaceAdapters/services/image-store.service.js";
 
 export class ServiceRegistry {
   static registerServices() {
@@ -17,6 +18,7 @@ export class ServiceRegistry {
     container.registerSingleton("IUniqueIdService",UniqueIdService)
     container.registerSingleton("IGitHubAuthService",GitHubAuthService)
     container.registerSingleton("IGoogleAuthService",GoogleAuthService)
+    container.registerSingleton("IImageStoreService",ImageStoreService)
     // logger
     container.registerSingleton("ILogger", WinstonLoggerAdapter);
     // security

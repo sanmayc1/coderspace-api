@@ -18,11 +18,6 @@ export interface IUserEntity {
   username: string;
   level?: number;
   xpCoin?: number;
-  phone?: string;
-  location?: string;
-  dateOfBirth?: Date;
-  githubUrl?: string;
-  linkedinUrl?: string;
   globalScore?: number;
   notification?: boolean;
   badge?: "silver" | "gold" | "platinum";

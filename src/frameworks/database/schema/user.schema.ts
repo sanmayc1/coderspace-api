@@ -4,9 +4,6 @@ import { BADGE, DIFFICULTY } from "../../../shared/constant.js";
 
 export const userSchema = new Schema<IUserModel>(
   {
-    phone: {
-      type: String
-    },
     username: {
       type: String,
       required: true,
@@ -20,18 +17,6 @@ export const userSchema = new Schema<IUserModel>(
     level: {
       type: Number,
       default: 0,
-    },
-    location: {
-      type: String,
-    },
-    dateOfBirth: {
-      type: Date,
-    },
-    githubUrl: {
-      type: String,
-    },
-    linkedinUrl: {
-      type: String,
     },
     globalScore: {
       type: Number,

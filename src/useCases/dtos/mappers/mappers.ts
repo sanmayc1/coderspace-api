@@ -95,6 +95,7 @@ export const getUserUsecaseMapper = {
       username: user.username,
       xpCoin: user.xpCoin as number,
       about: (user.about as string) || "",
+      profileUrl: account.profileUrl || "",
     };
   },
 };

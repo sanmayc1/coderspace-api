@@ -14,10 +14,20 @@ export interface IGetUserUsecaseOutputDto {
     accountId:string
     about?:string
     premiumActive:boolean
+    profileUrl:string
     skills:Rating[]
 }
 
 export interface IUpdateSuggestionLevelInputDto{
     level:TDifficulty
+    accountId:string
+}
+
+
+export interface IUpdateUserProfileInputDto{
+    name:string
+    username:string
+    about?:string
+    profileImage:Express.Multer.File | undefined
     accountId:string
 }
