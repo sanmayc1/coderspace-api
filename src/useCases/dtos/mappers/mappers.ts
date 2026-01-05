@@ -22,7 +22,7 @@ import {
 } from '../admin.dto';
 import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from '../auth.dto';
 import { IGetCompanyUsecaseOutputDto } from '../company.dto';
-import { IGetUserUsecaseOutputDto } from '../user.dto';
+import { IGetAllCodersUsecaseOutputDto, IGetUserUsecaseOutputDto } from '../user.dto';
 
 export const authUserUsecaseMapper = {
   toOutput(account: IAccountsEntity, user?: IUserEntity): IAuthResponseDto {
@@ -234,4 +234,19 @@ export const userGetProblemUsecaseMapper = {
       title: data.title,
     };
   },
+};
+
+
+
+export const getAllCodersUsecaseMapper = {
+    toResponse(data: IUserEntity): IGetAllCodersUsecaseOutputDto {
+        return {
+            userId: data._id as string,
+            name: (data.accountId as IAccountsEntity).name,
+            username: data.username,
+            badge: data.badge as TBadge,
+            profileUrl: (data.accountId as IAccountsEntity).profileUrl || '',
+            isFollowing: false,
+        };
+    },
 };

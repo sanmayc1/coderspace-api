@@ -67,4 +67,14 @@ export class UserRepository
     const user = await UserModel.findOne({ username });
     return user ? userMapperRepo.toEntity(user) : user;
   }
+
+  async getAllUsersWithFollowing(): Promise<IUserEntity[] | []> {
+    const doc = await UserModel.find().populate({
+      path: 'accountId',
+      match: { isVerified: true },
+    });
+
+
+    return doc ? doc.map((user) => userMapperRepo.toEntity(user)) : [];
+  }
 }

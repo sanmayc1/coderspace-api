@@ -23,6 +23,8 @@ import { CompanyContestController } from '../../interfaceAdapters/controllers/co
 import { CommonRoute } from '../express/routes/common/common-route';
 import { CommonController } from '../../interfaceAdapters/controllers/common/common.controller';
 import { ProblemRoute } from '../express/routes/user/problem/problem.route';
+import { CodersRoute } from '../express/routes/user/coders/coders.route';
+import { CodersController } from '../../interfaceAdapters/controllers/user/coders.controller';
 
 DependencyInjection.registerAll();
 
@@ -47,6 +49,7 @@ export const skillAndDomainManagementController = container.resolve(
 export const userProblemController = container.resolve(UserProblemController);
 export const companyContestController = container.resolve(CompanyContestController);
 export const commonController = container.resolve(CommonController);
+export const codersController = container.resolve(CodersController);
 
 // Routes
 export const authRoutes = container.resolve(AuthRoute);
@@ -54,7 +57,10 @@ export const userManagementRoute = container.resolve(UserManagementRoute);
 export const problemManagementRoutes = container.resolve(ProblemManagementRoutes);
 export const skillsAndDomainManagementRoute = container.resolve(SkillsAndDomainManagementRoute);
 export const adminRoutes = container.resolve(AdminRoutes);
+export const codersRoutes = container.resolve(CodersRoute);
 export const problemRoutes = container.resolve(ProblemRoute);
 export const userRoutes = container.resolve(UserRoutes);
 export const companyRoutes = container.resolve(CompanyRoutes);
 export const commonRoutes = container.resolve(CommonRoute);
+
+

@@ -43,6 +43,7 @@ import { CreateContestUsecase } from '../../useCases/company/create-contest.usec
 import { GetCompanyContestsUsecase } from '../../useCases/company/get-company-contests.usecase';
 import { UpdateUserProfileUsecase } from '../../useCases/user/user-profile/user-profile-update.usecase';
 import { UpdateUserPasswordUsecase } from '../../useCases/user/user-profile/update-user-password.usecase';
+import { GetAllCoders } from '../../useCases/user/coders/get-all-coders';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -145,6 +146,9 @@ export class UsecaseRegistery {
 
     container.register('IUpdateUserPasswordUsecase', {
       useClass: UpdateUserPasswordUsecase,
+    });
+    container.register('IGetAllCodersUsecase', {
+      useClass: GetAllCoders,
     });
   }
 }

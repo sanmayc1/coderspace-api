@@ -127,6 +127,7 @@ export const SUCCESS_MESSAGES = {
   CONTESTS_FETCHED: 'Contests fetched successfully',
   USER_PROFILE_UPDATED: 'User profile updated successfully',
   PASSWORD_UPDATED: 'Password updated successfully',
+  GET_ALL_CODERS: 'Users fetched Successfully',
 };
 
 export const COOKIES_NAMES = {

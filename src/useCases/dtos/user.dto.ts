@@ -34,3 +34,13 @@ export interface IUpdateUserPasswordInputDto {
   newPassword: string;
   accountId: string;
 }
+
+
+export interface IGetAllCodersUsecaseOutputDto {
+    userId:string
+    name:string
+    username:string
+    badge:string
+    profileUrl:string
+    isFollowing:boolean
+}

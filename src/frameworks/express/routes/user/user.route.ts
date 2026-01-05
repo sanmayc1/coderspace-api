@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 import { BaseRoute } from '../base-route';
 import { asyncHandler } from '../../../../shared/async-handler';
-import { authMiddleware, problemRoutes, userProfileController } from '../../../di/di-resolver';
+import { authMiddleware, codersRoutes, problemRoutes, userProfileController } from '../../../di/di-resolver';
 import { upload } from '../../../../shared/utils/multer';
 
 @injectable()
@@ -37,5 +37,6 @@ export class UserRoutes extends BaseRoute {
     );
 
     this.router.use('/problems', problemRoutes.router);
+    this.router.use('/coders', codersRoutes.router );
   }
 }
