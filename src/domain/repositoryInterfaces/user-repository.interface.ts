@@ -1,5 +1,5 @@
-import { IUserEntity } from "../entities/user.entity.js";
-import { IBaseRepository } from "./base-repository.interface.js";
+import { IUserEntity } from '../entities/user.entity';
+import { IBaseRepository } from './base-repository.interface';
 
 export interface IUserRepository extends IBaseRepository<IUserEntity> {
   // create(data: Partial<IUserEntity>): Promise<IUserEntity>;
@@ -10,7 +10,7 @@ export interface IUserRepository extends IBaseRepository<IUserEntity> {
   getAllUsers(
     skip: number,
     limit: number,
-    search:string,
-    sort:string
-  ): Promise<{ users: IUserEntity[]| [], count: number } >;
+    search: string,
+    sort: string
+  ): Promise<{ users: IUserEntity[] | []; count: number }>;
 }

@@ -1,8 +1,3 @@
-
-
-
-
-
 export interface ICreateDomainUsecase {
-    execute(title:string):Promise<void>
+  execute(title: string): Promise<void>;
 }

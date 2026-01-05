@@ -1,9 +1,6 @@
-import { ITestcaseEntity } from "../entities/testcase-entity.js";
-import { IBaseRepository } from "./base-repository.interface.js";
-
-
-
+import { ITestcaseEntity } from '../entities/testcase-entity';
+import { IBaseRepository } from './base-repository.interface';
 
 export interface ITestcaseRepository extends IBaseRepository<ITestcaseEntity> {
-    getTestcasesByProblemId(problemId:string):Promise<ITestcaseEntity[]>
+  getTestcasesByProblemId(problemId: string): Promise<ITestcaseEntity[]>;
 }

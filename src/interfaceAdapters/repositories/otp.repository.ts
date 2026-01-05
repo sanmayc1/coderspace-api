@@ -1,18 +1,16 @@
-import { IOtpEntity } from "../../domain/entities/otp.entity.js";
-import { IOtpRespository } from "../../domain/repositoryInterfaces/otp.interface.js";
-import { otpMapper } from "../../frameworks/database/dtoMappers/dto.mapper.js";
-import { OtpModel } from "../../frameworks/database/models/otp.model.js";
-
+import { IOtpEntity } from '../../domain/entities/otp.entity';
+import { IOtpRespository } from '../../domain/repositoryInterfaces/otp.interface';
+import { redis } from '../../frameworks/cache/redis';
 export class OtpRepository implements IOtpRespository {
   async delete(email: string): Promise<void> {
-    await OtpModel.deleteOne({ email });
+    
+    await redis.del(`email:${email}`);
   }
-  async save(data: Partial<IOtpEntity>): Promise<IOtpEntity> {
-    const otpData = await OtpModel.create(data);
-    return otpMapper.toEntity(otpData);
+  async save(data: IOtpEntity): Promise<void> {
+
+    await redis.set(`email:${data.email}`, data.otp, 'EX', data.expiry);
   }
-  async findByEmail(email: string): Promise<IOtpEntity | null> {
-    const otpData = await OtpModel.findOne({ email });
-    return otpData ? otpMapper.toEntity(otpData) : null;
+  async findByEmail(email: string): Promise<string | null> {
+    return await redis.get(`email:${email}`);
   }
 }

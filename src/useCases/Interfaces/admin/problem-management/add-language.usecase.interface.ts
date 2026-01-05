@@ -1,8 +1,5 @@
-import { IAddLanguageUsecaseInputDto } from "../../../dtos/admin.dto.js";
-
-
-
+import { IAddLanguageUsecaseInputDto } from '../../../dtos/admin.dto';
 
 export interface IAddLanguageUsecase {
-    execute(data:IAddLanguageUsecaseInputDto):Promise<void>
+  execute(data: IAddLanguageUsecaseInputDto): Promise<void>;
 }

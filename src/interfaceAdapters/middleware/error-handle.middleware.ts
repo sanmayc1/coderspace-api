@@ -1,20 +1,15 @@
-import { inject, injectable } from "tsyringe";
-import { ILoger } from "../services/logger/logger-service-interface.js";
-import {  NextFunction, Request, Response } from "express";
-import {  ZodError } from "zod";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../shared/constant.js";
-import { CustomError } from "../../domain/utils/custom-error.js";
+import { inject, injectable } from 'tsyringe';
+import { ILoger } from '../services/logger/logger-service-interface';
+import { NextFunction, Request, Response } from 'express';
+import { ZodError } from 'zod';
+import { ERROR_MESSAGES, HTTP_STATUS } from '../../shared/constant';
+import { CustomError } from '../../domain/utils/custom-error';
 
 @injectable()
 export class ErrorMiddleware {
-  constructor(@inject("ILogger") private logger: ILoger) {}
+  constructor(@inject('ILogger') private logger: ILoger) {}
 
-  public handleError(
-    err: any,
-    req: Request,
-    res: Response,
-    next:NextFunction
-  ) {
+  public handleError(err: any, req: Request, res: Response, next: NextFunction) {
     let statusCode = HTTP_STATUS.INTERNAL_SERVER_ERROR;
     let message = ERROR_MESSAGES.SERVER_ERROR;
     let errors = err.errors;
@@ -49,7 +44,7 @@ export class ErrorMiddleware {
     }
 
     if (statusCode >= 500) {
-      this.logger.error("An error occurred", {
+      this.logger.error('An error occurred', {
         message: err.message,
         stack: err.stack,
         meathod: req.method,

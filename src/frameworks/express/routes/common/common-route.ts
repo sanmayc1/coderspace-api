@@ -1,6 +1,6 @@
-import { asyncHandler } from "../../../../shared/async-handler.js";
-import { authMiddleware, commonController } from "../../../di/di-resolver.js";
-import { BaseRoute } from "../base-route.js";
+import { asyncHandler } from '../../../../shared/async-handler';
+import { authMiddleware, commonController } from '../../../di/di-resolver';
+import { BaseRoute } from '../base-route';
 
 export class CommonRoute extends BaseRoute {
   constructor() {
@@ -8,9 +8,6 @@ export class CommonRoute extends BaseRoute {
   }
 
   protected initializeRoutes(): void {
-    this.router.get(
-      "/skills",
-      asyncHandler(commonController.getAllSkills.bind(commonController))
-    );
+    this.router.get('/skills', asyncHandler(commonController.getAllSkills.bind(commonController)));
   }
 }

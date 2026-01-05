@@ -1,11 +1,11 @@
-import { UsecaseRegistery } from "./usecase-registry.js";
-import { RepositoryRegistery } from "./repository-registry.js";
-import { ServiceRegistry } from "./service-registry.js";
+import { UsecaseRegistery } from './usecase-registry';
+import { RepositoryRegistery } from './repository-registry';
+import { ServiceRegistry } from './service-registry';
 
 export class DependencyInjection {
   static registerAll() {
     UsecaseRegistery.registerUsecase();
     RepositoryRegistery.registerRepository();
-    ServiceRegistry.registerServices()
+    ServiceRegistry.registerServices();
   }
 }

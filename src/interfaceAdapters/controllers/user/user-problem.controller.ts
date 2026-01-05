@@ -1,33 +1,23 @@
-import { Request, Response } from "express";
-import { inject, injectable } from "tsyringe";
-import { IUserGetAllProblemsUsecase } from "../../../useCases/Interfaces/users/problem/user-get-all-problems.usecase.interface.js";
-import {
-  mongoObjectIdSchema,
-  querySchema,
-} from "../admin/validation/schema.js";
-import {
-  commonResponse,
-  HTTP_STATUS,
-  SUCCESS_MESSAGES,
-} from "../auth/index.js";
-import { IUserGetProblemUsecase } from "../../../useCases/Interfaces/users/problem/user-get-problem.usecase.interface.js";
+import { Request, Response } from 'express';
+import { inject, injectable } from 'tsyringe';
+import { IUserGetAllProblemsUsecase } from '../../../useCases/Interfaces/users/problem/user-get-all-problems.usecase.interface';
+import { mongoObjectIdSchema, querySchema } from '../admin/validation/schema';
+import { commonResponse, HTTP_STATUS, SUCCESS_MESSAGES } from '../auth/index';
+import { IUserGetProblemUsecase } from '../../../useCases/Interfaces/users/problem/user-get-problem.usecase.interface';
 
 @injectable()
 export class UserProblemController {
   constructor(
-    @inject("IUserGetAllProblemsUsecase")
+    @inject('IUserGetAllProblemsUsecase')
     private _userGetAllProblemsUsecase: IUserGetAllProblemsUsecase,
-    @inject("IUserGetProblemUsecase")
+    @inject('IUserGetProblemUsecase')
     private _userGetProblemUsecase: IUserGetProblemUsecase
   ) {}
 
   async getAllProblems(req: Request, res: Response) {
     const validatedQurey = querySchema.parse(req.query);
-    
 
-    const response = await this._userGetAllProblemsUsecase.execute(
-      validatedQurey
-    );
+    const response = await this._userGetAllProblemsUsecase.execute(validatedQurey);
 
     res
       .status(HTTP_STATUS.OK)
@@ -41,8 +31,6 @@ export class UserProblemController {
 
     const response = await this._userGetProblemUsecase.execute(validated.id);
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.GET_PROBLEM, response));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.GET_PROBLEM, response));
   }
 }

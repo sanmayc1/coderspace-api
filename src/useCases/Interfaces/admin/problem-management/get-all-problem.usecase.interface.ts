@@ -1,8 +1,8 @@
-
-
-
-import { IGetAllProblemUsecaseInputDto, IGetAllProblemUsecaseOutputDto } from "../../../dtos/admin.dto.js";
+import {
+  IGetAllProblemUsecaseInputDto,
+  IGetAllProblemUsecaseOutputDto,
+} from '../../../dtos/admin.dto';
 
 export interface IGetAllProblemsUsecase {
-  execute(data:IGetAllProblemUsecaseInputDto): Promise<IGetAllProblemUsecaseOutputDto>;
+  execute(data: IGetAllProblemUsecaseInputDto): Promise<IGetAllProblemUsecaseOutputDto>;
 }

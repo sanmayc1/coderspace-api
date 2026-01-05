@@ -1,6 +1,4 @@
-import { IWalletEnitity } from "../entities/wallet.entity.js";
-import { IBaseRepository } from "./base-repository.interface.js";
+import { IWalletEnitity } from '../entities/wallet.entity';
+import { IBaseRepository } from './base-repository.interface';
 
-export interface IWalletRepository extends IBaseRepository<IWalletEnitity> {
-    
-}
+export interface IWalletRepository extends IBaseRepository<IWalletEnitity> {}

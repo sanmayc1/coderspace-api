@@ -1,5 +1,5 @@
-import { Request, response, Response } from "express";
-import { inject, injectable } from "tsyringe";
+import { Request, response, Response } from 'express';
+import { inject, injectable } from 'tsyringe';
 import {
   createProblemSchema,
   languageRequestSchema,
@@ -7,56 +7,49 @@ import {
   querySchema,
   testcaseSchema,
   updateProblemSchema,
-} from "./validation/schema.js";
-import { ICreateProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/create-problem.usecase.interface.js";
-import {
-  commonResponse,
-  CustomError,
-  HTTP_STATUS,
-  SUCCESS_MESSAGES,
-} from "../auth/index.js";
-import { IGetAllProblemsUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-all-problem.usecase.interface.js";
-import { ERROR_MESSAGES, LANGUAGES } from "../../../shared/constant.js";
-import { IAddLanguageUsecase } from "../../../useCases/Interfaces/admin/problem-management/add-language.usecase.interface.js";
-import { IGetLanguageDetailsUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-language-details.interface.js";
-import { IUpdateLanguageUsecase } from "../../../useCases/Interfaces/admin/problem-management/update-language.interface.js";
-import { IAddSingleTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/add-single-testcase.usecase.interface.js";
-import { IGetAllTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-all-testcases.usecasee.interface.js";
-import { IDeleteTestcaseUsecase } from "../../../useCases/Interfaces/admin/problem-management/delete-testcase.usecase.interface.js";
-import { IGetProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/get-problem.usecase.interface.js";
-import { IUpdateProblemUsecase } from "../../../useCases/Interfaces/admin/problem-management/update-problem.usecase.interface.js";
-import { IChangeVisibilityUsecase } from "../../../useCases/Interfaces/admin/problem-management/change-visibility.usecase.interface.js";
+} from './validation/schema';
+import { ICreateProblemUsecase } from '../../../useCases/Interfaces/admin/problem-management/create-problem.usecase.interface';
+import { commonResponse, CustomError, HTTP_STATUS, SUCCESS_MESSAGES } from '../auth/index';
+import { IGetAllProblemsUsecase } from '../../../useCases/Interfaces/admin/problem-management/get-all-problem.usecase.interface';
+import { ERROR_MESSAGES, LANGUAGES } from '../../../shared/constant';
+import { IAddLanguageUsecase } from '../../../useCases/Interfaces/admin/problem-management/add-language.usecase.interface';
+import { IGetLanguageDetailsUsecase } from '../../../useCases/Interfaces/admin/problem-management/get-language-details.interface';
+import { IUpdateLanguageUsecase } from '../../../useCases/Interfaces/admin/problem-management/update-language.interface';
+import { IAddSingleTestcaseUsecase } from '../../../useCases/Interfaces/admin/problem-management/add-single-testcase.usecase.interface';
+import { IGetAllTestcaseUsecase } from '../../../useCases/Interfaces/admin/problem-management/get-all-testcases.usecasee.interface';
+import { IDeleteTestcaseUsecase } from '../../../useCases/Interfaces/admin/problem-management/delete-testcase.usecase.interface';
+import { IGetProblemUsecase } from '../../../useCases/Interfaces/admin/problem-management/get-problem.usecase.interface';
+import { IUpdateProblemUsecase } from '../../../useCases/Interfaces/admin/problem-management/update-problem.usecase.interface';
+import { IChangeVisibilityUsecase } from '../../../useCases/Interfaces/admin/problem-management/change-visibility.usecase.interface';
 
 @injectable()
 export class ProblemManagementController {
   constructor(
-    @inject("ICreateProblemUsecase")
+    @inject('ICreateProblemUsecase')
     private _createProblemUsecase: ICreateProblemUsecase,
-    @inject("IGetAllProblemsUsecase")
+    @inject('IGetAllProblemsUsecase')
     private _getAllProblemUsecase: IGetAllProblemsUsecase,
-    @inject("IAddLanguageUsecase")
+    @inject('IAddLanguageUsecase')
     private _addLanguageUsecase: IAddLanguageUsecase,
-    @inject("IGetLanguageDetailsUsecase")
+    @inject('IGetLanguageDetailsUsecase')
     private _getLanguageDetailsUsecase: IGetLanguageDetailsUsecase,
-    @inject("IUpdateLanguageUsecase")
+    @inject('IUpdateLanguageUsecase')
     private _updateLanguageUsecase: IUpdateLanguageUsecase,
-    @inject("IAddSingleTestcaseUsecase")
+    @inject('IAddSingleTestcaseUsecase')
     private _addSingleTestcaseUsecase: IAddSingleTestcaseUsecase,
-    @inject("IGetAllTestcaseUsecase")
+    @inject('IGetAllTestcaseUsecase')
     private _getAllTestcaseUsecase: IGetAllTestcaseUsecase,
-    @inject("IDeleteTestcaseUsecase")
+    @inject('IDeleteTestcaseUsecase')
     private _deleteTestcaseUsecase: IDeleteTestcaseUsecase,
-    @inject("IGetProblemUsecase") private _getProblemUsecase: IGetProblemUsecase,
-    @inject("IUpdateProblemUsecase") private _updateProblemUsecase:IUpdateProblemUsecase,
-    @inject("IChangeVisibilityUsecase") private _changeVisibilityUsecase:IChangeVisibilityUsecase
+    @inject('IGetProblemUsecase') private _getProblemUsecase: IGetProblemUsecase,
+    @inject('IUpdateProblemUsecase') private _updateProblemUsecase: IUpdateProblemUsecase,
+    @inject('IChangeVisibilityUsecase') private _changeVisibilityUsecase: IChangeVisibilityUsecase
   ) {}
 
   async createProblem(req: Request, res: Response) {
     const validatedProblem = createProblemSchema.parse(req.body);
     await this._createProblemUsecase.execute(validatedProblem);
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.PROBLEM_CREATED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.PROBLEM_CREATED));
   }
 
   async getAllProblems(req: Request, res: Response) {
@@ -72,26 +65,19 @@ export class ProblemManagementController {
   async addLanguage(req: Request, res: Response) {
     const { language, problemId } = req.body;
     if (!LANGUAGES.includes(language)) {
-      throw new CustomError(
-        HTTP_STATUS.BAD_REQUEST,
-        ERROR_MESSAGES.LANGUAGE_NOT_AVAILABLE
-      );
+      throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.LANGUAGE_NOT_AVAILABLE);
     }
 
     await this._addLanguageUsecase.execute({ language, problemId });
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.LANGUAGE_ADDED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.LANGUAGE_ADDED));
   }
 
   async getLanguage(req: Request, res: Response) {
     const { id } = req.params;
     const validated = mongoObjectIdSchema.parse({ id });
 
-    const response = await this._getLanguageDetailsUsecase.execute(
-      validated.id
-    );
+    const response = await this._getLanguageDetailsUsecase.execute(validated.id);
 
     res
       .status(HTTP_STATUS.OK)
@@ -103,9 +89,7 @@ export class ProblemManagementController {
 
     await this._updateLanguageUsecase.execute(validatedLangauge);
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.LANGUAGE_UPDATED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.LANGUAGE_UPDATED));
   }
 
   async addSingleTestcase(req: Request, res: Response) {
@@ -119,9 +103,7 @@ export class ProblemManagementController {
 
     await this._addSingleTestcaseUsecase.execute(validated);
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.SINGLE_TESTCASE_ADDED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.SINGLE_TESTCASE_ADDED));
   }
 
   async getAllTestcases(req: Request, res: Response) {
@@ -130,9 +112,7 @@ export class ProblemManagementController {
 
     const response = await this._getAllTestcaseUsecase.execute(validated.id);
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.GET_TESTCASES, response));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.GET_TESTCASES, response));
   }
 
   async deleteTestcase(req: Request, res: Response) {
@@ -141,9 +121,7 @@ export class ProblemManagementController {
 
     await this._deleteTestcaseUsecase.execute(validated.id);
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.TESTCASE_DELETED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.TESTCASE_DELETED));
   }
 
   async getProblem(req: Request, res: Response) {
@@ -151,26 +129,22 @@ export class ProblemManagementController {
     const validated = mongoObjectIdSchema.parse({ id });
 
     const response = await this._getProblemUsecase.execute(validated.id);
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.GET_PROBLEM, response));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.GET_PROBLEM, response));
   }
 
-  async updateProblem(req:Request,res:Response){
-     const validatedProblem = updateProblemSchema.parse(req.body)
-      
-     await this._updateProblemUsecase.execute(validatedProblem)
-     
-     res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.PROBLEM_UPDATED))
+  async updateProblem(req: Request, res: Response) {
+    const validatedProblem = updateProblemSchema.parse(req.body);
 
+    await this._updateProblemUsecase.execute(validatedProblem);
+
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.PROBLEM_UPDATED));
   }
 
-  async changeVisibility (req:Request,res:Response){
-    const validated = mongoObjectIdSchema.parse({id:req.body.id})
+  async changeVisibility(req: Request, res: Response) {
+    const validated = mongoObjectIdSchema.parse({ id: req.body.id });
 
-    await this._changeVisibilityUsecase.execute(validated.id)
+    await this._changeVisibilityUsecase.execute(validated.id);
 
-    res.status(HTTP_STATUS.OK).json(commonResponse(true,SUCCESS_MESSAGES.VISIBILITY_CHANGED))
-
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.VISIBILITY_CHANGED));
   }
 }

@@ -1,28 +1,27 @@
-import mongoose, { Types } from "mongoose";
-import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
-import { IOtpEntity } from "../../../domain/entities/otp.entity.js";
-import { IUserEntity } from "../../../domain/entities/user.entity.js";
-import { IWalletEnitity } from "../../../domain/entities/wallet.entity.js";
-import { IAccountsModel } from "../models/account.model .js";
-import { IOtpModel } from "../models/otp.model.js";
-import { IUserModel } from "../models/user.model.js";
-import { IWalletModel } from "../models/wallet.model.js";
-import { ICompanyModel } from "../models/company.model.js";
-import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
-import { TBadge } from "../../../shared/constant.js";
-import { IProblemModel } from "../models/problem.model.js";
-import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
-import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
-import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
-import { IDomainModel } from "../models/domain.model.js";
-import { ISkillModel } from "../models/skill.model.js";
-import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
-import { ILanguageModel } from "../models/language.model.js";
-import { ITestcaseEntity } from "../../../domain/entities/testcase-entity.js";
-import { ITestcaseModel } from "../models/testcase.model.js";
-import { IContestEntity } from "../../../domain/entities/contest-entity.js";
-import { IContestModel } from "../models/contest.model.js";
-
+import mongoose, { Types } from 'mongoose';
+import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
+import { IOtpEntity } from '../../../domain/entities/otp.entity';
+import { IUserEntity } from '../../../domain/entities/user.entity';
+import { IWalletEnitity } from '../../../domain/entities/wallet.entity';
+import { IAccountsModel } from '../models/account.model ';
+import { IOtpModel } from '../models/otp.model';
+import { IUserModel } from '../models/user.model';
+import { IWalletModel } from '../models/wallet.model';
+import { ICompanyModel } from '../models/company.model';
+import { ICompanyEntity } from '../../../domain/entities/company-entity';
+import { TBadge } from '../../../shared/constant';
+import { IProblemModel } from '../models/problem.model';
+import { IProblemEntity } from '../../../domain/entities/problem-entity';
+import { IDomainEntity } from '../../../domain/entities/domain-entity';
+import { ISkillEntity } from '../../../domain/entities/skill-entity';
+import { IDomainModel } from '../models/domain.model';
+import { ISkillModel } from '../models/skill.model';
+import { ILanguageEntity } from '../../../domain/entities/langauge-entity';
+import { ILanguageModel } from '../models/language.model';
+import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
+import { ITestcaseModel } from '../models/testcase.model';
+import { IContestEntity } from '../../../domain/entities/contest-entity';
+import { IContestModel } from '../models/contest.model';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -65,7 +64,7 @@ export const userMapperRepo = {
       }),
       ...(data.level && { level: data.level }),
       ...(data.notification && { notification: data.notification }),
-     
+
       ...(data.planHistory && { planHistory: data.planHistory }),
       ...(data.skills && { skills: data.skills }),
       ...(data.username && { username: data.username as string }),
@@ -114,7 +113,7 @@ export const accountRepositoryMapper = {
       _id: String(data._id),
       authProvider: data.authProvider,
       isVerified: data.isVerified,
-      profileUrl: data.profileUrl || "",
+      profileUrl: data.profileUrl || '',
       role: data.role,
       isBlocked: data.isBlocked,
     };
@@ -192,9 +191,7 @@ export const problemRepositoryMapper = {
       }),
       ...(data.view && { view: data.view }),
       ...(data.addedLanguagesId && {
-        addedLanguagesId: data.addedLanguagesId.map(
-          (l) => new Types.ObjectId(String(l))
-        ),
+        addedLanguagesId: data.addedLanguagesId.map((l) => new Types.ObjectId(String(l))),
       }),
       ...(data.problemNumber && { problemNumber: data.problemNumber }),
     };
@@ -253,14 +250,13 @@ export const langaugeRepositoryMapper = {
   },
 };
 
-
 export const testcaseRepositoryMapper = {
   toModel(data: Partial<ITestcaseEntity>): Partial<ITestcaseModel> {
     return {
       input: data.input,
       output: data.output,
-      problemId: new Types.ObjectId(data.problemId ) ,
-      example: data.example ,
+      problemId: new Types.ObjectId(data.problemId),
+      example: data.example,
     };
   },
   toEntity(data: ITestcaseModel): ITestcaseEntity {
@@ -288,9 +284,7 @@ export const contestRepositoryMapper = {
         skill instanceof Types.ObjectId ? String(skill) : (skill as ISkillEntity)
       ),
       problemsIds: data.problemsIds.map((problem) =>
-        problem instanceof Types.ObjectId
-          ? String(problem)
-          : (problem as IProblemEntity)
+        problem instanceof Types.ObjectId ? String(problem) : (problem as IProblemEntity)
       ),
       rewards: data.rewards,
       dateAndTime: data.dateAndTime,
@@ -312,14 +306,10 @@ export const contestRepositoryMapper = {
         domainId: new Types.ObjectId(String(data.domainId)),
       }),
       ...(data.skillsIds && {
-        skillsIds: data.skillsIds.map(
-          (skill) => new Types.ObjectId(String(skill))
-        ),
+        skillsIds: data.skillsIds.map((skill) => new Types.ObjectId(String(skill))),
       }),
       ...(data.problemsIds && {
-        problemsIds: data.problemsIds.map(
-          (problem) => new Types.ObjectId(String(problem))
-        ),
+        problemsIds: data.problemsIds.map((problem) => new Types.ObjectId(String(problem))),
       }),
       ...(data.rewards && { rewards: data.rewards }),
       ...(data.dateAndTime && { dateAndTime: data.dateAndTime }),

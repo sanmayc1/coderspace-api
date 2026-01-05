@@ -1,8 +1,8 @@
-import { Schema, Types } from "mongoose";
-import { IProblemModel } from "../models/problem.model.js";
-import { DIFFICULTY, VIEW } from "../../../shared/constant.js";
-import { IExample } from "../../../domain/entities/problem-entity.js";
-import { string } from "zod";
+import { Schema, Types } from 'mongoose';
+import { IProblemModel } from '../models/problem.model';
+import { DIFFICULTY, VIEW } from '../../../shared/constant';
+import { IExample } from '../../../domain/entities/problem-entity';
+import { string } from 'zod';
 
 const exampleSchema = new Schema<IExample>({
   explanation: {
@@ -19,48 +19,51 @@ const exampleSchema = new Schema<IExample>({
   },
 });
 
-export const problemSchema = new Schema<IProblemModel>({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  difficulty: {
-    type: String,
-    enum: DIFFICULTY,
-    required: true,
-  },
-  constraints: {
-    type: String,
-  },
-  domainId: {
-    type: Types.ObjectId,
-    ref: "Domain",
-    required: true,
-  },
-  skillsIds: [
-    {
-      type: Types.ObjectId,
-      ref: "Skill",
+export const problemSchema = new Schema<IProblemModel>(
+  {
+    title: {
+      type: String,
       required: true,
     },
-  ],
-  examples: [exampleSchema],
-  isPremium: {
-    type: Boolean,
-    default: false,
+    description: {
+      type: String,
+      required: true,
+    },
+    difficulty: {
+      type: String,
+      enum: DIFFICULTY,
+      required: true,
+    },
+    constraints: {
+      type: String,
+    },
+    domainId: {
+      type: Types.ObjectId,
+      ref: 'Domain',
+      required: true,
+    },
+    skillsIds: [
+      {
+        type: Types.ObjectId,
+        ref: 'Skill',
+        required: true,
+      },
+    ],
+    examples: [exampleSchema],
+    isPremium: {
+      type: Boolean,
+      default: false,
+    },
+    view: {
+      type: String,
+      enum: VIEW,
+      default: 'private',
+    },
+    addedLanguagesId: [{ type: Types.ObjectId, ref: 'Language', default: [] }],
+    problemNumber: {
+      type: Number,
+      required: true,
+    },
   },
-  view: {
-    type: String,
-    enum: VIEW,
-    default: "private",
-  },
-  addedLanguagesId: [{ type: Types.ObjectId, ref: "Language", default: [] }],
-  problemNumber: {
-    type: Number,
-    required: true,
-  },
-},{timestamps:true});
+  { timestamps: true }
+);

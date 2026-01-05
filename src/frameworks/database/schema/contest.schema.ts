@@ -1,6 +1,6 @@
-import { Schema, Types } from "mongoose";
-import { IContestModel } from "../models/contest.model.js";
-import { VIEW } from "../../../shared/constant.js";
+import { Schema, Types } from 'mongoose';
+import { IContestModel } from '../models/contest.model';
+import { VIEW } from '../../../shared/constant';
 
 const rewardSchema = new Schema(
   {
@@ -32,20 +32,20 @@ export const contestSchema = new Schema<IContestModel>(
     },
     domainId: {
       type: Types.ObjectId,
-      ref: "Domain",
+      ref: 'Domain',
       required: true,
     },
     skillsIds: [
       {
         type: Types.ObjectId,
-        ref: "Skill",
+        ref: 'Skill',
         required: true,
       },
     ],
     problemsIds: [
       {
         type: Types.ObjectId,
-        ref: "Problem",
+        ref: 'Problem',
         required: true,
       },
     ],
@@ -65,14 +65,13 @@ export const contestSchema = new Schema<IContestModel>(
     view: {
       type: String,
       enum: VIEW,
-      default: "private",
+      default: 'private',
     },
     creatorId: {
       type: Types.ObjectId,
-      ref: "Account",
+      ref: 'Account',
       required: true,
     },
   },
   { timestamps: true }
 );
-

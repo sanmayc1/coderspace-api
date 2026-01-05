@@ -1,9 +1,7 @@
-import { TDifficulty, TLanguages, TView } from "../../shared/constant.js";
-import { IDomainEntity } from "./domain-entity.js";
-import { ILanguageEntity } from "./langauge-entity.js";
-import { ISkillEntity } from "./skill-entity.js";
-
-
+import { TDifficulty, TLanguages, TView } from '../../shared/constant';
+import { IDomainEntity } from './domain-entity';
+import { ILanguageEntity } from './langauge-entity';
+import { ISkillEntity } from './skill-entity';
 
 export interface IProblemEntity {
   _id?: string;
@@ -13,17 +11,16 @@ export interface IProblemEntity {
   constraints: string;
   difficulty: TDifficulty;
   skillsIds: (string | ISkillEntity)[];
-  examples: IExample[]
+  examples: IExample[];
   domainId: string | IDomainEntity;
   view: TView;
   isPremium: boolean;
-  addedLanguagesId:(string|ILanguageEntity)[]
+  addedLanguagesId: (string | ILanguageEntity)[];
 }
 
-
-export interface IExample{
-  id?:string
-  input:string
-  output:string
-  explanation:string
+export interface IExample {
+  id?: string;
+  input: string;
+  output: string;
+  explanation: string;
 }

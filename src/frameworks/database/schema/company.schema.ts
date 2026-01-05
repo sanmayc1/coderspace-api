@@ -1,16 +1,17 @@
-import { Schema } from "mongoose";
-import { ICompanyModel } from "../models/company.model.js";
+import { Schema } from 'mongoose';
+import { ICompanyModel } from '../models/company.model';
 
-
-
-export const  companySchema = new  Schema<ICompanyModel>({
-    gstin:{
-        type:String,
-        required:true
+export const companySchema = new Schema<ICompanyModel>(
+  {
+    gstin: {
+      type: String,
+      required: true,
     },
-    accountId:{
-        type:Schema.Types.ObjectId,
-        required:true,
-        ref:"Account"
-    }
-},{timestamps:true})
+    accountId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Account',
+    },
+  },
+  { timestamps: true }
+);

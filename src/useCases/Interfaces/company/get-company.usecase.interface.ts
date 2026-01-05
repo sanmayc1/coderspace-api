@@ -1,7 +1,5 @@
-import { IGetCompanyUsecaseOutputDto } from "../../dtos/company.dto.js";
-
-
+import { IGetCompanyUsecaseOutputDto } from '../../dtos/company.dto';
 
 export interface IGetCompanyUsecase {
-    execute(accountId:string):Promise<IGetCompanyUsecaseOutputDto>
+  execute(accountId: string): Promise<IGetCompanyUsecaseOutputDto>;
 }

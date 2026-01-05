@@ -1,8 +1,5 @@
-
-
 export interface IOtpEntity {
-  _id: string;
   otp: string;
-  expiry: Date;
+  expiry: number;
   email: string;
 }

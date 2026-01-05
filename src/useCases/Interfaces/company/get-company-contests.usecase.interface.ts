@@ -1,7 +1,7 @@
 import {
   IGetCompanyContestUsecaseInputDto,
   IGetCompanyContestUsecaseOutputDto,
-} from "../../dtos/company.dto.js";
+} from '../../dtos/company.dto';
 
 export interface IGetCompanyContestsUsecase {
   execute(
@@ -9,4 +9,3 @@ export interface IGetCompanyContestsUsecase {
     query: IGetCompanyContestUsecaseInputDto
   ): Promise<IGetCompanyContestUsecaseOutputDto>;
 }
-

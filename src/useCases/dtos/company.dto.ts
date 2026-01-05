@@ -1,12 +1,10 @@
+import { TView } from '../../shared/constant';
 
-
-import { TView } from "../../shared/constant.js";
-
-export interface IGetCompanyUsecaseOutputDto{
-    companyName:string
-    gstin:string
-    email:string
-    profileUrl:string
+export interface IGetCompanyUsecaseOutputDto {
+  companyName: string;
+  gstin: string;
+  email: string;
+  profileUrl: string;
 }
 
 export interface IGetCompanyContestUsecaseInputDto {

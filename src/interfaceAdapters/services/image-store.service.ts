@@ -1,7 +1,7 @@
-import { injectable } from "tsyringe";
-import { IImageStoreService } from "../../domain/services/image-store.service.interface.js";
-import cloudinary from "../../shared/utils/cloudinary.js";
-import { UploadApiResponse } from "cloudinary";
+import { injectable } from 'tsyringe';
+import { IImageStoreService } from '../../domain/services/image-store.service.interface';
+import cloudinary from '../../shared/utils/cloudinary';
+import { UploadApiResponse } from 'cloudinary';
 
 @injectable()
 export class ImageStoreService implements IImageStoreService {

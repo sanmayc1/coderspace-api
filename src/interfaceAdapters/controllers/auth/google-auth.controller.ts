@@ -1,5 +1,5 @@
-import { IGoogleAuthUsecaseInputDto } from "../../../useCases/dtos/auth.dto.js";
-import { IGoogleAuthUsecase } from "../../../useCases/Interfaces/auth/google-auth.usecase.interface.js";
+import { IGoogleAuthUsecaseInputDto } from '../../../useCases/dtos/auth.dto';
+import { IGoogleAuthUsecase } from '../../../useCases/Interfaces/auth/google-auth.usecase.interface';
 import {
   Request,
   Response,
@@ -9,13 +9,11 @@ import {
   injectable,
   inject,
   HTTP_STATUS,
-} from "./index.js";
+} from './index';
 
 @injectable()
 export class GoogleAuthController {
-  constructor(
-    @inject("IGoogleAuthUsecase") private _googleAuthUsecase: IGoogleAuthUsecase
-  ) {}
+  constructor(@inject('IGoogleAuthUsecase') private _googleAuthUsecase: IGoogleAuthUsecase) {}
 
   async googleAuth(req: Request, res: Response) {
     const userProfile = req.user as IGoogleAuthUsecaseInputDto;
@@ -28,8 +26,8 @@ export class GoogleAuthController {
     }
 
     setCookies(res, COOKIES_NAMES.ACCESS_TOKEN, data.accessToken as string);
-    setCookies(res, COOKIES_NAMES.REFRESH_TOKEN,data.refreshToken as string );
-    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId as string,true);
+    setCookies(res, COOKIES_NAMES.REFRESH_TOKEN, data.refreshToken as string);
+    setCookies(res, COOKIES_NAMES.DEVICE_ID, data.deviceId as string, true);
 
     res.redirect(`${config.client.uri}`);
   }

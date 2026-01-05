@@ -1,29 +1,24 @@
-import { Request, Response } from "express";
-import { inject, injectable } from "tsyringe";
-import {
-  commonResponse,
-  HTTP_STATUS,
-  IJwtPayload,
-  SUCCESS_MESSAGES,
-} from "../auth/index.js";
-import { IGetUserUsecase } from "../../../useCases/Interfaces/users/user-profile/user-profile.usecase.interface.js";
-import { DIFFICULTY, ERROR_MESSAGES } from "../../../shared/constant.js";
-import { IUpdateSuggestionLevelUsecase } from "../../../useCases/Interfaces/users/user-profile/update-suggestion-level.js";
-import { userProfileUpdateSchema } from "./validation/user.validation.js";
+import { Request, Response } from 'express';
+import { inject, injectable } from 'tsyringe';
+import { commonResponse, HTTP_STATUS, IJwtPayload, SUCCESS_MESSAGES } from '../auth/index';
+import { IGetUserUsecase } from '../../../useCases/Interfaces/users/user-profile/user-profile.usecase.interface';
+import { DIFFICULTY, ERROR_MESSAGES } from '../../../shared/constant';
+import { IUpdateSuggestionLevelUsecase } from '../../../useCases/Interfaces/users/user-profile/update-suggestion-level';
+import { userProfileUpdateSchema } from './validation/user.validation';
 
-import { IUpdateUserProfileUsecase } from "../../../useCases/Interfaces/users/user-profile/update-user-profile.usecase.interface.js";
-import {  UpdatePasswordSchema } from "../auth/validation/user-validation-schema.js";
-import { IUpdateUserPasswordUsecase } from "../../../useCases/Interfaces/users/user-profile/update-user-password.interface.js";
+import { IUpdateUserProfileUsecase } from '../../../useCases/Interfaces/users/user-profile/update-user-profile.usecase.interface';
+import { UpdatePasswordSchema } from '../auth/validation/user-validation-schema';
+import { IUpdateUserPasswordUsecase } from '../../../useCases/Interfaces/users/user-profile/update-user-password.interface';
 
 @injectable()
 export class UserProfileController {
   constructor(
-    @inject("IGetUserUsecase") private _getUserUsecase: IGetUserUsecase,
-    @inject("IUpdateSuggestionLevelUsecase")
+    @inject('IGetUserUsecase') private _getUserUsecase: IGetUserUsecase,
+    @inject('IUpdateSuggestionLevelUsecase')
     private _updateSuggestionLevelUsecase: IUpdateSuggestionLevelUsecase,
-    @inject("IUpdateUserProfileUsecase")
+    @inject('IUpdateUserProfileUsecase')
     private _updateUserProfileUsecase: IUpdateUserProfileUsecase,
-    @inject("IUpdateUserPasswordUsecase")
+    @inject('IUpdateUserPasswordUsecase')
     private _updateUserPasswordUsecase: IUpdateUserPasswordUsecase
   ) {}
 
@@ -32,9 +27,7 @@ export class UserProfileController {
 
     const response = await this._getUserUsecase.execute(accountId);
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.USER_FETCHED, response));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.USER_FETCHED, response));
   }
 
   async updateSuggestionLevel(req: Request, res: Response) {
@@ -50,36 +43,30 @@ export class UserProfileController {
       accountId: req?.user?.accountId as string,
     });
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.SUGGESTION_LEVEL));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.SUGGESTION_LEVEL));
   }
 
   async updateUserProfile(req: Request, res: Response) {
     const valiidatedData = userProfileUpdateSchema.parse(req.body);
 
-   await this._updateUserProfileUsecase.execute({
+    await this._updateUserProfileUsecase.execute({
       ...valiidatedData,
       accountId: req?.user?.accountId as string,
       profileImage: req?.file,
     });
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.USER_PROFILE_UPDATED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.USER_PROFILE_UPDATED));
   }
 
   async updatePassword(req: Request, res: Response) {
-     const validatedData = UpdatePasswordSchema.parse(req.body)
+    const validatedData = UpdatePasswordSchema.parse(req.body);
 
-     console.log(validatedData);
+    console.log(validatedData);
     await this._updateUserPasswordUsecase.execute({
       ...validatedData,
       accountId: req?.user?.accountId as string,
     });
 
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.PASSWORD_UPDATED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.PASSWORD_UPDATED));
   }
 }

@@ -1,7 +1,7 @@
-import { injectable } from "tsyringe";
-import { BaseRoute } from "../../base-route.js";
-import { asyncHandler } from "../../../../../shared/async-handler.js";
-import { userProblemController } from "../../../../di/di-resolver.js";
+import { injectable } from 'tsyringe';
+import { BaseRoute } from '../../base-route';
+import { asyncHandler } from '../../../../../shared/async-handler';
+import { userProblemController } from '../../../../di/di-resolver';
 
 @injectable()
 export class ProblemRoute extends BaseRoute {
@@ -11,14 +11,12 @@ export class ProblemRoute extends BaseRoute {
 
   protected initializeRoutes(): void {
     this.router.get(
-      "/",
-      asyncHandler(
-        userProblemController.getAllProblems.bind(userProblemController)
-      )
+      '/',
+      asyncHandler(userProblemController.getAllProblems.bind(userProblemController))
     );
 
     this.router.get(
-      "/:id",
+      '/:id',
       asyncHandler(userProblemController.getProblem.bind(userProblemController))
     );
   }

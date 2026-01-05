@@ -1,16 +1,16 @@
-import { inject, injectable } from "tsyringe";
-import { IProblemRepository } from "../../../domain/repositoryInterfaces/problem-repository.interface.js";
-import { IAddLanguageUsecaseInputDto } from "../../dtos/admin.dto.js";
-import { IAddLanguageUsecase } from "../../Interfaces/admin/problem-management/add-language.usecase.interface.js";
-import { ILanguageRepository } from "../../../domain/repositoryInterfaces/language-repository.interface.js";
-import { templateCodes } from "../../../shared/constant.js";
+import { inject, injectable } from 'tsyringe';
+import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem-repository.interface';
+import { IAddLanguageUsecaseInputDto } from '../../dtos/admin.dto';
+import { IAddLanguageUsecase } from '../../Interfaces/admin/problem-management/add-language.usecase.interface';
+import { ILanguageRepository } from '../../../domain/repositoryInterfaces/language-repository.interface';
+import { templateCodes } from '../../../shared/constant';
 
 @injectable()
 export class AddLanguageUsecase implements IAddLanguageUsecase {
   constructor(
-    @inject("IProblemRepository")
+    @inject('IProblemRepository')
     private _problemRepository: IProblemRepository,
-    @inject("ILanguageRepository")
+    @inject('ILanguageRepository')
     private _languageRepository: ILanguageRepository
   ) {}
   async execute(data: IAddLanguageUsecaseInputDto): Promise<void> {
@@ -19,12 +19,9 @@ export class AddLanguageUsecase implements IAddLanguageUsecase {
       language: data.language,
       templateCode,
       solution: templateCode,
-      functionName: "solve",
+      functionName: 'solve',
     });
 
-    await this._problemRepository.addLanguage(
-      data.problemId,
-      newLanguage._id as string
-    );
+    await this._problemRepository.addLanguage(data.problemId, newLanguage._id as string);
   }
 }

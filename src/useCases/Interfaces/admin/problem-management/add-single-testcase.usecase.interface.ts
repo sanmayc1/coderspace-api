@@ -1,9 +1,5 @@
-import { IAddSingleTestcaseInputDto } from "../../../dtos/admin.dto.js";
-
-
-
-
+import { IAddSingleTestcaseInputDto } from '../../../dtos/admin.dto';
 
 export interface IAddSingleTestcaseUsecase {
-    execute(input: IAddSingleTestcaseInputDto): Promise<void>
+  execute(input: IAddSingleTestcaseInputDto): Promise<void>;
 }

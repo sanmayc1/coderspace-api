@@ -1,8 +1,8 @@
-import { IDomainEntity } from "./domain-entity.js";
-import { ISkillEntity } from "./skill-entity.js";
-import { IProblemEntity } from "./problem-entity.js";
-import { TView } from "../../shared/constant.js";
-import { IAccountsEntity } from "./accounts-entity.js";
+import { IDomainEntity } from './domain-entity';
+import { ISkillEntity } from './skill-entity';
+import { IProblemEntity } from './problem-entity';
+import { TView } from '../../shared/constant';
+import { IAccountsEntity } from './accounts-entity';
 
 export interface IContestRewardEntity {
   rank: number;
@@ -24,4 +24,3 @@ export interface IContestEntity {
   createdAt?: Date;
   updatedAt?: Date;
 }
-

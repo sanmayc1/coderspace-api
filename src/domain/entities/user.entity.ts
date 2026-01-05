@@ -1,5 +1,5 @@
-import { TDifficulty } from "../../shared/constant.js";
-import { IAccountsEntity } from "./accounts-entity.js";
+import { TDifficulty } from '../../shared/constant';
+import { IAccountsEntity } from './accounts-entity';
 
 interface PlanHistory {
   planId: string;
@@ -14,20 +14,20 @@ export interface Rating {
 
 export interface IUserEntity {
   _id?: string;
-  accountId:string | IAccountsEntity 
+  accountId: string | IAccountsEntity;
   username: string;
   level?: number;
   xpCoin?: number;
   globalScore?: number;
   notification?: boolean;
-  badge?: "silver" | "gold" | "platinum";
+  badge?: 'silver' | 'gold' | 'platinum';
   about?: string;
   isPremiumActive?: boolean;
-  planHistory?: PlanHistory ;
+  planHistory?: PlanHistory;
   isProfileComplete?: boolean;
-  domain?: Rating[] ;
-  skills?: Rating[] ;
-  suggestionLevel?:TDifficulty
+  domain?: Rating[];
+  skills?: Rating[];
+  suggestionLevel?: TDifficulty;
   createdAt?: Date;
   updatedAt?: Date;
 }

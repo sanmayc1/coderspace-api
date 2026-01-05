@@ -1,18 +1,16 @@
-import { Document, model, Types } from "mongoose";
-import {
-  IContestEntity,
-  IContestRewardEntity,
-} from "../../../domain/entities/contest-entity.js";
-import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
-import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
-import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
-import { contestSchema } from "../schema/contest.schema.js";
-import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
+import { Document, model, Types } from 'mongoose';
+import { IContestEntity, IContestRewardEntity } from '../../../domain/entities/contest-entity';
+import { IDomainEntity } from '../../../domain/entities/domain-entity';
+import { ISkillEntity } from '../../../domain/entities/skill-entity';
+import { IProblemEntity } from '../../../domain/entities/problem-entity';
+import { contestSchema } from '../schema/contest.schema';
+import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
 
 export interface IContestModel
-  extends Omit<
+  extends
+    Omit<
       IContestEntity,
-      "_id" | "domainId" | "skillsIds" | "problemsIds" | "rewards" | "creatorId"
+      '_id' | 'domainId' | 'skillsIds' | 'problemsIds' | 'rewards' | 'creatorId'
     >,
     Document {
   _id: Types.ObjectId;
@@ -23,5 +21,4 @@ export interface IContestModel
   creatorId: Types.ObjectId | IAccountsEntity;
 }
 
-export const ContestModel = model<IContestModel>("Contest", contestSchema);
-
+export const ContestModel = model<IContestModel>('Contest', contestSchema);

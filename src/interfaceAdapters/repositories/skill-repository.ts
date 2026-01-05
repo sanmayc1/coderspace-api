@@ -1,12 +1,9 @@
-import { injectable } from "tsyringe";
-import { BaseRepository } from "./base-repository.js";
-import { skillRepositoryMapper } from "../../frameworks/database/dtoMappers/dto.mapper.js";
-import {
-  ISkillModel,
-  SkillModel,
-} from "../../frameworks/database/models/skill.model.js";
-import { ISkillEntity } from "../../domain/entities/skill-entity.js";
-import { ISkillRepository } from "../../domain/repositoryInterfaces/skill-repository.interface.js";
+import { injectable } from 'tsyringe';
+import { BaseRepository } from './base-repository';
+import { skillRepositoryMapper } from '../../frameworks/database/dtoMappers/dto.mapper';
+import { ISkillModel, SkillModel } from '../../frameworks/database/models/skill.model';
+import { ISkillEntity } from '../../domain/entities/skill-entity';
+import { ISkillRepository } from '../../domain/repositoryInterfaces/skill-repository.interface';
 
 @injectable()
 export class SkillRepository
@@ -14,11 +11,7 @@ export class SkillRepository
   implements ISkillRepository
 {
   constructor() {
-    super(
-      SkillModel,
-      skillRepositoryMapper.toEntity,
-      skillRepositoryMapper.toModel
-    );
+    super(SkillModel, skillRepositoryMapper.toEntity, skillRepositoryMapper.toModel);
   }
   async getAll(): Promise<ISkillEntity[]> {
     return await SkillModel.find();

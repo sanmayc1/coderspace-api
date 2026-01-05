@@ -1,7 +1,5 @@
-import { IGetAllTestcaseUsecaseOutputDto } from "../../../dtos/admin.dto.js";
+import { IGetAllTestcaseUsecaseOutputDto } from '../../../dtos/admin.dto';
 
-
-
-export interface  IGetAllTestcaseUsecase {
-    execute(problemId:string):Promise<IGetAllTestcaseUsecaseOutputDto[]>
+export interface IGetAllTestcaseUsecase {
+  execute(problemId: string): Promise<IGetAllTestcaseUsecaseOutputDto[]>;
 }

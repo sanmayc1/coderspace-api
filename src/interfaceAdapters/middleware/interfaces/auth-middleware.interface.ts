@@ -1,8 +1,6 @@
-import { NextFunction, Request, Response } from "express";
-import { TRole } from "../../../shared/constant.js";
-
-
+import { NextFunction, Request, Response } from 'express';
+import { TRole } from '../../../shared/constant';
 
 export interface IAuthMiddleware {
-    handle(role:TRole[]):(req: Request, res: Response, next: NextFunction) => Promise<void>
+  handle(role: TRole[]): (req: Request, res: Response, next: NextFunction) => Promise<void>;
 }

@@ -1,17 +1,12 @@
-import { inject, injectable } from "tsyringe";
-import { IGetAllSkillsUsecase } from "../../../useCases/Interfaces/common/get-all-skills.usecase.interface.js";
-import {
-  commonResponse,
-  HTTP_STATUS,
-  SUCCESS_MESSAGES,
-} from "../auth/index.js";
-import { Request, Response } from "express";
-
+import { inject, injectable } from 'tsyringe';
+import { IGetAllSkillsUsecase } from '../../../useCases/Interfaces/common/get-all-skills.usecase.interface';
+import { commonResponse, HTTP_STATUS, SUCCESS_MESSAGES } from '../auth/index';
+import { Request, Response } from 'express';
 
 @injectable()
 export class CommonController {
   constructor(
-    @inject("IGetAllSkillsUsecase")
+    @inject('IGetAllSkillsUsecase')
     private _getAllSkillsUsecase: IGetAllSkillsUsecase
   ) {}
 

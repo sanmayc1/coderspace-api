@@ -1,11 +1,8 @@
-import passport,{PassportStatic} from "passport";
-import { IGoogleAuthService } from "../../domain/services/google-auth-service.interface.js";
-import {
-  Strategy as GoogleStrategy,
-  VerifyCallback,
-} from "passport-google-oauth20";
-import { config } from "../../shared/config.js";
-import {  injectable } from "tsyringe";
+import passport, { PassportStatic } from 'passport';
+import { IGoogleAuthService } from '../../domain/services/google-auth-service.interface';
+import { Strategy as GoogleStrategy, VerifyCallback } from 'passport-google-oauth20';
+import { config } from '../../shared/config';
+import { injectable } from 'tsyringe';
 
 @injectable()
 export class GoogleAuthService implements IGoogleAuthService {
@@ -20,20 +17,14 @@ export class GoogleAuthService implements IGoogleAuthService {
           clientSecret: `${config.google.secret}`,
           callbackURL: config.google.callbackUrl,
         },
-        async (
-          accessToken: string,
-          refreshToken: string,
-          profile: any,
-          done: VerifyCallback
-        ) => {
-           
+        async (accessToken: string, refreshToken: string, profile: any, done: VerifyCallback) => {
           done(null, profile);
         }
       )
     );
   }
 
-  getPassport():PassportStatic{
+  getPassport(): PassportStatic {
     return this.passport;
   }
 }

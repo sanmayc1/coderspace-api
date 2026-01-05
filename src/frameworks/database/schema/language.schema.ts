@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
-import { LANGUAGES } from "../../../shared/constant.js";
-import { ILanguageModel } from "../models/language.model.js";
+import { Schema } from 'mongoose';
+import { LANGUAGES } from '../../../shared/constant';
+import { ILanguageModel } from '../models/language.model';
 
 export const langaugeSchema = new Schema<ILanguageModel>(
   {
@@ -10,15 +10,15 @@ export const langaugeSchema = new Schema<ILanguageModel>(
     },
     solution: {
       type: String,
-      default: "",
+      default: '',
     },
     templateCode: {
       type: String,
-      default: "",
+      default: '',
     },
     functionName: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   { timestamps: true }

@@ -1,5 +1,3 @@
-
-
-export interface IUniqueIdService{
-    generate():string
+export interface IUniqueIdService {
+  generate(): string;
 }

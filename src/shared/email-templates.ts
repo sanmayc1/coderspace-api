@@ -83,7 +83,7 @@ export const otpEmailTemplate = (otp: string) => `
 </html>
 `;
 
-export const passwordRestTemplate = (name:string, link:string) => `<html>
+export const passwordRestTemplate = (name: string, link: string) => `<html>
   <body style="color: black">
     <table
       cellpadding="0"

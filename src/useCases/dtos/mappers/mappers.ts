@@ -1,12 +1,12 @@
-import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
-import { ICompanyEntity } from "../../../domain/entities/company-entity.js";
-import { IDomainEntity } from "../../../domain/entities/domain-entity.js";
-import { ILanguageEntity } from "../../../domain/entities/langauge-entity.js";
-import { IProblemEntity } from "../../../domain/entities/problem-entity.js";
-import { ISkillEntity } from "../../../domain/entities/skill-entity.js";
-import { ITestcaseEntity } from "../../../domain/entities/testcase-entity.js";
-import { IUserEntity } from "../../../domain/entities/user.entity.js";
-import { TBadge, TLanguages, TRole } from "../../../shared/constant.js";
+import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
+import { ICompanyEntity } from '../../../domain/entities/company-entity';
+import { IDomainEntity } from '../../../domain/entities/domain-entity';
+import { ILanguageEntity } from '../../../domain/entities/langauge-entity';
+import { IProblemEntity } from '../../../domain/entities/problem-entity';
+import { ISkillEntity } from '../../../domain/entities/skill-entity';
+import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
+import { IUserEntity } from '../../../domain/entities/user.entity';
+import { TBadge, TLanguages, TRole } from '../../../shared/constant';
 import {
   IDomainDto,
   IGetAllProblemUsecaseOutputDto,
@@ -19,10 +19,10 @@ import {
   IUserGetAllProblem,
   IUserGetAllProblemsUsecaseOutput,
   IUserGetProblemUsecaseOutput,
-} from "../admin.dto.js";
-import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from "../auth.dto.js";
-import { IGetCompanyUsecaseOutputDto } from "../company.dto.js";
-import { IGetUserUsecaseOutputDto } from "../user.dto.js";
+} from '../admin.dto';
+import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from '../auth.dto';
+import { IGetCompanyUsecaseOutputDto } from '../company.dto';
+import { IGetUserUsecaseOutputDto } from '../user.dto';
 
 export const authUserUsecaseMapper = {
   toOutput(account: IAccountsEntity, user?: IUserEntity): IAuthResponseDto {
@@ -32,7 +32,7 @@ export const authUserUsecaseMapper = {
       ...(user?.isProfileComplete !== undefined && {
         profileComplete: user?.isProfileComplete,
       }),
-      profileUrl: account.profileUrl || "",
+      profileUrl: account.profileUrl || '',
       role: account.role as TRole,
     };
   },
@@ -43,7 +43,7 @@ export const googleAuthUsecaseMapper = {
     return {
       email: data.emails[0].value as string,
       name: data.displayName as string,
-      authProvider: "google",
+      authProvider: 'google',
       profileUrl: data.photos && data.photos[0].value,
       isVerified: true,
     };
@@ -80,10 +80,7 @@ export const getUsersUsecaseMapper = {
 };
 
 export const getUserUsecaseMapper = {
-  toOutput(
-    user: IUserEntity,
-    account: IAccountsEntity
-  ): IGetUserUsecaseOutputDto {
+  toOutput(user: IUserEntity, account: IAccountsEntity): IGetUserUsecaseOutputDto {
     return {
       accountId: user.accountId as string,
       currentBadge: user.badge as string,
@@ -94,23 +91,20 @@ export const getUserUsecaseMapper = {
       skills: user.skills || [],
       username: user.username,
       xpCoin: user.xpCoin as number,
-      about: (user.about as string) || "",
-      profileUrl: account.profileUrl || "",
-      auth:account.authProvider as string,
+      about: (user.about as string) || '',
+      profileUrl: account.profileUrl || '',
+      auth: account.authProvider as string,
     };
   },
 };
 
 export const getCompanyUsecaseMapper = {
-  toResponse(
-    account: IAccountsEntity,
-    company: ICompanyEntity
-  ): IGetCompanyUsecaseOutputDto {
+  toResponse(account: IAccountsEntity, company: ICompanyEntity): IGetCompanyUsecaseOutputDto {
     return {
       companyName: account.name,
       email: account.email,
       gstin: company.gstin,
-      profileUrl: account.profileUrl || "",
+      profileUrl: account.profileUrl || '',
     };
   },
 };
@@ -212,7 +206,7 @@ export const userGetAllProblemsUsecaseMapper = {
         id: String(s._id),
         title: s.title,
       })),
-      premium:data.isPremium,
+      premium: data.isPremium,
       title: data.title,
     };
   },
@@ -237,7 +231,7 @@ export const userGetProblemUsecaseMapper = {
         language: l.language,
         templateCode: String(l.templateCode),
       })),
-      title:data.title
+      title: data.title,
     };
   },
 };

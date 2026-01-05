@@ -1,6 +1,4 @@
-import { ILanguageEntity } from "../entities/langauge-entity.js";
-import { IBaseRepository } from "./base-repository.interface.js";
+import { ILanguageEntity } from '../entities/langauge-entity';
+import { IBaseRepository } from './base-repository.interface';
 
-export interface ILanguageRepository extends IBaseRepository<ILanguageEntity> {
-
-}
+export interface ILanguageRepository extends IBaseRepository<ILanguageEntity> {}

@@ -1,11 +1,11 @@
-import { Schema } from "mongoose";
-import { IWalletModel } from "../models/wallet.model.js";
+import { Schema } from 'mongoose';
+import { IWalletModel } from '../models/wallet.model';
 
 export const walletSchema = new Schema<IWalletModel>({
   accountId: {
     required: true,
     type: Schema.Types.ObjectId,
-    ref: "Account",
+    ref: 'Account',
     index: true,
   },
   balance: {
@@ -15,5 +15,5 @@ export const walletSchema = new Schema<IWalletModel>({
   contestAmount: {
     type: Number,
     default: 0,
-  }
+  },
 });

@@ -1,4 +1,4 @@
-import { IUpdateUserPasswordInputDto } from "../../../dtos/user.dto.js";
+import { IUpdateUserPasswordInputDto } from '../../../dtos/user.dto';
 
 export interface IUpdateUserPasswordUsecase {
   execute(data: IUpdateUserPasswordInputDto): Promise<any>;

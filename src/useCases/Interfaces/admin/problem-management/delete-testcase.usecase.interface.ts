@@ -1,7 +1,3 @@
-
-
-
-
 export interface IDeleteTestcaseUsecase {
-    execute(id:string):Promise<void>
+  execute(id: string): Promise<void>;
 }

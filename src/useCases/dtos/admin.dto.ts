@@ -1,6 +1,6 @@
-import { IDomainEntity } from "../../domain/entities/domain-entity.js";
-import { IExample } from "../../domain/entities/problem-entity.js";
-import { TBadge, TLanguages, TView } from "../../shared/constant.js";
+import { IDomainEntity } from '../../domain/entities/domain-entity';
+import { IExample } from '../../domain/entities/problem-entity';
+import { TBadge, TLanguages, TView } from '../../shared/constant';
 
 export interface IGetUsersUsecaseOutputDto {
   page: number;
@@ -133,8 +133,7 @@ export interface IGetAllTestcaseUsecaseOutputDto {
   example?: boolean;
 }
 
-
-export interface IGetProblemUsecaseOutput{
+export interface IGetProblemUsecaseOutput {
   title: string;
   description: string;
   difficulty: string;
@@ -146,42 +145,38 @@ export interface IGetProblemUsecaseOutput{
 }
 
 export interface IUpdateProblemUsecaseInput extends ICreateProblemUsecaseInputDto {
-  problemId:string
+  problemId: string;
 }
-
-
 
 export interface IUserGetAllProblemsUsecaseOutput {
-  problems:IUserGetAllProblem[]
-  totalPages:number
-  currentPage:number
+  problems: IUserGetAllProblem[];
+  totalPages: number;
+  currentPage: number;
 }
 
-export interface IUserGetAllProblem{
+export interface IUserGetAllProblem {
   title: string;
-  number:number
+  number: number;
   difficulty: string;
   skills: ISkillDto[];
-  id:string
-  premium:boolean
+  id: string;
+  premium: boolean;
 }
-
 
 export interface IUserGetAllProblemsUsecaseInput {
-   search:string,
-   page:number,
-   difficulty?:string,
-   skill?:string
+  search: string;
+  page: number;
+  difficulty?: string;
+  skill?: string;
 }
 
-export interface ITemplateCodes{
-  language:string
-  id:string,
-  templateCode:string
+export interface ITemplateCodes {
+  language: string;
+  id: string;
+  templateCode: string;
 }
 
-
-export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput{
-  templateCodes:ITemplateCodes[]
-  number:number
+export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput {
+  templateCodes: ITemplateCodes[];
+  number: number;
 }

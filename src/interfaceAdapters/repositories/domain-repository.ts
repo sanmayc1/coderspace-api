@@ -1,11 +1,9 @@
-import { injectable } from "tsyringe";
-import { IDomainEntity } from "../../domain/entities/domain-entity.js";
-import { IDomainRepository } from "../../domain/repositoryInterfaces/domain-respository.interface.js";
-import { DomainModel, IDomainModel } from "../../frameworks/database/models/domain.model.js";
-import { BaseRepository } from "./base-repository.js";
-import { domainRepositoryMapper } from "../../frameworks/database/dtoMappers/dto.mapper.js";
-
-
+import { injectable } from 'tsyringe';
+import { IDomainEntity } from '../../domain/entities/domain-entity';
+import { IDomainRepository } from '../../domain/repositoryInterfaces/domain-respository.interface';
+import { DomainModel, IDomainModel } from '../../frameworks/database/models/domain.model';
+import { BaseRepository } from './base-repository';
+import { domainRepositoryMapper } from '../../frameworks/database/dtoMappers/dto.mapper';
 
 @injectable()
 export class DomainRepository
@@ -13,19 +11,12 @@ export class DomainRepository
   implements IDomainRepository
 {
   constructor() {
-    super(
-      DomainModel,
-      domainRepositoryMapper.toEntity,
-      domainRepositoryMapper.toModel
-    );
+    super(DomainModel, domainRepositoryMapper.toEntity, domainRepositoryMapper.toModel);
   }
-  async  getAll(): Promise<IDomainEntity[]> {
-         return await DomainModel.find()
-    }
-   async findByTitle(title: string): Promise<IDomainEntity | null> {
-        return await DomainModel.findOne({title})
-    }
-
-    
-
+  async getAll(): Promise<IDomainEntity[]> {
+    return await DomainModel.find();
+  }
+  async findByTitle(title: string): Promise<IDomainEntity | null> {
+    return await DomainModel.findOne({ title });
+  }
 }

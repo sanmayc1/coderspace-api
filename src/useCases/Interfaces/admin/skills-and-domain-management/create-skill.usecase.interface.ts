@@ -1,5 +1,3 @@
-
-
 export interface ICreateSkillUsecase {
-    execute(title:string):Promise<void>
+  execute(title: string): Promise<void>;
 }

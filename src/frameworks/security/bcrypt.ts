@@ -1,6 +1,6 @@
-import {  injectable } from "tsyringe";
-import { IBcrypt } from "../../domain/services/bcrypt.interface.js";
-import { hash, compare } from "bcrypt";
+import { injectable } from 'tsyringe';
+import { IBcrypt } from '../../domain/services/bcrypt.interface';
+import { hash, compare } from 'bcrypt';
 
 @injectable()
 export class Bcrypt implements IBcrypt {
