@@ -1,5 +1,5 @@
-import { Redis } from "ioredis";
-import { config } from "../../shared/config.js";
+import { Redis } from 'ioredis';
+import { config } from '../../shared/config';
 
 export class RedisService {
   private static instance: Redis;
@@ -13,12 +13,12 @@ export class RedisService {
         password: config.redis.password,
       });
 
-      RedisService.instance.on("connect", () => {
-        console.log("Connected to Redis");
+      RedisService.instance.on('connect', () => {
+        console.log('Connected to Redis');
       });
 
-      RedisService.instance.on("error", (err) => {
-        console.error("Redis error:", err);
+      RedisService.instance.on('error', (err) => {
+        console.error('Redis error:', err);
       });
     }
     return RedisService.instance;

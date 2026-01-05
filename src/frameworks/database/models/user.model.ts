@@ -1,33 +1,32 @@
-import { model, Document, Types } from "mongoose";
-import { IUserEntity } from "../../../domain/entities/user.entity.js";
-import { userSchema } from "../schema/user.schema.js";
-import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
-
+import { model, Document, Types } from 'mongoose';
+import { IUserEntity } from '../../../domain/entities/user.entity';
+import { userSchema } from '../schema/user.schema';
+import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
 
 export interface IUserModel
-  extends Omit<
+  extends
+    Omit<
       IUserEntity,
-      | "_id"
-      | "isProfileComplete"
-      | "level"
-      | "notifiacation"
-      | "xpCoin"
-      | "badge"
-      | "isPremiumActive"
-      | "accountId"
-      | "globalScore"
+      | '_id'
+      | 'isProfileComplete'
+      | 'level'
+      | 'notifiacation'
+      | 'xpCoin'
+      | 'badge'
+      | 'isPremiumActive'
+      | 'accountId'
+      | 'globalScore'
     >,
     Document {
   _id: Types.ObjectId;
-  accountId: Types.ObjectId |IAccountsEntity;
+  accountId: Types.ObjectId | IAccountsEntity;
   isProfileComplete: boolean;
   level: number;
   notification: boolean;
   xpCoin: number;
-  badge: "silver" | "gold" | "platinum";
+  badge: 'silver' | 'gold' | 'platinum';
   isPremiumActive: boolean;
-  globalScore:number
-
+  globalScore: number;
 }
 
-export const UserModel = model<IUserModel>("User", userSchema);
+export const UserModel = model<IUserModel>('User', userSchema);

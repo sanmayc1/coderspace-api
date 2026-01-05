@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
 export const config = {
@@ -10,7 +10,7 @@ export const config = {
     host: process.env.HOST,
   },
   database: {
-    mongoDb: process.env.MONGO_URL || "mongodb://localhost:27017/coderspace",
+    mongoDb: process.env.MONGO_URL || 'mongodb://localhost:27017/coderspace',
   },
   jwt: {
     accessSecret: process.env.ACCESS_SECRET,
@@ -36,10 +36,15 @@ export const config = {
     exchangeTokenUrl: process.env.GITHUB_EXCHANGE_TOKEN_URI,
     getUserUrl: process.env.GITHUB_GET_USER_URI,
   },
-  google:{
-    clientId:process.env.GOOGLE_CLIENT_ID,
-    secret:process.env.GOOGLE_CLIENT_SECRET,
-    callbackUrl:process.env.GOOGLE_CALLBACK_URI
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    secret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackUrl: process.env.GOOGLE_CALLBACK_URI,
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
   },
   environment: process.env.NODE_ENV,
   cookieSecret: process.env.COOKIES_SECRET,

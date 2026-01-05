@@ -1,13 +1,12 @@
-import { IAccountsEntity } from "../../../domain/entities/accounts-entity.js";
-import { RegisterCompanyRequestDto, RegisterUserRequestDto } from "../auth.dto.js";
-
+import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
+import { RegisterCompanyRequestDto, RegisterUserRequestDto } from '../auth.dto';
 
 export const accountDtoMapper = {
-  toEntity(data: RegisterUserRequestDto | RegisterCompanyRequestDto):IAccountsEntity {
+  toEntity(data: RegisterUserRequestDto | RegisterCompanyRequestDto): IAccountsEntity {
     return {
       name: data.name,
       email: data.email,
       password: data.password,
     };
-  } 
+  },
 };

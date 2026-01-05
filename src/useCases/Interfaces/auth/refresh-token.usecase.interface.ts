@@ -1,7 +1,3 @@
-
-
-
-
 export interface IRefreshTokenUsecase {
-     execute(refreshToken:string,deviceId:string):Promise<string>
+  execute(refreshToken: string, deviceId: string): Promise<string>;
 }

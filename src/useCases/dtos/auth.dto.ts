@@ -1,5 +1,5 @@
-import { ITokenEntity } from "../../domain/entities/token.entity.js";
-import { TRole } from "../../shared/constant.js";
+import { ITokenEntity } from '../../domain/entities/token.entity';
+import { TRole } from '../../shared/constant';
 
 export interface RegisterUserRequestDto {
   name: string;
@@ -8,12 +8,10 @@ export interface RegisterUserRequestDto {
   password: string;
 }
 
-
 export interface ILoginUsecaseOutputDto extends ITokenEntity {
   deviceId: string;
   response: IAuthResponseDto;
 }
-
 
 export interface IAuthProviderUsecaseOutputDto {
   statusCode: number;
@@ -28,7 +26,7 @@ export interface IAuthResponseDto {
   email: string;
   profileComplete?: boolean;
   profileUrl: string;
-  role:TRole
+  role: TRole;
 }
 
 export interface IGoogleAuthUsecaseInputDto {
@@ -40,8 +38,7 @@ export interface IGoogleAuthUsecaseInputDto {
   };
   emails: { value: string; verified?: boolean }[];
   photos?: { value: string }[];
-}  
-
+}
 
 export interface RegisterCompanyRequestDto {
   name: string;

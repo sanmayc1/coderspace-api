@@ -1,12 +1,9 @@
-import { Schema } from "mongoose";
-import { IUserModel } from "../models/user.model.js";
-import { BADGE, DIFFICULTY } from "../../../shared/constant.js";
+import { Schema } from 'mongoose';
+import { IUserModel } from '../models/user.model';
+import { BADGE, DIFFICULTY } from '../../../shared/constant';
 
 export const userSchema = new Schema<IUserModel>(
   {
-    phone: {
-      type: String
-    },
     username: {
       type: String,
       required: true,
@@ -21,18 +18,6 @@ export const userSchema = new Schema<IUserModel>(
       type: Number,
       default: 0,
     },
-    location: {
-      type: String,
-    },
-    dateOfBirth: {
-      type: Date,
-    },
-    githubUrl: {
-      type: String,
-    },
-    linkedinUrl: {
-      type: String,
-    },
     globalScore: {
       type: Number,
       default: 0,
@@ -43,8 +28,8 @@ export const userSchema = new Schema<IUserModel>(
     },
     badge: {
       type: String,
-      enum: BADGE ,
-      default: "silver",
+      enum: BADGE,
+      default: 'silver',
     },
     about: {
       type: String,
@@ -67,14 +52,14 @@ export const userSchema = new Schema<IUserModel>(
     skills: {
       type: Array,
     },
-    accountId:{
-      type:Schema.Types.ObjectId,
-      ref:"Account"
+    accountId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Account',
     },
-    suggestionLevel:{
-      type:String,
-      enum:DIFFICULTY
-    }
+    suggestionLevel: {
+      type: String,
+      enum: DIFFICULTY,
+    },
   },
   { timestamps: true }
 );

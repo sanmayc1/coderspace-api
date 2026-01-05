@@ -1,5 +1,5 @@
-import { IAuthProviderUsecaseOutputDto, IGoogleAuthUsecaseInputDto } from "../../dtos/auth.dto.js";
+import { IAuthProviderUsecaseOutputDto, IGoogleAuthUsecaseInputDto } from '../../dtos/auth.dto';
 
 export interface IGoogleAuthUsecase {
-    execute(data:IGoogleAuthUsecaseInputDto):Promise<IAuthProviderUsecaseOutputDto>
+  execute(data: IGoogleAuthUsecaseInputDto): Promise<IAuthProviderUsecaseOutputDto>;
 }

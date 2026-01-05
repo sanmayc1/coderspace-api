@@ -1,9 +1,9 @@
-import axios from "axios";
-import { IGitHubAuthService } from "../../domain/services/github-auth-service.interface.js";
-import { config } from "../../shared/config.js";
-import { injectable } from "tsyringe";
-import { HTTP_STATUS } from "../../shared/constant.js";
-import { IGitHubResponse } from "../../domain/entities/github-response.entity.js";
+import axios from 'axios';
+import { IGitHubAuthService } from '../../domain/services/github-auth-service.interface';
+import { config } from '../../shared/config';
+import { injectable } from 'tsyringe';
+import { HTTP_STATUS } from '../../shared/constant';
+import { IGitHubResponse } from '../../domain/entities/github-response.entity';
 
 @injectable()
 export class GitHubAuthService implements IGitHubAuthService {
@@ -18,7 +18,7 @@ export class GitHubAuthService implements IGitHubAuthService {
 
     const params = new URLSearchParams(response.data);
 
-    return params.get("access_token");
+    return params.get('access_token');
   }
   async getUserProfile(accessToken: string): Promise<IGitHubResponse> {
     const response = await axios.get(`${config.github.getUserUrl}`, {

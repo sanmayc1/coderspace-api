@@ -1,9 +1,3 @@
 export interface ILogoutUsecase {
-  executes(
-    refreshToken: string,
-    accessToken: string,
-  ): Promise<void>;
+  executes(refreshToken: string, accessToken: string): Promise<void>;
 }
-
-
-

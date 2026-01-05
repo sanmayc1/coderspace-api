@@ -1,6 +1,5 @@
-import { PassportStatic } from "passport";
+import { PassportStatic } from 'passport';
 
-
-export interface IGoogleAuthService{
-    getPassport():PassportStatic
+export interface IGoogleAuthService {
+  getPassport(): PassportStatic;
 }

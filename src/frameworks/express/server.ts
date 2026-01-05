@@ -1,16 +1,17 @@
-import express, { Application } from "express";
-import cors from "cors";
-import { Server as IServer, createServer } from "http";
-import cookieParser from "cookie-parser";
-import { config } from "../../shared/config.js";
+import express, { Application } from 'express';
+import cors from 'cors';
+import { Server as IServer, createServer } from 'http';
+import cookieParser from 'cookie-parser';
+import { config } from '../../shared/config';
 import {
   adminRoutes,
   authRoutes,
+  commonRoutes,
   companyRoutes,
   errorMiddleware,
   userRoutes,
-} from "../di/di-resolver.js";
-import { Socket, Server as SocketServer } from "socket.io";
+} from '../di/di-resolver';
+import { Socket, Server as SocketServer } from 'socket.io';
 
 export class Server {
   private _app: Application;
@@ -35,15 +36,15 @@ export class Server {
   }
 
   private configureRouter(): void {
-    this._app.use(cors({ origin: config.client.uri, credentials: true }))
-    this._app.use("/api/v1/auth", authRoutes.router);
-    this._app.use("/api/v1/admin", adminRoutes.router);
-    this._app.use("/api/v1/user", userRoutes.router);
-    this._app.use("/api/v1/company",companyRoutes.router)
-    this._io.on("connection",async (socket:Socket) => {
-       
-      const accessToken = socket.handshake.headers.cookie?.split(";")[0].split('=')[1]
-      
+    this._app.use(cors({ origin: config.client.uri, credentials: true }));
+    this._app.use('/api/v1/auth', authRoutes.router);
+    this._app.use('/api/v1/admin', adminRoutes.router);
+    this._app.use('/api/v1/user', userRoutes.router);
+    this._app.use('/api/v1/company', companyRoutes.router);
+    this._app.use('/api/v1/common', commonRoutes.router);
+    this._io.on('connection', async (socket: Socket) => {
+      const accessToken = socket.handshake.headers.cookie?.split(';')[0].split('=')[1];
+
       // console.log("auth",accessToken)
     });
   }
@@ -54,9 +55,7 @@ export class Server {
 
   public start(): void {
     this._server.listen(config.server.port, () => {
-      console.log(
-        `Server running on http://${config.server.host}:${config.server.port}`
-      );
+      console.log(`Server running on http://${config.server.host}:${config.server.port}`);
     });
   }
 }

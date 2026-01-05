@@ -1,13 +1,13 @@
-import { inject, injectable } from "tsyringe";
-import { IUpdateUserStatusUsecase } from "../../Interfaces/admin/user-management/update-user-status.usecase.interface.js";
-import { IAccountsRepository } from "../../../domain/repositoryInterfaces/accounts-repository.interface.js";
-import { CustomError } from "../../../domain/utils/custom-error.js";
-import { ERROR_MESSAGES, HTTP_STATUS } from "../../../shared/constant.js";
+import { inject, injectable } from 'tsyringe';
+import { IUpdateUserStatusUsecase } from '../../Interfaces/admin/user-management/update-user-status.usecase.interface';
+import { IAccountsRepository } from '../../../domain/repositoryInterfaces/accounts-repository.interface';
+import { CustomError } from '../../../domain/utils/custom-error';
+import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
 
 @injectable()
 export class UpdateUserStatusUsecase implements IUpdateUserStatusUsecase {
   constructor(
-    @inject("IAccountRepository")
+    @inject('IAccountRepository')
     private _accountsRepository: IAccountsRepository
   ) {}
 
@@ -15,10 +15,7 @@ export class UpdateUserStatusUsecase implements IUpdateUserStatusUsecase {
     const account = await this._accountsRepository.findById(accountId);
 
     if (!account) {
-      throw new CustomError(
-        HTTP_STATUS.BAD_REQUEST,
-        ERROR_MESSAGES.ACCOUNT_NOT_FOUND
-      );
+      throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.ACCOUNT_NOT_FOUND);
     }
 
     await this._accountsRepository.updateById(accountId, {

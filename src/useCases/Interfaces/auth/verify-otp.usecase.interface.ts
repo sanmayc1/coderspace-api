@@ -1,6 +1,3 @@
-
-
-
 export interface IVerifyOtpUsecase {
-    execute(email:string,otp:string):Promise<void>
+  execute(email: string, otp: string): Promise<void>;
 }

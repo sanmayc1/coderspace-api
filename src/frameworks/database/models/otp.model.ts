@@ -1,11 +1,9 @@
-import { model, ObjectId } from "mongoose";
-import { IOtpEntity } from "../../../domain/entities/otp.entity.js";
-import { otpSchema } from "../schema/otp.schema.js";
+import { model, ObjectId } from 'mongoose';
+import { IOtpEntity } from '../../../domain/entities/otp.entity';
+import { otpSchema } from '../schema/otp.schema';
 
-
-export interface IOtpModel extends Omit<IOtpEntity , "_id">{
-    _id:ObjectId,
-    
+export interface IOtpModel extends Omit<IOtpEntity, '_id'> {
+  _id: ObjectId;
 }
 
-export const OtpModel = model("Otp",otpSchema)
+export const OtpModel = model('Otp', otpSchema);

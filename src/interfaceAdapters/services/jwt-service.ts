@@ -1,8 +1,8 @@
-import { SignOptions } from "jsonwebtoken";
-import { IJwtService } from "../../domain/services/jwt-service.interface.js";
-import jwt from "jsonwebtoken";
-import { config } from "../../shared/config.js";
-import { IJwtPayload } from "../../domain/entities/jwt-payload.enitity.js";
+import { SignOptions } from 'jsonwebtoken';
+import { IJwtService } from '../../domain/services/jwt-service.interface';
+import jwt from 'jsonwebtoken';
+import { config } from '../../shared/config';
+import { IJwtPayload } from '../../domain/entities/jwt-payload.enitity';
 
 export class JwtService implements IJwtService {
   private refreshSecret: string;
@@ -15,13 +15,16 @@ export class JwtService implements IJwtService {
     this.refreshExpireIn = config.jwt.refreshExpire as string;
     this.accessExpireIn = config.jwt.accessExpire as string;
   }
-  signAccess<T extends object>(payload:T): string {
+  signAccess<T extends object>(payload: T): string {
     return jwt.sign(payload, this.accessSecret, {
       expiresIn: this.accessExpireIn,
     } as SignOptions);
   }
 
-  signRefresh<T extends object>(payload: T,expireIn:string|number = this.refreshExpireIn): string {
+  signRefresh<T extends object>(
+    payload: T,
+    expireIn: string | number = this.refreshExpireIn
+  ): string {
     return jwt.sign(payload, this.refreshSecret, {
       expiresIn: expireIn,
     } as SignOptions);

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 
 export abstract class BaseRoute {
   public router: Router;

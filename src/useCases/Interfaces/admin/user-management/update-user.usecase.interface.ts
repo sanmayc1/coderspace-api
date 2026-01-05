@@ -1,6 +1,5 @@
-import { IUpdateUserUsecaseInputDto } from "../../../dtos/admin.dto.js";
-
+import { IUpdateUserUsecaseInputDto } from '../../../dtos/admin.dto';
 
 export interface IUpdateUserUsecase {
-    execute(data:IUpdateUserUsecaseInputDto):Promise<void>
+  execute(data: IUpdateUserUsecaseInputDto): Promise<void>;
 }

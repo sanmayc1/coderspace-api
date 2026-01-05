@@ -1,6 +1,3 @@
-
-
-
 export interface ISendOtpUsecase {
-    execute(email:string):Promise<void>
+  execute(email: string): Promise<void>;
 }

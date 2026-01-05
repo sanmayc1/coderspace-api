@@ -1,5 +1,5 @@
-import { Schema } from "mongoose";
-import { IOtpModel } from "../models/otp.model.js";
+import { Schema } from 'mongoose';
+import { IOtpModel } from '../models/otp.model';
 
 export const otpSchema = new Schema<IOtpModel>({
   otp: {
@@ -13,7 +13,6 @@ export const otpSchema = new Schema<IOtpModel>({
   expiry: {
     type: Date,
     required: true,
-    index:{expires:1}
-  }
-  
+    index: { expires: 1 },
+  },
 });
