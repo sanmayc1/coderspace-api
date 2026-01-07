@@ -8,6 +8,8 @@ export interface IGetUserUsecaseOutputDto {
   xpCoin: number;
   currentLevel: number;
   currentBadge: string;
+  following:number
+  followers:number
   accountId: string;
   about?: string;
   premiumActive: boolean;
@@ -41,6 +43,22 @@ export interface IGetAllCodersUsecaseOutputDto {
     name:string
     username:string
     badge:string
+    profileUrl:string
+    isFollowing:boolean
+}
+
+
+export interface IGetCoderUsecaseOutputDto {
+    userId:string
+    name:string
+    username:string
+    badge:string
+    level:number
+    following:number
+    followers:number
+    about?:string
+    joinDate:string
+    problemSolved:number
     profileUrl:string
     isFollowing:boolean
 }

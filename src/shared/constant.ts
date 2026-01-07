@@ -87,6 +87,10 @@ export const ERROR_MESSAGES = {
   PROBLEM_NOT_FOUND: 'Problem not found',
   NO_LANGUAGE_ADDED: 'Please add one language to change visibility',
   OLD_PASSWORD_AND_NEW_PASSWORD_SAME: 'Old password and new password same',
+  USER_ALREADY_FOLLOWING: 'User already following',
+  USER_NOT_FOLLOWING: 'User not following',
+  INVALID_LANGUAGE: 'Invalid language',
+  WRONG_ANSWER: 'Test Case Failed',
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -128,6 +132,10 @@ export const SUCCESS_MESSAGES = {
   USER_PROFILE_UPDATED: 'User profile updated successfully',
   PASSWORD_UPDATED: 'Password updated successfully',
   GET_ALL_CODERS: 'Users fetched Successfully',
+  FOLLOW_CODER: 'User followed successfully',
+  UNFOLLOW_CODER: 'User unfollowed successfully',
+  GET_CODER: 'Coder fetched successfully',
+  RUN_PROBLEM: 'Problem run successfully',
 };
 
 export const COOKIES_NAMES = {
@@ -175,3 +183,12 @@ var solve = function(n) {
 }
 `,
 };
+
+
+
+export const availableLanguages = {
+    java: {name: 'java', extension: 'java',version: '15.0.2'},
+    cpp: {name: 'cpp', extension: 'cpp',version: '17'},
+    python: {name: 'python', extension: 'py',version: '3.12.0'},
+    javascript: {name: 'javascript', extension: 'js',version: '20.11.1'},
+}

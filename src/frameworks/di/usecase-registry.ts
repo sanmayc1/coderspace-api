@@ -43,7 +43,11 @@ import { CreateContestUsecase } from '../../useCases/company/create-contest.usec
 import { GetCompanyContestsUsecase } from '../../useCases/company/get-company-contests.usecase';
 import { UpdateUserProfileUsecase } from '../../useCases/user/user-profile/user-profile-update.usecase';
 import { UpdateUserPasswordUsecase } from '../../useCases/user/user-profile/update-user-password.usecase';
-import { GetAllCoders } from '../../useCases/user/coders/get-all-coders';
+import { GetAllCoders } from '../../useCases/user/coders/get-all-coders.usecase';
+import { FollowCoders } from '../../useCases/user/coders/follow-coder-usecase';
+import { UnfollowCodersUsecase } from '../../useCases/user/coders/unfollow-coders.usecase';
+import { GetCoderUsecase } from '../../useCases/user/coders/get-coder.usecase';
+import { RunProblemUsecase } from '../../useCases/user/problem/run-problem.usecase';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -149,6 +153,21 @@ export class UsecaseRegistery {
     });
     container.register('IGetAllCodersUsecase', {
       useClass: GetAllCoders,
+    });
+
+    container.register('IFollowCodersUsecase', {
+      useClass: FollowCoders,
+    });
+
+    container.register('IUnfollowCodersUsecase', {
+      useClass: UnfollowCodersUsecase,
+    });
+
+    container.register('IGetCoderUsecase', {
+      useClass: GetCoderUsecase,
+    });
+    container.register('IRunProblemUsecase', {
+      useClass: RunProblemUsecase,
     });
   }
 }

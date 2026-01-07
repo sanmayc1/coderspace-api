@@ -22,7 +22,7 @@ import {
 } from '../admin.dto';
 import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from '../auth.dto';
 import { IGetCompanyUsecaseOutputDto } from '../company.dto';
-import { IGetAllCodersUsecaseOutputDto, IGetUserUsecaseOutputDto } from '../user.dto';
+import { IGetAllCodersUsecaseOutputDto, IGetCoderUsecaseOutputDto, IGetUserUsecaseOutputDto } from '../user.dto';
 
 export const authUserUsecaseMapper = {
   toOutput(account: IAccountsEntity, user?: IUserEntity): IAuthResponseDto {
@@ -80,7 +80,7 @@ export const getUsersUsecaseMapper = {
 };
 
 export const getUserUsecaseMapper = {
-  toOutput(user: IUserEntity, account: IAccountsEntity): IGetUserUsecaseOutputDto {
+  toOutput(user: IUserEntity, account: IAccountsEntity,followersAndFollowingCount:{followersCount:number,followingCount:number}): IGetUserUsecaseOutputDto {
     return {
       accountId: user.accountId as string,
       currentBadge: user.badge as string,
@@ -94,6 +94,8 @@ export const getUserUsecaseMapper = {
       about: (user.about as string) || '',
       profileUrl: account.profileUrl || '',
       auth: account.authProvider as string,
+      followers:followersAndFollowingCount.followersCount,
+      following:followersAndFollowingCount.followingCount,
     };
   },
 };
@@ -239,14 +241,38 @@ export const userGetProblemUsecaseMapper = {
 
 
 export const getAllCodersUsecaseMapper = {
-    toResponse(data: IUserEntity): IGetAllCodersUsecaseOutputDto {
+    toResponse(data: IUserEntity & {isFollowing:boolean}): IGetAllCodersUsecaseOutputDto {
         return {
             userId: data._id as string,
             name: (data.accountId as IAccountsEntity).name,
             username: data.username,
             badge: data.badge as TBadge,
             profileUrl: (data.accountId as IAccountsEntity).profileUrl || '',
-            isFollowing: false,
+            isFollowing: data.isFollowing,
+        };
+    },
+};
+
+
+export const getCoderUsecaseMapper = {
+    toResponse(data: IUserEntity & {isFollowing:boolean} & {followersCount:number,followingCount:number} & {account:IAccountsEntity}): IGetCoderUsecaseOutputDto {
+
+      const date = new Date(data.createdAt as Date);
+
+     const formatted = date.toISOString().split("T")[0];
+        return {
+            userId: data._id as string,
+            name: data.account.name,
+            username: data.username,
+            badge: data.badge as TBadge,
+            profileUrl: data.account.profileUrl || '',
+            isFollowing: data.isFollowing,
+            followers:data.followersCount,
+            following:data.followingCount,
+            about:data.about,
+            joinDate:formatted,
+            problemSolved:0,
+            level:data.level as number,
         };
     },
 };

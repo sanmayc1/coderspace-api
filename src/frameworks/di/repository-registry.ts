@@ -12,6 +12,7 @@ import { SkillRepository } from '../../interfaceAdapters/repositories/skill-repo
 import { LanguageRepository } from '../../interfaceAdapters/repositories/language-repository';
 import { TestcaseRepository } from '../../interfaceAdapters/repositories/testcase-repository';
 import { ContestRepository } from '../../interfaceAdapters/repositories/contest-repository';
+import { FollowerRepository } from '../../interfaceAdapters/repositories/follower-repository';
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -28,5 +29,6 @@ export class RepositoryRegistery {
     container.register('ILanguageRepository', { useClass: LanguageRepository });
     container.register('ITestcaseRepository', { useClass: TestcaseRepository });
     container.register('IContestRepository', { useClass: ContestRepository });
+    container.register('IFollowerRepository',{useClass:FollowerRepository})
   }
 }

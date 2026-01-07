@@ -19,5 +19,10 @@ export class ProblemRoute extends BaseRoute {
       '/:id',
       asyncHandler(userProblemController.getProblem.bind(userProblemController))
     );
+
+    this.router.post(
+      '/run',
+      asyncHandler(userProblemController.runProblem.bind(userProblemController))
+    );
   }
 }

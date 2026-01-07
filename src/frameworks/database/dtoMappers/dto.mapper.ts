@@ -1,10 +1,8 @@
 import mongoose, { Types } from 'mongoose';
 import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
-import { IOtpEntity } from '../../../domain/entities/otp.entity';
 import { IUserEntity } from '../../../domain/entities/user.entity';
 import { IWalletEnitity } from '../../../domain/entities/wallet.entity';
 import { IAccountsModel } from '../models/account.model ';
-import { IOtpModel } from '../models/otp.model';
 import { IUserModel } from '../models/user.model';
 import { IWalletModel } from '../models/wallet.model';
 import { ICompanyModel } from '../models/company.model';
@@ -22,6 +20,8 @@ import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
 import { ITestcaseModel } from '../models/testcase.model';
 import { IContestEntity } from '../../../domain/entities/contest-entity';
 import { IContestModel } from '../models/contest.model';
+import { IFollowerModel } from '../models/follower.model';
+import { IFollowerEntity } from '../../../domain/entities/follower-entity';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -93,16 +93,7 @@ export const walletMapper = {
   },
 };
 
-export const otpMapper = {
-  toEntity(data: IOtpModel): IOtpEntity {
-    return {
-      _id: String(data._id),
-      email: data.email,
-      expiry: data.expiry,
-      otp: data.otp,
-    };
-  },
-};
+
 
 export const accountRepositoryMapper = {
   toEntity(data: IAccountsModel): IAccountsEntity {
@@ -321,3 +312,22 @@ export const contestRepositoryMapper = {
     };
   },
 };
+
+
+export const followerRepositoryMapper = {
+  toEntity(data: IFollowerModel): IFollowerEntity {
+    return {
+      _id: String(data._id),
+      followerId: String(data.followerId),
+      followeeId: String(data.followeeId),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<IFollowerEntity>): Partial<IFollowerModel> {
+    return {
+      ...(data.followerId && { followerId: new Types.ObjectId(String(data.followerId)) }),
+      ...(data.followeeId && { followeeId: new Types.ObjectId(String(data.followeeId)) }),
+    };
+  },
+}

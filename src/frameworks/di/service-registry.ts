@@ -9,6 +9,7 @@ import { UniqueIdService } from '../../interfaceAdapters/services/uuid.service';
 import { GitHubAuthService } from '../../interfaceAdapters/services/github-auth.service';
 import { GoogleAuthService } from '../../interfaceAdapters/services/google-auth.service';
 import { ImageStoreService } from '../../interfaceAdapters/services/image-store.service';
+import { CompilerService } from '../../interfaceAdapters/services/compiler.service';
 
 export class ServiceRegistry {
   static registerServices() {
@@ -18,6 +19,7 @@ export class ServiceRegistry {
     container.registerSingleton('IGitHubAuthService', GitHubAuthService);
     container.registerSingleton('IGoogleAuthService', GoogleAuthService);
     container.registerSingleton('IImageStoreService', ImageStoreService);
+    container.registerSingleton('ICompilerService', CompilerService);
     // logger
     container.registerSingleton('ILogger', WinstonLoggerAdapter);
     // security

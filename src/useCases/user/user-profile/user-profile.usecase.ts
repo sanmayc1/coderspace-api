@@ -6,13 +6,16 @@ import { CustomError } from '../../../domain/utils/custom-error';
 import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
 import { IAccountsRepository } from '../../../domain/repositoryInterfaces/accounts-repository.interface';
 import { getUserUsecaseMapper } from '../../dtos/mappers/mappers';
+import { IFollowerRepository } from '../../../domain/repositoryInterfaces/follower-repository.interface';
 
 @injectable()
 export class GetUserUsecase implements IGetUserUsecase {
   constructor(
     @inject('IUserRepository') private _userRepository: IUserRepository,
     @inject('IAccountRepository')
-    private _accountRepository: IAccountsRepository
+    private _accountRepository: IAccountsRepository,
+    @inject('IFollowerRepository')
+    private _followerRepository: IFollowerRepository
   ) {}
   async execute(accountId: string): Promise<IGetUserUsecaseOutputDto> {
     const account = await this._accountRepository.findById(accountId);
@@ -27,7 +30,9 @@ export class GetUserUsecase implements IGetUserUsecase {
       throw new CustomError(HTTP_STATUS.NOT_FOUND, ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
-    const response = getUserUsecaseMapper.toOutput(user, account);
+    const followersAndFollowingCount = await this._followerRepository.countFollowersAndFollowingCount(String(user._id));
+
+    const response = getUserUsecaseMapper.toOutput(user, account,followersAndFollowingCount);
     return response;
   }
 }
