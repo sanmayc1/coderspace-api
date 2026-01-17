@@ -62,3 +62,30 @@ export interface IGetCoderUsecaseOutputDto {
     profileUrl:string
     isFollowing:boolean
 }
+
+export interface ISubmitProblemUsecaseOutputDto {
+
+  suggestionProblemId:string
+  suggestionProblemName:string
+    
+}
+
+export interface ISubmitProblemUsecaseInputDto {
+    problemId:string
+    solution:string
+    language:string
+    accountId:string
+}
+
+
+export interface IGetProblemUpdatesUsecaseInputDto {
+    accountId:string
+    problemId:string
+    language:string
+}
+
+export interface IGetProblemUpdatesUsecaseOutputDto{
+    status:string
+    solution:string
+    language:string
+}

@@ -22,6 +22,8 @@ import { IContestEntity } from '../../../domain/entities/contest-entity';
 import { IContestModel } from '../models/contest.model';
 import { IFollowerModel } from '../models/follower.model';
 import { IFollowerEntity } from '../../../domain/entities/follower-entity';
+import { ISubmitProblemModel } from '../models/submit-problem.model';
+import { ISubmitProblemEntity } from '../../../domain/entities/submit-problem.entity';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -164,6 +166,7 @@ export const problemRepositoryMapper = {
         l instanceof Types.ObjectId ? String(l) : (l as ILanguageEntity)
       ),
       problemNumber: data.problemNumber,
+      validatorType: data.validatorType,
     };
   },
   toModel(data: Partial<IProblemEntity>): Partial<IProblemModel> {
@@ -184,6 +187,7 @@ export const problemRepositoryMapper = {
       ...(data.addedLanguagesId && {
         addedLanguagesId: data.addedLanguagesId.map((l) => new Types.ObjectId(String(l))),
       }),
+      ...(data.validatorType && { validatorType: data.validatorType }),
       ...(data.problemNumber && { problemNumber: data.problemNumber }),
     };
   },
@@ -330,4 +334,29 @@ export const followerRepositoryMapper = {
       ...(data.followeeId && { followeeId: new Types.ObjectId(String(data.followeeId)) }),
     };
   },
+}
+
+
+export const submitProblemRepositoryMapper = {
+    toEntity(data: ISubmitProblemModel): ISubmitProblemEntity {
+        return {
+            _id: String(data._id),
+            userId: String(data.userId) ,
+            problemId: String(data.problemId),
+            solution: data.solution,
+            language: data.language,
+            status: data.status,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        };
+    },
+    toModel(data: Partial<ISubmitProblemEntity>): Partial<ISubmitProblemModel> {
+        return {
+            ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+            ...(data.problemId && { problemId: new Types.ObjectId(String(data.problemId)) }),
+            ...(data.solution && { solution: data.solution }),
+            ...(data.language && { language: data.language }),
+            ...(data.status && { status: data.status }),
+        };
+    },
 }

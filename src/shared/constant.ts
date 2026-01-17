@@ -1,3 +1,5 @@
+import { validatorForExactMatch, validatorForUnorderedArray } from "./utils/testcase-validators";
+
 export type TRole = 'admin' | 'user' | 'company';
 export type TAuthProviders = 'google' | 'github' | 'local';
 export type TBadge = 'silver' | 'gold' | 'platinum';
@@ -136,6 +138,7 @@ export const SUCCESS_MESSAGES = {
   UNFOLLOW_CODER: 'User unfollowed successfully',
   GET_CODER: 'Coder fetched successfully',
   RUN_PROBLEM: 'Problem run successfully',
+  SUBMIT_PROBLEM: 'Problem submitted successfully',
 };
 
 export const COOKIES_NAMES = {
@@ -145,6 +148,14 @@ export const COOKIES_NAMES = {
   DEVICE_ID: '_dvid',
   GITHUB_SESSION: '_secure_gth',
 };
+
+
+export const VALIDATOR_TYPE = ['exactMatch', 'unorderedArray']
+
+export const VALIDATORS = {
+    exactMatch: validatorForExactMatch,
+    unorderedArray: validatorForUnorderedArray
+}
 
 export const templateCodes: Record<TLanguages, string> = {
   java: `
@@ -192,3 +203,8 @@ export const availableLanguages = {
     python: {name: 'python', extension: 'py',version: '3.12.0'},
     javascript: {name: 'javascript', extension: 'js',version: '20.11.1'},
 }
+
+
+
+export type TStatus = 'attempted' | 'solved' 
+export const STATUS:TStatus[]=['attempted','solved']

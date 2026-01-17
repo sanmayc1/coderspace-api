@@ -8,8 +8,8 @@ export const USER_SORTING = {
 };
 
 export const PROBLEM_SORTING: Record<string, Sort> = {
-  NEWEST: { createdAt: 'asc' },
-  OLDEST: { createdAt: 'desc' },
+  NEWEST: { createdAt: 'desc' },
+  OLDEST: { createdAt: 'asc' },
   NAME_ASC: { title: 'asc' },
   NAME_DESC: { title: 'desc' },
 };

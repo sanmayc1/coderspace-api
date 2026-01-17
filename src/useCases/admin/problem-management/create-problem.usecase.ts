@@ -24,6 +24,7 @@ export class CreateProblemUsecase implements ICreateProblemUsecase {
       isPremium: data.premium,
       problemNumber: problemCount + 1,
       skillsIds: data.skills,
+      validatorType: data.validationType,
     });
   }
 }

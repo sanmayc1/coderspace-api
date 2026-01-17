@@ -48,6 +48,8 @@ import { FollowCoders } from '../../useCases/user/coders/follow-coder-usecase';
 import { UnfollowCodersUsecase } from '../../useCases/user/coders/unfollow-coders.usecase';
 import { GetCoderUsecase } from '../../useCases/user/coders/get-coder.usecase';
 import { RunProblemUsecase } from '../../useCases/user/problem/run-problem.usecase';
+import { SubmitProblemUsecase } from '../../useCases/user/problem/sumbit-problem.usecase';
+import { GetProblemUpdatesUsecase } from '../../useCases/user/problem/get-problem-update.usecase';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -169,5 +171,13 @@ export class UsecaseRegistery {
     container.register('IRunProblemUsecase', {
       useClass: RunProblemUsecase,
     });
+
+    container.register('ISubmitProblemUsecase', {
+      useClass: SubmitProblemUsecase,
+    });
+
+    container.register('IGetProblemUpdatesUsecase',{
+      useClass:GetProblemUpdatesUsecase
+    })
   }
 }

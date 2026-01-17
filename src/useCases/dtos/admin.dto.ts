@@ -42,6 +42,7 @@ export interface ICreateProblemUsecaseInputDto {
   domain: string;
   constrain: string;
   examples: IExample[];
+  validationType: string;
 }
 
 export interface IContestRewardDto {
@@ -144,7 +145,7 @@ export interface IGetProblemUsecaseOutput {
   examples: IExample[];
 }
 
-export interface IUpdateProblemUsecaseInput extends ICreateProblemUsecaseInputDto {
+export interface IUpdateProblemUsecaseInput extends Omit<ICreateProblemUsecaseInputDto,'validationType'> {
   problemId: string;
 }
 
