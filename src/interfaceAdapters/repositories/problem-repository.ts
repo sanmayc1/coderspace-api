@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 import { IProblemEntity } from '../../domain/entities/problem-entity';
 import {
   IGetAllProblems,
-  IGetAllProblemsInput,
+  IMongoOptions,
   IGetProblemInput,
   IProblemRepository,
 } from '../../domain/repositoryInterfaces/problem-repository.interface';
@@ -37,7 +37,7 @@ export class ProblemRepository
       $push: { addedLanguagesId: languageId },
     });
   }
-  async getAllProblems(data: IGetAllProblemsInput): Promise<IGetAllProblems> {
+  async getAllProblems(data: IMongoOptions): Promise<IGetAllProblems> {
     const filter = data.filter ? convertToMongoFilter(data.filter) : {};
     const projection = data.projections ? convertToMongoProjection(data.projections) : {};
     const sort = data.sort ? convertToMongoSort(data.sort) : {};

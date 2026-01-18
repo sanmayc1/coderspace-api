@@ -180,4 +180,5 @@ export interface ITemplateCodes {
 export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput {
   templateCodes: ITemplateCodes[];
   number: number;
+  testcases:{input:string,output:string,expected:string}[];
 }

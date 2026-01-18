@@ -1,3 +1,4 @@
+import { int } from 'zod';
 import { Rating } from '../../domain/entities/user.entity';
 import { TDifficulty } from '../../shared/constant';
 
@@ -88,4 +89,14 @@ export interface IGetProblemUpdatesUsecaseOutputDto{
     status:string
     solution:string
     language:string
+}
+
+export interface IRunProblemUsecaseOutputDto{
+  testcases:{
+    input:string
+    output:string
+    expected:string
+    isCorrect:boolean
+  }[]   
+  success:boolean
 }

@@ -4,8 +4,8 @@ export type TRole = 'admin' | 'user' | 'company';
 export type TAuthProviders = 'google' | 'github' | 'local';
 export type TBadge = 'silver' | 'gold' | 'platinum';
 export type TDifficulty = 'easy' | 'medium' | 'hard';
-export type TLanguages = 'javascript' | 'java' | 'python' | 'cpp';
-export const LANGUAGES: TLanguages[] = ['cpp', 'java', 'javascript', 'python'];
+export type TLanguages = 'javascript' | 'java' | 'python' | 'typescript';
+export const LANGUAGES: TLanguages[] = ['typescript', 'java', 'javascript', 'python'];
 
 export const ROLES = ['admin', 'user', 'company'];
 export const AUTHPROVIDER = ['github', 'google', 'local'];
@@ -167,14 +167,9 @@ class Solution {
     }
 }
 `,
-  cpp: `
-class Solution {
-public:
-    int solve(int n) {
-       
-
-        return 0;
-    }
+  typescript: `
+  function solve(num: number): number {
+    
 };
 `,
 
@@ -199,7 +194,7 @@ var solve = function(n) {
 
 export const availableLanguages = {
     java: {name: 'java', extension: 'java',version: '15.0.2'},
-    cpp: {name: 'cpp', extension: 'cpp',version: '17'},
+    typescript: {name: 'typescript', extension: 'ts',version: '5.0.3'},
     python: {name: 'python', extension: 'py',version: '3.12.0'},
     javascript: {name: 'javascript', extension: 'js',version: '20.11.1'},
 }
