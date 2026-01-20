@@ -14,6 +14,11 @@ export const PROBLEM_SORTING: Record<string, Sort> = {
   NAME_DESC: { title: 'desc' },
 };
 
+export const PAYMENT_SORTING: Record<string, Sort> = {
+  NEWEST: { createdAt: 'desc' },
+  OLDEST: { createdAt: 'asc' },
+};
+
 export function convertToMongoFilter(filter: GenericFilter): any {
   const mongoQuery: any = {};
 

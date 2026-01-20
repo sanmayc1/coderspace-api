@@ -13,7 +13,6 @@ export interface IGetUserUsecaseOutputDto {
   followers:number
   accountId: string;
   about?: string;
-  premiumActive: boolean;
   profileUrl: string;
   skills: Rating[];
   auth: string;
@@ -99,4 +98,35 @@ export interface IRunProblemUsecaseOutputDto{
     isCorrect:boolean
   }[]   
   success:boolean
+}
+
+export interface IGetAllPlansUsecaseOutputDto{
+    id:string
+    name:string
+    price:number
+    description:string
+    features:string[]
+    duration:string
+}
+
+export interface ICreateRazorpayOrderUsecaseOutputDto{
+    orderId:string
+    amount:string
+    currency:string
+    name:string
+    email:string
+}
+
+export interface ICreateRazorpayOrderUsecaseInputDto{
+    planId:string
+    accountId:string
+}
+
+export interface IEditPlanInputDto{
+    id:string
+    name:string
+    price:number
+    description:string
+    features:string[]
+    duration:string
 }

@@ -50,6 +50,10 @@ export const config = {
     executeUrl: process.env.COMPILER_EXECUTE_URL as string,
     runtimesUrl: process.env.COMPILER_RUNTIMES_URL as string,
   },
+  razorpay:{
+    apiKey:process.env.RAZORPAY_API_KEY,
+    secert:process.env.RAZORPAY_SECRET
+  },
   environment: process.env.NODE_ENV,
   cookieSecret: process.env.COOKIES_SECRET,
 };

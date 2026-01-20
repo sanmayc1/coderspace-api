@@ -24,6 +24,10 @@ import { IFollowerModel } from '../models/follower.model';
 import { IFollowerEntity } from '../../../domain/entities/follower-entity';
 import { ISubmitProblemModel } from '../models/submit-problem.model';
 import { ISubmitProblemEntity } from '../../../domain/entities/submit-problem.entity';
+import { IPlanModel } from '../models/plan.model';
+import { IPlanEntity } from '../../../domain/entities/plan-entity';
+import { IPaymentModel } from '../models/payment.model';
+import { IPaymentEntity } from '../../../domain/entities/payment.entity';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -37,12 +41,11 @@ export const userMapperRepo = {
       notification: data.notification,
       xpCoin: data.xpCoin,
       badge: data.badge,
-      isPremiumActive: data.isPremiumActive,
       about: data.about,
       domain: data.domain,
       suggestionLevel: data.suggestionLevel,
       globalScore: data.globalScore,
-      planHistory: data.planHistory,
+      subscription: data.subscription,
       skills: data.skills,
       accountId:
         data.accountId instanceof Types.ObjectId
@@ -60,14 +63,12 @@ export const userMapperRepo = {
       ...(data.domain && { domain: data.domain }),
       ...(data.suggestionLevel && { suggestionLevel: data.suggestionLevel }),
       ...(data.globalScore && { globalScore: data.globalScore }),
-      ...(data.isPremiumActive && { isPremiumActive: data.isPremiumActive }),
+      ...(data.subscription && { subscription: data.subscription }),
       ...(data.isProfileComplete && {
         isProfileComplete: data.isProfileComplete,
       }),
       ...(data.level && { level: data.level }),
       ...(data.notification && { notification: data.notification }),
-
-      ...(data.planHistory && { planHistory: data.planHistory }),
       ...(data.skills && { skills: data.skills }),
       ...(data.username && { username: data.username as string }),
       ...(data.xpCoin && { xpCoin: data.xpCoin as number }),
@@ -356,6 +357,61 @@ export const submitProblemRepositoryMapper = {
             ...(data.problemId && { problemId: new Types.ObjectId(String(data.problemId)) }),
             ...(data.solution && { solution: data.solution }),
             ...(data.language && { language: data.language }),
+            ...(data.status && { status: data.status }),
+        };
+    },
+}
+
+
+
+export const planRepositoryMapper = {
+    toEntity(data: IPlanModel): IPlanEntity {
+        return {
+            _id: String(data._id),
+            name: data.name,
+            price: data.price,
+            durationInMonths: data.durationInMonths,
+            description: data.description,
+            features: data.features,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        };
+    },
+    toModel(data: Partial<IPlanEntity>): Partial<IPlanModel> {
+        return {
+            ...(data.name && { name: data.name }),
+            ...(data.price && { price: data.price }),
+            ...(data.durationInMonths && { durationInMonths: data.durationInMonths }),
+            ...(data.description && { description: data.description }),
+            ...(data.features && { features: data.features }),
+        };
+    },
+}
+
+
+export const paymentRepositoryMapper = {
+    toEntity(data: IPaymentModel): IPaymentEntity {
+        return {
+            _id: String(data._id),
+            userId: data.userId instanceof Types.ObjectId ? String(data.userId) : (data.userId as IAccountsEntity),
+            planId: data.planId instanceof Types.ObjectId ? String(data.planId) : (data.planId as IPlanEntity),
+            razorpayOrderId: data.razorpayOrderId,
+            razorpayPaymentId: data.razorpayPaymentId,
+            amount: data.amount,
+            currency: data.currency,
+            status: data.status,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        };
+    },
+    toModel(data: Partial<IPaymentEntity>): Partial<IPaymentModel> {
+        return {
+            ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+            ...(data.planId && { planId: new Types.ObjectId(String(data.planId)) }),
+            ...(data.razorpayOrderId && { razorpayOrderId: data.razorpayOrderId }),
+            ...(data.razorpayPaymentId && { razorpayPaymentId: data.razorpayPaymentId }),
+            ...(data.amount && { amount: data.amount }),
+            ...(data.currency && { currency: data.currency }),
             ...(data.status && { status: data.status }),
         };
     },

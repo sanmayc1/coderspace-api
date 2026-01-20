@@ -25,6 +25,7 @@ export interface IAuthResponseDto {
   accountId: string;
   email: string;
   profileComplete?: boolean;
+  isPremium?: boolean;
   profileUrl: string;
   role: TRole;
 }

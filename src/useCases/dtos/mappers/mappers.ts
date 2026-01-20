@@ -1,7 +1,10 @@
 import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
 import { ICompanyEntity } from '../../../domain/entities/company-entity';
+import { IContestEntity } from '../../../domain/entities/contest-entity';
 import { IDomainEntity } from '../../../domain/entities/domain-entity';
 import { ILanguageEntity } from '../../../domain/entities/langauge-entity';
+import { IPaymentEntity } from '../../../domain/entities/payment.entity';
+import { IPlanEntity } from '../../../domain/entities/plan-entity';
 import { IProblemEntity } from '../../../domain/entities/problem-entity';
 import { ISkillEntity } from '../../../domain/entities/skill-entity';
 import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
@@ -9,6 +12,7 @@ import { IUserEntity } from '../../../domain/entities/user.entity';
 import { TBadge, TLanguages, TRole } from '../../../shared/constant';
 import {
   IDomainDto,
+  IGetAllPaymentsUsecasePaymentDto,
   IGetAllProblemUsecaseOutputDto,
   IGetAllTestcaseUsecaseOutputDto,
   IGetLanguageDetailsUsecaseOutput,
@@ -21,9 +25,11 @@ import {
   IUserGetProblemUsecaseOutput,
 } from '../admin.dto';
 import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from '../auth.dto';
-import { IGetCompanyUsecaseOutputDto } from '../company.dto';
+import { IGetCompanyUsecaseOutputDto, IGetContestUsecaseOutputDto } from '../company.dto';
 import {
+  ICreateRazorpayOrderUsecaseOutputDto,
   IGetAllCodersUsecaseOutputDto,
+  IGetAllPlansUsecaseOutputDto,
   IGetCoderUsecaseOutputDto,
   IGetUserUsecaseOutputDto,
 } from '../user.dto';
@@ -38,6 +44,7 @@ export const authUserUsecaseMapper = {
       }),
       profileUrl: account.profileUrl || '',
       role: account.role as TRole,
+      isPremium: user?.subscription ? user.subscription.endDate > new Date() : false,
     };
   },
 };
@@ -95,7 +102,6 @@ export const getUserUsecaseMapper = {
       currentLevel: user.level as number,
       id: user._id as string,
       name: account.name,
-      premiumActive: user.isPremiumActive as boolean,
       skills: user.skills || [],
       username: user.username,
       xpCoin: user.xpCoin as number,
@@ -291,4 +297,54 @@ export const getCoderUsecaseMapper = {
       level: data.level as number,
     };
   },
+};
+
+
+export const getAllPlansUsecaseMapper = {
+    toResponse(data: IPlanEntity): IGetAllPlansUsecaseOutputDto {
+        return {
+            id: String(data._id),
+            name: data.name,
+            price: data.price,
+            description: data.description,
+            features: data.features,
+            duration: String(data.durationInMonths),
+        };
+    },
+};
+
+
+
+export const getAllPaymentsUsecaseMapper = {
+    toResponse(data: IPaymentEntity): IGetAllPaymentsUsecasePaymentDto {
+        return {
+         
+            username: (data.userId as IAccountsEntity).name,
+            email: (data.userId as IAccountsEntity).email,
+            amount: data.amount,
+            status: data.status,
+            planId: (data.planId as IPlanEntity)._id,
+            planName: (data.planId as IPlanEntity).name,
+            date: data.createdAt.toISOString().split('T')[0],
+            paymentId:data.razorpayPaymentId
+        };
+    },
+};
+
+
+export const getContestUsecaseMapper = {
+    toResponse(data: IContestEntity): IGetContestUsecaseOutputDto {
+        return {
+            id: String(data._id),
+            title: data.title,
+            description: data.description,
+            dateAndTime:String(data.dateAndTime),
+            duration: data.duration,
+            visibility: data.view,
+            rewards:data.rewards,
+            domain:data.domainId as string,
+            skills:data.skillsIds as string[],
+            problems:data.problemsIds as string[],
+        };
+    },
 };

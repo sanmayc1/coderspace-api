@@ -3,6 +3,7 @@ import {
   authMiddleware,
   companyController,
   companyContestController,
+  contestRoutes,
 } from '../../../di/di-resolver';
 import { BaseRoute } from '../base-route';
 
@@ -24,16 +25,8 @@ export class CompanyRoutes extends BaseRoute {
       companyController.updateProfile.bind(companyController)
     );
 
-    this.router.post(
-      '/contests',
-      asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware),
-      companyContestController.createContest.bind(companyContestController)
-    );
+    this.router.use('/contests',asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware), contestRoutes.router);
 
-    this.router.get(
-      '/contests',
-      asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware),
-      companyContestController.getContests.bind(companyContestController)
-    );
+    
   }
 }

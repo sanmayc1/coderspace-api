@@ -1,6 +1,7 @@
-import { validatorForExactMatch, validatorForUnorderedArray } from "./utils/testcase-validators";
+import { validatorForExactMatch, validatorForUnorderedArray } from './utils/testcase-validators';
 
 export type TRole = 'admin' | 'user' | 'company';
+export type TPremiumContents = 'problem' | 'interview';
 export type TAuthProviders = 'google' | 'github' | 'local';
 export type TBadge = 'silver' | 'gold' | 'platinum';
 export type TDifficulty = 'easy' | 'medium' | 'hard';
@@ -13,7 +14,7 @@ export const BADGE = ['silver', 'gold', 'platinum'];
 export const DIFFICULTY: TDifficulty[] = ['easy', 'medium', 'hard'];
 export type TView = 'public' | 'private';
 export const VIEW: TView[] = ['public', 'private'];
-
+export const PAYMENT_STATUS_ENUM = ['pending', 'paid', 'failed'];
 type FilterOp = 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'in' | 'contains';
 
 interface FilterCondition {
@@ -93,6 +94,12 @@ export const ERROR_MESSAGES = {
   USER_NOT_FOLLOWING: 'User not following',
   INVALID_LANGUAGE: 'Invalid language',
   WRONG_ANSWER: 'Test Case Failed',
+  PLAN_NOT_FOUND: 'Plan not found',
+  PAYMENT_NOT_FOUND: 'Payment not found',
+  PAYMENT_VERIFICATION_FAILED: 'Payment verification failed',
+  SUBSCRIPTION_ALREADY_EXISTS: 'Subscription already exists',
+  PREMIUM_REQUIRED: 'Access denied, premium required',
+  CONTEST_NOT_FOUND: 'Contest not found',
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -139,6 +146,11 @@ export const SUCCESS_MESSAGES = {
   GET_CODER: 'Coder fetched successfully',
   RUN_PROBLEM: 'Problem run successfully',
   SUBMIT_PROBLEM: 'Problem submitted successfully',
+  GET_ALL_PLANS: 'Plans fetched successfully',
+  CREATE_RAZORPAY_ORDER: 'Razorpay order created successfully',
+  VERIFY_PAYMENT: 'Payment verified successfully',
+  MARK_FAILED_PAYMENT: 'Payment marked failed successfully',
+  CONTEST_FETCHED: 'Contest fetched successfully',
 };
 
 export const COOKIES_NAMES = {
@@ -149,13 +161,12 @@ export const COOKIES_NAMES = {
   GITHUB_SESSION: '_secure_gth',
 };
 
-
-export const VALIDATOR_TYPE = ['exactMatch', 'unorderedArray']
+export const VALIDATOR_TYPE = ['exactMatch', 'unorderedArray'];
 
 export const VALIDATORS = {
-    exactMatch: validatorForExactMatch,
-    unorderedArray: validatorForUnorderedArray
-}
+  exactMatch: validatorForExactMatch,
+  unorderedArray: validatorForUnorderedArray,
+};
 
 export const templateCodes: Record<TLanguages, string> = {
   java: `
@@ -190,16 +201,12 @@ var solve = function(n) {
 `,
 };
 
-
-
 export const availableLanguages = {
-    java: {name: 'java', extension: 'java',version: '15.0.2'},
-    typescript: {name: 'typescript', extension: 'ts',version: '5.0.3'},
-    python: {name: 'python', extension: 'py',version: '3.12.0'},
-    javascript: {name: 'javascript', extension: 'js',version: '20.11.1'},
-}
+  java: { name: 'java', extension: 'java', version: '15.0.2' },
+  typescript: { name: 'typescript', extension: 'ts', version: '5.0.3' },
+  python: { name: 'python', extension: 'py', version: '3.12.0' },
+  javascript: { name: 'javascript', extension: 'js', version: '20.11.1' },
+};
 
-
-
-export type TStatus = 'attempted' | 'solved' 
-export const STATUS:TStatus[]=['attempted','solved']
+export type TStatus = 'attempted' | 'solved';
+export const STATUS: TStatus[] = ['attempted', 'solved'];

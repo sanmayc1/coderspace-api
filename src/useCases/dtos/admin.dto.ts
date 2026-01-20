@@ -182,3 +182,21 @@ export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput {
   number: number;
   testcases:{input:string,output:string,expected:string}[];
 }
+
+
+export interface IGetAllPaymentsUsecaseOutputDto {
+  data: IGetAllPaymentsUsecasePaymentDto[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export interface IGetAllPaymentsUsecasePaymentDto {
+  paymentId: string;
+  amount: number;
+  status: string;
+  planId: string;
+  date: string;
+  email:string;
+  planName:string;
+  username:string;
+}

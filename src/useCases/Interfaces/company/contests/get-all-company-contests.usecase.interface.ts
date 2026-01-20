@@ -1,9 +1,9 @@
 import {
   IGetCompanyContestUsecaseInputDto,
   IGetCompanyContestUsecaseOutputDto,
-} from '../../dtos/company.dto';
+} from '../../../dtos/company.dto';
 
-export interface IGetCompanyContestsUsecase {
+export interface IGetAllCompanyContestsUsecase {
   execute(
     accountId: string,
     query: IGetCompanyContestUsecaseInputDto
