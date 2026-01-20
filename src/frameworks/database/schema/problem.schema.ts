@@ -1,6 +1,6 @@
 import { Schema, Types } from 'mongoose';
 import { IProblemModel } from '../models/problem.model';
-import { DIFFICULTY, VIEW } from '../../../shared/constant';
+import { DIFFICULTY, VALIDATOR_TYPE, VIEW } from '../../../shared/constant';
 import { IExample } from '../../../domain/entities/problem-entity';
 import { string } from 'zod';
 
@@ -63,6 +63,12 @@ export const problemSchema = new Schema<IProblemModel>(
     problemNumber: {
       type: Number,
       required: true,
+    },
+    validatorType: {
+      type: String,
+      enum:VALIDATOR_TYPE,
+      required: true,
+      default: 'exactMatch',
     },
   },
   { timestamps: true }

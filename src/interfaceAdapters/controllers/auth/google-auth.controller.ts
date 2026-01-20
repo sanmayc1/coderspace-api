@@ -16,7 +16,7 @@ export class GoogleAuthController {
   constructor(@inject('IGoogleAuthUsecase') private _googleAuthUsecase: IGoogleAuthUsecase) {}
 
   async googleAuth(req: Request, res: Response) {
-    const userProfile = req.user as IGoogleAuthUsecaseInputDto;
+    const userProfile = req.user as unknown as IGoogleAuthUsecaseInputDto;
 
     const data = await this._googleAuthUsecase.execute(userProfile);
 

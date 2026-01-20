@@ -16,5 +16,21 @@ export class CodersRoute extends BaseRoute {
             asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
             asyncHandler(codersController.getAllCoders.bind(codersController))
         );
+
+        this.router.post(
+            '/follow',
+            asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
+            asyncHandler(codersController.followCoders.bind(codersController))
+        )
+
+        this.router.delete("/unfollow/:id",
+            asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
+            asyncHandler(codersController.unfollowCoders.bind(codersController))
+        )
+
+        this.router.get("/:id/coder",
+            asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
+            asyncHandler(codersController.getCoder.bind(codersController))
+        )
     }
 }

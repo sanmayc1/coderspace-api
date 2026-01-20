@@ -1,13 +1,13 @@
 import { inject, injectable } from 'tsyringe';
-import { IGetCompanyContestsUsecase } from '../Interfaces/company/get-company-contests.usecase.interface';
-import { IContestRepository } from '../../domain/repositoryInterfaces/contest-repository.interface';
+import { IGetAllCompanyContestsUsecase } from '../../Interfaces/company/contests/get-all-company-contests.usecase.interface';
+import { IContestRepository } from '../../../domain/repositoryInterfaces/contest-repository.interface';
 import {
   IGetCompanyContestUsecaseInputDto,
   IGetCompanyContestUsecaseOutputDto,
-} from '../dtos/company.dto';
+} from '../../dtos/company.dto';
 
 @injectable()
-export class GetCompanyContestsUsecase implements IGetCompanyContestsUsecase {
+export class GetAllCompanyContestsUsecase implements IGetAllCompanyContestsUsecase {
   private readonly limit = 10;
 
   constructor(

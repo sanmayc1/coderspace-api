@@ -1,4 +1,4 @@
-import { TDifficulty, TLanguages, TView } from '../../shared/constant';
+import { TDifficulty, TView } from '../../shared/constant';
 import { IDomainEntity } from './domain-entity';
 import { ILanguageEntity } from './langauge-entity';
 import { ISkillEntity } from './skill-entity';
@@ -15,6 +15,7 @@ export interface IProblemEntity {
   domainId: string | IDomainEntity;
   view: TView;
   isPremium: boolean;
+  validatorType: string;
   addedLanguagesId: (string | ILanguageEntity)[];
 }
 

@@ -25,12 +25,19 @@ import { CommonController } from '../../interfaceAdapters/controllers/common/com
 import { ProblemRoute } from '../express/routes/user/problem/problem.route';
 import { CodersRoute } from '../express/routes/user/coders/coders.route';
 import { CodersController } from '../../interfaceAdapters/controllers/user/coders.controller';
+import { PaymentRoute } from '../express/routes/user/payment/payment.route';
+import { PaymentsController } from '../../interfaceAdapters/controllers/user/payments.controller';
+import { PaymentsManagementController } from '../../interfaceAdapters/controllers/admin/payments.management.controller';
+import { PaymentsManagementRoutes } from '../express/routes/admin/payments.routes';
+import { PremiumGuardMiddleware } from '../../interfaceAdapters/middleware/premium.guard.middleware';
+import { ContestRoute } from '../express/routes/company/contest.routes';
 
 DependencyInjection.registerAll();
 
 // Middleware
 export const errorMiddleware = container.resolve(ErrorMiddleware);
 export const authMiddleware = container.resolve(AuthMiddleware);
+export const premiumGuardMiddleware = container.resolve(PremiumGuardMiddleware);
 
 // Services
 export const googleAuthService = container.resolve(GoogleAuthService);
@@ -50,16 +57,21 @@ export const userProblemController = container.resolve(UserProblemController);
 export const companyContestController = container.resolve(CompanyContestController);
 export const commonController = container.resolve(CommonController);
 export const codersController = container.resolve(CodersController);
+export const paymentController = container.resolve(PaymentsController);
+export const paymentsManagementController = container.resolve(PaymentsManagementController);
 
 // Routes
 export const authRoutes = container.resolve(AuthRoute);
 export const userManagementRoute = container.resolve(UserManagementRoute);
 export const problemManagementRoutes = container.resolve(ProblemManagementRoutes);
 export const skillsAndDomainManagementRoute = container.resolve(SkillsAndDomainManagementRoute);
+export const paymentsManagementRoutes = container.resolve(PaymentsManagementRoutes);
 export const adminRoutes = container.resolve(AdminRoutes);
 export const codersRoutes = container.resolve(CodersRoute);
 export const problemRoutes = container.resolve(ProblemRoute);
+export const paymentRoutes = container.resolve(PaymentRoute);
 export const userRoutes = container.resolve(UserRoutes);
+export const contestRoutes = container.resolve(ContestRoute);
 export const companyRoutes = container.resolve(CompanyRoutes);
 export const commonRoutes = container.resolve(CommonRoute);
 

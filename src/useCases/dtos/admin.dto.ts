@@ -42,6 +42,7 @@ export interface ICreateProblemUsecaseInputDto {
   domain: string;
   constrain: string;
   examples: IExample[];
+  validationType: string;
 }
 
 export interface IContestRewardDto {
@@ -144,7 +145,7 @@ export interface IGetProblemUsecaseOutput {
   examples: IExample[];
 }
 
-export interface IUpdateProblemUsecaseInput extends ICreateProblemUsecaseInputDto {
+export interface IUpdateProblemUsecaseInput extends Omit<ICreateProblemUsecaseInputDto,'validationType'> {
   problemId: string;
 }
 
@@ -179,4 +180,23 @@ export interface ITemplateCodes {
 export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput {
   templateCodes: ITemplateCodes[];
   number: number;
+  testcases:{input:string,output:string,expected:string}[];
+}
+
+
+export interface IGetAllPaymentsUsecaseOutputDto {
+  data: IGetAllPaymentsUsecasePaymentDto[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export interface IGetAllPaymentsUsecasePaymentDto {
+  paymentId: string;
+  amount: number;
+  status: string;
+  planId: string;
+  date: string;
+  email:string;
+  planName:string;
+  username:string;
 }

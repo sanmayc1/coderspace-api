@@ -4,7 +4,7 @@ import { IBaseRepository } from './base-repository.interface';
 
 export interface IProblemRepository extends IBaseRepository<IProblemEntity> {
   findProblemCount(): Promise<number>;
-  getAllProblems(data: IGetAllProblemsInput): Promise<IGetAllProblems>;
+  getAllProblems(data: IMongoOptions): Promise<IGetAllProblems>;
   addLanguage(id: string, languageId: string): Promise<void>;
   getProblem(id: string, options?: IGetProblemInput): Promise<IProblemEntity | null>;
 }
@@ -14,7 +14,7 @@ export interface IGetAllProblems {
   total: number;
 }
 
-export interface IGetAllProblemsInput {
+export interface IMongoOptions {
   projections?: Projection;
   sort?: Sort;
   filter?: GenericFilter;

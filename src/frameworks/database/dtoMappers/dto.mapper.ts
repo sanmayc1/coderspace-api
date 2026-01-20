@@ -1,10 +1,8 @@
 import mongoose, { Types } from 'mongoose';
 import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
-import { IOtpEntity } from '../../../domain/entities/otp.entity';
 import { IUserEntity } from '../../../domain/entities/user.entity';
 import { IWalletEnitity } from '../../../domain/entities/wallet.entity';
 import { IAccountsModel } from '../models/account.model ';
-import { IOtpModel } from '../models/otp.model';
 import { IUserModel } from '../models/user.model';
 import { IWalletModel } from '../models/wallet.model';
 import { ICompanyModel } from '../models/company.model';
@@ -22,6 +20,14 @@ import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
 import { ITestcaseModel } from '../models/testcase.model';
 import { IContestEntity } from '../../../domain/entities/contest-entity';
 import { IContestModel } from '../models/contest.model';
+import { IFollowerModel } from '../models/follower.model';
+import { IFollowerEntity } from '../../../domain/entities/follower-entity';
+import { ISubmitProblemModel } from '../models/submit-problem.model';
+import { ISubmitProblemEntity } from '../../../domain/entities/submit-problem.entity';
+import { IPlanModel } from '../models/plan.model';
+import { IPlanEntity } from '../../../domain/entities/plan-entity';
+import { IPaymentModel } from '../models/payment.model';
+import { IPaymentEntity } from '../../../domain/entities/payment.entity';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -35,12 +41,11 @@ export const userMapperRepo = {
       notification: data.notification,
       xpCoin: data.xpCoin,
       badge: data.badge,
-      isPremiumActive: data.isPremiumActive,
       about: data.about,
       domain: data.domain,
       suggestionLevel: data.suggestionLevel,
       globalScore: data.globalScore,
-      planHistory: data.planHistory,
+      subscription: data.subscription,
       skills: data.skills,
       accountId:
         data.accountId instanceof Types.ObjectId
@@ -58,14 +63,12 @@ export const userMapperRepo = {
       ...(data.domain && { domain: data.domain }),
       ...(data.suggestionLevel && { suggestionLevel: data.suggestionLevel }),
       ...(data.globalScore && { globalScore: data.globalScore }),
-      ...(data.isPremiumActive && { isPremiumActive: data.isPremiumActive }),
+      ...(data.subscription && { subscription: data.subscription }),
       ...(data.isProfileComplete && {
         isProfileComplete: data.isProfileComplete,
       }),
       ...(data.level && { level: data.level }),
       ...(data.notification && { notification: data.notification }),
-
-      ...(data.planHistory && { planHistory: data.planHistory }),
       ...(data.skills && { skills: data.skills }),
       ...(data.username && { username: data.username as string }),
       ...(data.xpCoin && { xpCoin: data.xpCoin as number }),
@@ -93,16 +96,7 @@ export const walletMapper = {
   },
 };
 
-export const otpMapper = {
-  toEntity(data: IOtpModel): IOtpEntity {
-    return {
-      _id: String(data._id),
-      email: data.email,
-      expiry: data.expiry,
-      otp: data.otp,
-    };
-  },
-};
+
 
 export const accountRepositoryMapper = {
   toEntity(data: IAccountsModel): IAccountsEntity {
@@ -173,6 +167,7 @@ export const problemRepositoryMapper = {
         l instanceof Types.ObjectId ? String(l) : (l as ILanguageEntity)
       ),
       problemNumber: data.problemNumber,
+      validatorType: data.validatorType,
     };
   },
   toModel(data: Partial<IProblemEntity>): Partial<IProblemModel> {
@@ -193,6 +188,7 @@ export const problemRepositoryMapper = {
       ...(data.addedLanguagesId && {
         addedLanguagesId: data.addedLanguagesId.map((l) => new Types.ObjectId(String(l))),
       }),
+      ...(data.validatorType && { validatorType: data.validatorType }),
       ...(data.problemNumber && { problemNumber: data.problemNumber }),
     };
   },
@@ -321,3 +317,102 @@ export const contestRepositoryMapper = {
     };
   },
 };
+
+
+export const followerRepositoryMapper = {
+  toEntity(data: IFollowerModel): IFollowerEntity {
+    return {
+      _id: String(data._id),
+      followerId: String(data.followerId),
+      followeeId: String(data.followeeId),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<IFollowerEntity>): Partial<IFollowerModel> {
+    return {
+      ...(data.followerId && { followerId: new Types.ObjectId(String(data.followerId)) }),
+      ...(data.followeeId && { followeeId: new Types.ObjectId(String(data.followeeId)) }),
+    };
+  },
+}
+
+
+export const submitProblemRepositoryMapper = {
+    toEntity(data: ISubmitProblemModel): ISubmitProblemEntity {
+        return {
+            _id: String(data._id),
+            userId: String(data.userId) ,
+            problemId: String(data.problemId),
+            solution: data.solution,
+            language: data.language,
+            status: data.status,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        };
+    },
+    toModel(data: Partial<ISubmitProblemEntity>): Partial<ISubmitProblemModel> {
+        return {
+            ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+            ...(data.problemId && { problemId: new Types.ObjectId(String(data.problemId)) }),
+            ...(data.solution && { solution: data.solution }),
+            ...(data.language && { language: data.language }),
+            ...(data.status && { status: data.status }),
+        };
+    },
+}
+
+
+
+export const planRepositoryMapper = {
+    toEntity(data: IPlanModel): IPlanEntity {
+        return {
+            _id: String(data._id),
+            name: data.name,
+            price: data.price,
+            durationInMonths: data.durationInMonths,
+            description: data.description,
+            features: data.features,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        };
+    },
+    toModel(data: Partial<IPlanEntity>): Partial<IPlanModel> {
+        return {
+            ...(data.name && { name: data.name }),
+            ...(data.price && { price: data.price }),
+            ...(data.durationInMonths && { durationInMonths: data.durationInMonths }),
+            ...(data.description && { description: data.description }),
+            ...(data.features && { features: data.features }),
+        };
+    },
+}
+
+
+export const paymentRepositoryMapper = {
+    toEntity(data: IPaymentModel): IPaymentEntity {
+        return {
+            _id: String(data._id),
+            userId: data.userId instanceof Types.ObjectId ? String(data.userId) : (data.userId as IAccountsEntity),
+            planId: data.planId instanceof Types.ObjectId ? String(data.planId) : (data.planId as IPlanEntity),
+            razorpayOrderId: data.razorpayOrderId,
+            razorpayPaymentId: data.razorpayPaymentId,
+            amount: data.amount,
+            currency: data.currency,
+            status: data.status,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+        };
+    },
+    toModel(data: Partial<IPaymentEntity>): Partial<IPaymentModel> {
+        return {
+            ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+            ...(data.planId && { planId: new Types.ObjectId(String(data.planId)) }),
+            ...(data.razorpayOrderId && { razorpayOrderId: data.razorpayOrderId }),
+            ...(data.razorpayPaymentId && { razorpayPaymentId: data.razorpayPaymentId }),
+            ...(data.amount && { amount: data.amount }),
+            ...(data.currency && { currency: data.currency }),
+            ...(data.status && { status: data.status }),
+        };
+    },
+}

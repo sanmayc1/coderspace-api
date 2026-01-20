@@ -1,4 +1,5 @@
 import { TView } from '../../shared/constant';
+import { ICreateContestUsecaseInputDto } from './admin.dto';
 
 export interface IGetCompanyUsecaseOutputDto {
   companyName: string;
@@ -25,4 +26,8 @@ export interface IGetCompanyContestUsecaseOutputDto {
   contests: ICompanyContestDto[];
   totalPages: number;
   currentPage: number;
+}
+
+export interface IGetContestUsecaseOutputDto extends ICreateContestUsecaseInputDto {
+ id:string;
 }

@@ -13,7 +13,6 @@ export interface IUserModel
       | 'notifiacation'
       | 'xpCoin'
       | 'badge'
-      | 'isPremiumActive'
       | 'accountId'
       | 'globalScore'
     >,
@@ -25,7 +24,6 @@ export interface IUserModel
   notification: boolean;
   xpCoin: number;
   badge: 'silver' | 'gold' | 'platinum';
-  isPremiumActive: boolean;
   globalScore: number;
 }
 

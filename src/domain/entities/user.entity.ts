@@ -1,10 +1,10 @@
 import { TDifficulty } from '../../shared/constant';
 import { IAccountsEntity } from './accounts-entity';
 
-interface PlanHistory {
+export interface ISubscription {
   planId: string;
-  planName: string;
-  expireAt: Date;
+  endDate: Date;
+  startDate: Date;
 }
 
 export interface Rating {
@@ -22,8 +22,7 @@ export interface IUserEntity {
   notification?: boolean;
   badge?: 'silver' | 'gold' | 'platinum';
   about?: string;
-  isPremiumActive?: boolean;
-  planHistory?: PlanHistory;
+  subscription: ISubscription | null;
   isProfileComplete?: boolean;
   domain?: Rating[];
   skills?: Rating[];

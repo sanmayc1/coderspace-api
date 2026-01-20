@@ -1,6 +1,23 @@
 import { Schema } from 'mongoose';
 import { IUserModel } from '../models/user.model';
 import { BADGE, DIFFICULTY } from '../../../shared/constant';
+import { ISubscription } from '../../../domain/entities/user.entity';
+
+
+const subscriptionSchema = new Schema<ISubscription>({
+  planId: {
+    type: String,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+});
 
 export const userSchema = new Schema<IUserModel>(
   {
@@ -34,13 +51,9 @@ export const userSchema = new Schema<IUserModel>(
     about: {
       type: String,
     },
-    isPremiumActive: {
-      type: Boolean,
-      default: false,
-    },
-    planHistory: {
-      type: Array,
-      default: [],
+    subscription: {
+      type:subscriptionSchema,
+      default: null,
     },
     isProfileComplete: {
       type: Boolean,

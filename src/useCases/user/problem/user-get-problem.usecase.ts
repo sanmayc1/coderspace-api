@@ -5,19 +5,23 @@ import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem
 import { userGetProblemUsecaseMapper } from '../../dtos/mappers/mappers';
 import { CustomError } from '../../../domain/utils/custom-error';
 import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
+import { ITestcaseRepository } from '../../../domain/repositoryInterfaces/testcase-respository.interface';
 
 @injectable()
 export class UserGetProblemUsecase implements IUserGetProblemUsecase {
-  constructor(@inject('IProblemRepository') private _problemRepository: IProblemRepository) {}
+  constructor(@inject('IProblemRepository') private _problemRepository: IProblemRepository,
+  @inject('ITestcaseRepository') private _testcaseRepository: ITestcaseRepository
+) {}
   async execute(id: string): Promise<IUserGetProblemUsecaseOutput> {
     const relations = ['skillsIds', 'addedLanguagesId', 'domainId'];
 
     const problem = await this._problemRepository.getProblem(id, { relations });
-
+    const testcases = await this._testcaseRepository.getTestcasesByProblemId(id,{limit:3});
+   
     if (!problem) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.PROBLEM_NOT_FOUND);
     }
 
-    return userGetProblemUsecaseMapper.toResponse(problem);
+    return userGetProblemUsecaseMapper.toResponse(problem,testcases);
   }
 }

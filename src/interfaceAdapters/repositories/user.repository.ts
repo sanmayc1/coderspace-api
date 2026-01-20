@@ -5,6 +5,7 @@ import { IUserModel, UserModel } from '../../frameworks/database/models/user.mod
 import { userMapperRepo } from '../../frameworks/database/dtoMappers/dto.mapper';
 import { BaseRepository } from './base-repository';
 import { USER_SORTING } from '../../shared/utils/mongo-utils';
+import mongoose from 'mongoose';
 
 @injectable()
 export class UserRepository
@@ -68,13 +69,48 @@ export class UserRepository
     return user ? userMapperRepo.toEntity(user) : user;
   }
 
-  async getAllUsersWithFollowing(): Promise<IUserEntity[] | []> {
-    const doc = await UserModel.find().populate({
-      path: 'accountId',
-      match: { isVerified: true },
-    });
-
-
-    return doc ? doc.map((user) => userMapperRepo.toEntity(user)) : [];
+  async getAllUsersWithFollowing(
+    userId: string
+  ): Promise<(IUserEntity & { isFollowing: boolean })[] | []> {
+    const viewerId = new mongoose.Types.ObjectId(userId);
+    const doc = await UserModel.aggregate([
+      {
+        $match: { _id: {$ne: viewerId} },
+      },
+      {
+        $lookup: {
+          from: 'accounts',
+          localField: 'accountId',
+          foreignField: '_id',
+          as: 'accountId',
+        },
+      },
+      { $unwind: { path: '$accountId', preserveNullAndEmptyArrays: true } },
+      { $match: { 'accountId.isVerified': true } },
+      {
+        $lookup: {
+          from: 'followers',
+          let: { userId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [{ $eq: ['$followeeId', '$$userId'] }, { $eq: ['$followerId', viewerId] }],
+                },
+              },
+            },
+          ],
+          as: 'followers',
+        },
+      },
+      {
+        $addFields: {
+          isFollowing: { $gt: [{ $size: '$followers' }, 0] },
+        },
+      },
+    ]);
+    return doc
+      ? doc.map((user) => ({ ...userMapperRepo.toEntity(user), isFollowing: user.isFollowing }))
+      : [];
   }
 }

@@ -1,9 +1,12 @@
+import { validatorForExactMatch, validatorForUnorderedArray } from './utils/testcase-validators';
+
 export type TRole = 'admin' | 'user' | 'company';
+export type TPremiumContents = 'problem' | 'interview';
 export type TAuthProviders = 'google' | 'github' | 'local';
 export type TBadge = 'silver' | 'gold' | 'platinum';
 export type TDifficulty = 'easy' | 'medium' | 'hard';
-export type TLanguages = 'javascript' | 'java' | 'python' | 'cpp';
-export const LANGUAGES: TLanguages[] = ['cpp', 'java', 'javascript', 'python'];
+export type TLanguages = 'javascript' | 'java' | 'python' | 'typescript';
+export const LANGUAGES: TLanguages[] = ['typescript', 'java', 'javascript', 'python'];
 
 export const ROLES = ['admin', 'user', 'company'];
 export const AUTHPROVIDER = ['github', 'google', 'local'];
@@ -11,7 +14,7 @@ export const BADGE = ['silver', 'gold', 'platinum'];
 export const DIFFICULTY: TDifficulty[] = ['easy', 'medium', 'hard'];
 export type TView = 'public' | 'private';
 export const VIEW: TView[] = ['public', 'private'];
-
+export const PAYMENT_STATUS_ENUM = ['pending', 'paid', 'failed'];
 type FilterOp = 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'in' | 'contains';
 
 interface FilterCondition {
@@ -87,6 +90,16 @@ export const ERROR_MESSAGES = {
   PROBLEM_NOT_FOUND: 'Problem not found',
   NO_LANGUAGE_ADDED: 'Please add one language to change visibility',
   OLD_PASSWORD_AND_NEW_PASSWORD_SAME: 'Old password and new password same',
+  USER_ALREADY_FOLLOWING: 'User already following',
+  USER_NOT_FOLLOWING: 'User not following',
+  INVALID_LANGUAGE: 'Invalid language',
+  WRONG_ANSWER: 'Test Case Failed',
+  PLAN_NOT_FOUND: 'Plan not found',
+  PAYMENT_NOT_FOUND: 'Payment not found',
+  PAYMENT_VERIFICATION_FAILED: 'Payment verification failed',
+  SUBSCRIPTION_ALREADY_EXISTS: 'Subscription already exists',
+  PREMIUM_REQUIRED: 'Access denied, premium required',
+  CONTEST_NOT_FOUND: 'Contest not found',
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -128,6 +141,16 @@ export const SUCCESS_MESSAGES = {
   USER_PROFILE_UPDATED: 'User profile updated successfully',
   PASSWORD_UPDATED: 'Password updated successfully',
   GET_ALL_CODERS: 'Users fetched Successfully',
+  FOLLOW_CODER: 'User followed successfully',
+  UNFOLLOW_CODER: 'User unfollowed successfully',
+  GET_CODER: 'Coder fetched successfully',
+  RUN_PROBLEM: 'Problem run successfully',
+  SUBMIT_PROBLEM: 'Problem submitted successfully',
+  GET_ALL_PLANS: 'Plans fetched successfully',
+  CREATE_RAZORPAY_ORDER: 'Razorpay order created successfully',
+  VERIFY_PAYMENT: 'Payment verified successfully',
+  MARK_FAILED_PAYMENT: 'Payment marked failed successfully',
+  CONTEST_FETCHED: 'Contest fetched successfully',
 };
 
 export const COOKIES_NAMES = {
@@ -136,6 +159,13 @@ export const COOKIES_NAMES = {
   ACCESS_TOKEN: '_secure_at_auth',
   DEVICE_ID: '_dvid',
   GITHUB_SESSION: '_secure_gth',
+};
+
+export const VALIDATOR_TYPE = ['exactMatch', 'unorderedArray'];
+
+export const VALIDATORS = {
+  exactMatch: validatorForExactMatch,
+  unorderedArray: validatorForUnorderedArray,
 };
 
 export const templateCodes: Record<TLanguages, string> = {
@@ -148,14 +178,9 @@ class Solution {
     }
 }
 `,
-  cpp: `
-class Solution {
-public:
-    int solve(int n) {
-       
-
-        return 0;
-    }
+  typescript: `
+  function solve(num: number): number {
+    
 };
 `,
 
@@ -175,3 +200,13 @@ var solve = function(n) {
 }
 `,
 };
+
+export const availableLanguages = {
+  java: { name: 'java', extension: 'java', version: '15.0.2' },
+  typescript: { name: 'typescript', extension: 'ts', version: '5.0.3' },
+  python: { name: 'python', extension: 'py', version: '3.12.0' },
+  javascript: { name: 'javascript', extension: 'js', version: '20.11.1' },
+};
+
+export type TStatus = 'attempted' | 'solved';
+export const STATUS: TStatus[] = ['attempted', 'solved'];

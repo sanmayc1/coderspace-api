@@ -2,6 +2,8 @@ import { injectable } from 'tsyringe';
 import { BaseRoute } from '../base-route';
 import {
   authMiddleware,
+  paymentRoutes,
+  paymentsManagementRoutes,
   problemManagementRoutes,
   skillsAndDomainManagementRoute,
   userManagementRoute,
@@ -30,5 +32,12 @@ export class AdminRoutes extends BaseRoute {
       asyncHandler(authMiddleware.handle(['admin', 'company'])).bind(authMiddleware),
       skillsAndDomainManagementRoute.router
     );
+
+    this.router.use(
+      '/payments',
+      asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
+      paymentsManagementRoutes.router
+    );
+
   }
 }
