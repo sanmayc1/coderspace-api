@@ -1,4 +1,4 @@
-import { IOtpEntity } from '../entities/otp.entity';
+
 
 export interface IOtpService {
   generateOtp(): string;

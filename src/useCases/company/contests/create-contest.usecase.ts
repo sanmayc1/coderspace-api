@@ -1,9 +1,10 @@
-import { inject, injectable } from 'tsyringe';
-import { ICreateContestUsecase } from '../Interfaces/company/create-contest.usecase.interface';
-import { IContestRepository } from '../../domain/repositoryInterfaces/contest-repository.interface';
-import { ICreateContestUsecaseInputDto } from '../dtos/admin.dto';
-import { CustomError } from '../../domain/utils/custom-error';
-import { ERROR_MESSAGES } from '../../shared/constant';
+import { inject, injectable } from "tsyringe";
+import { ICreateContestUsecase } from "../../Interfaces/company/contests/create-contest.usecase.interface";
+import { IContestRepository } from "../../../domain/repositoryInterfaces/contest-repository.interface";
+import { ICreateContestUsecaseInputDto } from "../../dtos/admin.dto";
+import { ERROR_MESSAGES } from "../../../shared/constant";
+import { CustomError } from "../../../domain/utils/custom-error";
+
 
 @injectable()
 export class CreateContestUsecase implements ICreateContestUsecase {

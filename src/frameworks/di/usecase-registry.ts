@@ -39,11 +39,24 @@ import { ChangeVisibilityUsecase } from '../../useCases/admin/problem-management
 import { UserGetAllProblemsUsecase } from '../../useCases/user/problem/user-get-all-problem.usecase';
 import { UserGetProblemUsecase } from '../../useCases/user/problem/user-get-problem.usecase';
 import { UpdateCompanyUsecase } from '../../useCases/company/update-company.usecase';
-import { CreateContestUsecase } from '../../useCases/company/create-contest.usecase';
-import { GetCompanyContestsUsecase } from '../../useCases/company/get-company-contests.usecase';
+import { GetAllCompanyContestsUsecase } from '../../useCases/company/contests/get-all-company-contests.usecase';
 import { UpdateUserProfileUsecase } from '../../useCases/user/user-profile/user-profile-update.usecase';
 import { UpdateUserPasswordUsecase } from '../../useCases/user/user-profile/update-user-password.usecase';
-import { GetAllCoders } from '../../useCases/user/coders/get-all-coders';
+import { GetAllCoders } from '../../useCases/user/coders/get-all-coders.usecase';
+import { FollowCoders } from '../../useCases/user/coders/follow-coder-usecase';
+import { UnfollowCodersUsecase } from '../../useCases/user/coders/unfollow-coders.usecase';
+import { GetCoderUsecase } from '../../useCases/user/coders/get-coder.usecase';
+import { RunProblemUsecase } from '../../useCases/user/problem/run-problem.usecase';
+import { SubmitProblemUsecase } from '../../useCases/user/problem/sumbit-problem.usecase';
+import { GetProblemUpdatesUsecase } from '../../useCases/user/problem/get-problem-update.usecase';
+import { GetAllPlansUseCase } from '../../useCases/common/get-all-plans.usecase';
+import { CreateRazorpayOrderUseCase } from '../../useCases/user/payments/create-razorpay-order.usecase';
+import { VerifyPaymentUseCase } from '../../useCases/user/payments/verify-payment.usecase';
+import { MarkFailedPaymentUseCase } from '../../useCases/user/payments/mark-failed-payment.usecase';
+import { EditPlanUseCase } from '../../useCases/admin/payments/edit-plan.usecase';
+import { GetAllPaymentsUseCase } from '../../useCases/admin/payments/get-all-payments.usecase';
+import { CreateContestUsecase } from '../../useCases/company/contests/create-contest.usecase';
+import { GetContestUsecase } from '../../useCases/company/contests/get-contest.usecase';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -136,8 +149,8 @@ export class UsecaseRegistery {
     container.register('ICreateContestUsecase', {
       useClass: CreateContestUsecase,
     });
-    container.register('IGetCompanyContestsUsecase', {
-      useClass: GetCompanyContestsUsecase,
+    container.register('IGetAllCompanyContestsUsecase', {
+      useClass: GetAllCompanyContestsUsecase,
     });
 
     container.register('IUpdateUserProfileUsecase', {
@@ -149,6 +162,54 @@ export class UsecaseRegistery {
     });
     container.register('IGetAllCodersUsecase', {
       useClass: GetAllCoders,
+    });
+
+    container.register('IFollowCodersUsecase', {
+      useClass: FollowCoders,
+    });
+
+    container.register('IUnfollowCodersUsecase', {
+      useClass: UnfollowCodersUsecase,
+    });
+
+    container.register('IGetCoderUsecase', {
+      useClass: GetCoderUsecase,
+    });
+    container.register('IRunProblemUsecase', {
+      useClass: RunProblemUsecase,
+    });
+
+    container.register('ISubmitProblemUsecase', {
+      useClass: SubmitProblemUsecase,
+    });
+
+    container.register('IGetProblemUpdatesUsecase', {
+      useClass: GetProblemUpdatesUsecase,
+    });
+    container.register('IGetAllPlansUseCase', {
+      useClass: GetAllPlansUseCase,
+    });
+    container.register('ICreateRazorpayOrderUseCase', {
+      useClass: CreateRazorpayOrderUseCase,
+    });
+
+    container.register('IVerifyPaymentUseCase', {
+      useClass: VerifyPaymentUseCase,
+    });
+
+    container.register('IMarkFailedPaymentUseCase', {
+      useClass: MarkFailedPaymentUseCase,
+    });
+
+    container.register('IEditPlanUseCase', {
+      useClass: EditPlanUseCase,
+    });
+    container.register('IGetAllPaymentsUseCase', {
+      useClass: GetAllPaymentsUseCase,
+    });
+
+    container.register('IGetContestUsecase', {
+      useClass: GetContestUsecase,
     });
   }
 }

@@ -1,5 +1,5 @@
 import z from 'zod';
-import { BADGE, DIFFICULTY } from '../../../../shared/constant';
+import { BADGE, DIFFICULTY, VALIDATOR_TYPE } from '../../../../shared/constant';
 
 export const UserProfileUpdateSchema = z.object({
   level: z
@@ -24,6 +24,7 @@ export const createProblemSchema = z.object({
   domain: objectId,
   premium: z.boolean(),
   skills: z.array(objectId).nonempty('Skills array cannot be empty'),
+  validationType: z.enum(VALIDATOR_TYPE),
   examples: z
     .array(
       z.object({
@@ -69,6 +70,6 @@ export const testcaseSchema = z.object({
   example: z.boolean().optional(),
 });
 
-export const updateProblemSchema = createProblemSchema.extend({
+export const updateProblemSchema = createProblemSchema.omit({validationType: true}).extend({
   problemId: objectId,
 });

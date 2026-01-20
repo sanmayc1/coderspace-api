@@ -13,4 +13,7 @@ export class LanguageRepository
   constructor() {
     super(LanguageModel, langaugeRepositoryMapper.toEntity, langaugeRepositoryMapper.toModel);
   }
+ async getLanguageByProblemIdAndLanguage(id: string, langauge: string): Promise<ILanguageEntity | null> {
+    return await LanguageModel.findOne({ problemId: id, language: langauge });
+  }
 }
