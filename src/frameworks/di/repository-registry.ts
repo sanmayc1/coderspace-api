@@ -16,6 +16,7 @@ import { FollowerRepository } from '../../interfaceAdapters/repositories/followe
 import { SubmitProblemRepository } from '../../interfaceAdapters/repositories/submit-problem-repository';
 import { PlanRepository } from '../../interfaceAdapters/repositories/plan-repository';
 import { PaymentRepository } from '../../interfaceAdapters/repositories/payment-repository';
+import { ContestAttemptRepository } from '../../interfaceAdapters/repositories/contest-attempt-repository';
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -36,5 +37,6 @@ export class RepositoryRegistery {
     container.register('ISubmitProblemRepository',{useClass:SubmitProblemRepository})
     container.register('IPlanRepository',{useClass:PlanRepository})
     container.register('IPaymentRepository',{useClass:PaymentRepository})
+    container.register('IContestAttemptRepository',{useClass:ContestAttemptRepository})
   }
 }

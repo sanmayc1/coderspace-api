@@ -1,36 +1,43 @@
 import { inject, injectable } from 'tsyringe';
+import { IContestProblemSubmitUsecase } from '../../Interfaces/users/contest/contest-problem-submit.usecase.interface';
+import {
+  IContestProblemSubmitUsecaseInputDto,
+  IContestProblemSubmitUsecaseOutputDto,
+} from '../../dtos/user.dto';
 import { ICompilerService } from '../../../domain/services/compiler-service.interface';
-import { IRunProblemUsecase } from '../../Interfaces/users/problem/run-problem.usecase.interface';
+import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem-repository.interface';
+import { ITestcaseRepository } from '../../../domain/repositoryInterfaces/testcase-respository.interface';
+import { IUserRepository } from '../../../domain/repositoryInterfaces/user-repository.interface';
 import {
   availableLanguages,
+  CONTEST_SCORE_BASED_ON_DIFFICULTY,
   ERROR_MESSAGES,
   HTTP_STATUS,
-  TLanguages,
   VALIDATORS,
 } from '../../../shared/constant';
 import { CustomError } from '../../../domain/utils/custom-error';
-import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem-repository.interface';
-import { ITestcaseRepository } from '../../../domain/repositoryInterfaces/testcase-respository.interface';
 import { ILanguageEntity } from '../../../domain/entities/langauge-entity';
-import { normalize, normalizeMongoOutput } from '../../../shared/utils/helper';
-import { ISubmitProblemUsecase } from '../../Interfaces/users/problem/sumbit-problem.usecase.interface';
-import { ISubmitProblemUsecaseInputDto, ISubmitProblemUsecaseOutputDto } from '../../dtos/user.dto';
-import { IUserRepository } from '../../../domain/repositoryInterfaces/user-repository.interface';
-import { ISubmitProblemRepository } from '../../../domain/repositoryInterfaces/submit-problem-repository.interface';
-import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
 import { testCodeGenerators } from '../../../shared/testCodeGenerator';
+import { normalize } from '../../../shared/utils/helper';
+import { normalizeMongoOutput } from '../../../shared/utils/helper';
+import { IContestAttemptRepository } from '../../../domain/repositoryInterfaces/contest-attempt-repository.interface';
+import { IContestRepository } from '../../../domain/repositoryInterfaces/contest-repository.interface';
 
 @injectable()
-export class SubmitProblemUsecase implements ISubmitProblemUsecase {
+export class ContestProblemSubmitUsecase implements IContestProblemSubmitUsecase {
   constructor(
     @inject('ICompilerService') private _compilerService: ICompilerService,
     @inject('IProblemRepository') private _problemRepository: IProblemRepository,
     @inject('ITestcaseRepository') private _testcaseRepository: ITestcaseRepository,
     @inject('IUserRepository') private _userRepository: IUserRepository,
-    @inject('ISubmitProblemRepository') private _submitProblemRepository: ISubmitProblemRepository
+    @inject('IContestAttemptRepository')
+    private _contestAttemptRepository: IContestAttemptRepository,
+    @inject('IContestRepository') private _contestRepository: IContestRepository
   ) {}
 
-  async execute(data: ISubmitProblemUsecaseInputDto): Promise<ISubmitProblemUsecaseOutputDto> {
+  async execute(
+    data: IContestProblemSubmitUsecaseInputDto
+  ): Promise<IContestProblemSubmitUsecaseOutputDto> {
     const selectedLanguage = availableLanguages[data.language as keyof typeof availableLanguages];
 
     if (!selectedLanguage) {
@@ -67,7 +74,7 @@ export class SubmitProblemUsecase implements ISubmitProblemUsecase {
 
     let results: { input: string; output: string; expected: string; isCorrect: boolean }[] = [];
     let allTestCasePassed = true;
-    for (let i = 0; i < testcases.length; i++) {
+    for (let i = 0; i < testcases.length ; i++) {
       const testCode = testCodeGenerator(
         testcases[i],
         data.solution,
@@ -93,6 +100,7 @@ export class SubmitProblemUsecase implements ISubmitProblemUsecase {
 
       const isCorrect = validator(normalizeMongoOutput(testcases[i].output), normalizedOutput);
       if (!isCorrect) {
+        allTestCasePassed = false;
         results.push({
           input: JSON.parse(testcases[i].input)
             .map((arg: any, i: number) => `param${i + 1} = ${JSON.stringify(arg)}`)
@@ -101,7 +109,6 @@ export class SubmitProblemUsecase implements ISubmitProblemUsecase {
           expected: normalizeMongoOutput(testcases[i].output),
           isCorrect: false,
         });
-        allTestCasePassed = false;
       } else {
         results.push({
           input: JSON.parse(testcases[i].input)
@@ -131,23 +138,49 @@ export class SubmitProblemUsecase implements ISubmitProblemUsecase {
         ];
       }
     }
+    const contest = await this._contestRepository.findById(data.contestId);
+
+    if (!contest) {
+      throw new CustomError(HTTP_STATUS.NOT_FOUND, ERROR_MESSAGES.CONTEST_NOT_FOUND);
+    }
+
+    const contestAttempt = await this._contestAttemptRepository.getContestByUserIdAndContestId(
+      user._id as string,
+      contest._id as string
+    );
+    if (!contestAttempt) {
+      throw new CustomError(HTTP_STATUS.NOT_FOUND, ERROR_MESSAGES.CONTEST_ATTEMPT_NOT_FOUND);
+    }
 
     if (!allTestCasePassed) {
-      await this._submitProblemRepository.create({
-        problemId: data.problemId,
-        userId: user._id as string,
-        language: data.language as TLanguages,
-        solution: data.solution,
-        status: 'attempted',
+      await this._contestAttemptRepository.updateContestByUserIdAndContestId(
+        user._id as string,
+        contest._id as string,
+        {
+        contestId: contest._id,
+        userId: user._id,
+        totalProblems: contest.problemsIds.length,
+        totalSubmissions: contestAttempt?.totalSubmissions + 1,
+        endDateAndTime: new Date(),
       });
     } else {
-      await this._submitProblemRepository.create({
-        problemId: data.problemId,
-        userId: user._id as string,
-        language: data.language as TLanguages,
-        solution: data.solution,
-        status: 'solved',
-      });
+      const score =
+        contest.problemsIds.length * CONTEST_SCORE_BASED_ON_DIFFICULTY[problem.difficulty] +
+        contestAttempt?.score;
+
+      await this._contestAttemptRepository.updateContestByUserIdAndContestId(
+        user._id as string,
+        contest._id as string,
+        {
+          contestId: contest._id,
+          userId: user._id,
+          totalProblems: contest.problemsIds.length,
+          totalSubmissions: contestAttempt?.totalSubmissions + 1,
+          endDateAndTime: new Date(),
+          score: score,
+          solvedProblems: contestAttempt?.solvedProblems + 1,
+        }
+      );
     }
 
     return {

@@ -31,6 +31,8 @@ import {
   IGetAllCodersUsecaseOutputDto,
   IGetAllPlansUsecaseOutputDto,
   IGetCoderUsecaseOutputDto,
+  IGetContestProblem,
+  IGetContestUsecase,
   IGetUserUsecaseOutputDto,
 } from '../user.dto';
 
@@ -247,7 +249,7 @@ export const userGetProblemUsecaseMapper = {
           .map((arg: any, i: number) => `param${i + 1} = ${JSON.stringify(arg)}`)
           .join(',  '),
         expected: t.output,
-        output: "",
+        output: '',
       })),
       templateCodes: (data.addedLanguagesId as ILanguageEntity[]).map((l) => ({
         id: String(l._id),
@@ -299,52 +301,99 @@ export const getCoderUsecaseMapper = {
   },
 };
 
-
 export const getAllPlansUsecaseMapper = {
-    toResponse(data: IPlanEntity): IGetAllPlansUsecaseOutputDto {
-        return {
-            id: String(data._id),
-            name: data.name,
-            price: data.price,
-            description: data.description,
-            features: data.features,
-            duration: String(data.durationInMonths),
-        };
-    },
+  toResponse(data: IPlanEntity): IGetAllPlansUsecaseOutputDto {
+    return {
+      id: String(data._id),
+      name: data.name,
+      price: data.price,
+      description: data.description,
+      features: data.features,
+      duration: String(data.durationInMonths),
+    };
+  },
 };
-
-
 
 export const getAllPaymentsUsecaseMapper = {
-    toResponse(data: IPaymentEntity): IGetAllPaymentsUsecasePaymentDto {
-        return {
-         
-            username: (data.userId as IAccountsEntity).name,
-            email: (data.userId as IAccountsEntity).email,
-            amount: data.amount,
-            status: data.status,
-            planId: (data.planId as IPlanEntity)._id,
-            planName: (data.planId as IPlanEntity).name,
-            date: data.createdAt.toISOString().split('T')[0],
-            paymentId:data.razorpayPaymentId
-        };
-    },
+  toResponse(data: IPaymentEntity): IGetAllPaymentsUsecasePaymentDto {
+    return {
+      username: (data.userId as IAccountsEntity).name,
+      email: (data.userId as IAccountsEntity).email,
+      amount: data.amount,
+      status: data.status,
+      planId: (data.planId as IPlanEntity)._id,
+      planName: (data.planId as IPlanEntity).name,
+      date: data.createdAt.toISOString().split('T')[0],
+      paymentId: data.razorpayPaymentId,
+    };
+  },
+};
+
+export const getContestUsecaseMapper = {
+  toResponse(data: IContestEntity): IGetContestUsecaseOutputDto {
+    return {
+      id: String(data._id),
+      title: data.title,
+      description: data.description,
+      dateAndTime: String(data.dateAndTime),
+      duration: data.duration,
+      visibility: data.view,
+      rewards: data.rewards,
+      domain: data.domainId as string,
+      skills: data.skillsIds as string[],
+      problems: data.problemsIds as string[],
+    };
+  },
+};
+
+export const getAllContestUsecaseMapper = {
+  toResponse(data: IContestEntity): IGetContestUsecase {
+    return {
+      id: String(data._id),
+      title: data.title,
+      description: data.description,
+      dateAndTime: String(data.dateAndTime),
+      duration: String(data.duration),
+      rewards: data.rewards,
+      domain: (data.domainId as IDomainEntity).title,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        title: s.title,
+        id: String(s._id),
+      })),
+    };
+  },
 };
 
 
-export const getContestUsecaseMapper = {
-    toResponse(data: IContestEntity): IGetContestUsecaseOutputDto {
-        return {
-            id: String(data._id),
-            title: data.title,
-            description: data.description,
-            dateAndTime:String(data.dateAndTime),
-            duration: data.duration,
-            visibility: data.view,
-            rewards:data.rewards,
-            domain:data.domainId as string,
-            skills:data.skillsIds as string[],
-            problems:data.problemsIds as string[],
-        };
-    },
+
+export const getContestProblemUsecaseMapper = {
+  toResponse(data: IProblemEntity, testcases: ITestcaseEntity[]): IGetContestProblem {
+    return {
+      id: String(data._id),
+      constrain: data.constraints,
+      description: data.description,
+      difficulty: data.difficulty,
+      domain: data.domainId as string,
+      examples: data.examples,
+      premium: data.isPremium,
+      number: data.problemNumber as number,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        id: String(s._id),
+        title: s.title,
+      })),
+      testcases: testcases.map((t) => ({
+        input: JSON.parse(t.input)
+          .map((arg: any, i: number) => `param${i + 1} = ${JSON.stringify(arg)}`)
+          .join(',  '),
+        expected: t.output,
+        output: '',
+      })),
+      templateCodes: (data.addedLanguagesId as ILanguageEntity[]).map((l) => ({
+        id: String(l._id),
+        language: l.language,
+        templateCode: String(l.templateCode),
+      })),
+      title: data.title,
+    };
+  },
 };

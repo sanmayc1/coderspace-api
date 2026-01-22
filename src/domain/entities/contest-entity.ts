@@ -3,6 +3,7 @@ import { ISkillEntity } from './skill-entity';
 import { IProblemEntity } from './problem-entity';
 import { TView } from '../../shared/constant';
 import { IAccountsEntity } from './accounts-entity';
+import { IProblemModel } from '../../frameworks/database/models/problem.model';
 
 export interface IContestRewardEntity {
   rank: number;
@@ -18,6 +19,7 @@ export interface IContestEntity {
   problemsIds: (string | IProblemEntity)[];
   rewards: IContestRewardEntity[];
   dateAndTime: Date;
+  endDateAndTime: Date;
   duration: number;
   view: TView;
   creatorId: string | IAccountsEntity;

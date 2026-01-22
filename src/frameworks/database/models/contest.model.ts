@@ -5,6 +5,7 @@ import { ISkillEntity } from '../../../domain/entities/skill-entity';
 import { IProblemEntity } from '../../../domain/entities/problem-entity';
 import { contestSchema } from '../schema/contest.schema';
 import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
+import { IProblemModel } from './problem.model';
 
 export interface IContestModel
   extends
@@ -16,7 +17,7 @@ export interface IContestModel
   _id: Types.ObjectId;
   domainId: Types.ObjectId | IDomainEntity;
   skillsIds: (Types.ObjectId | ISkillEntity)[];
-  problemsIds: (Types.ObjectId | IProblemEntity)[];
+  problemsIds: (Types.ObjectId | IProblemModel | IProblemEntity)[];
   rewards: IContestRewardEntity[];
   creatorId: Types.ObjectId | IAccountsEntity;
 }

@@ -28,6 +28,10 @@ export const createContestSchema = z.object({
   visibility: z.enum(VIEW),
 });
 
+export const updateContestSchema= createContestSchema.extend({
+  id: objectId,
+});
+
 export const companyContestQuerySchema = z.object({
   search: z.string().optional().default(''),
   page: z.coerce.number().int().positive().optional().default(1),

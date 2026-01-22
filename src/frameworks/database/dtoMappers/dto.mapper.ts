@@ -28,6 +28,8 @@ import { IPlanModel } from '../models/plan.model';
 import { IPlanEntity } from '../../../domain/entities/plan-entity';
 import { IPaymentModel } from '../models/payment.model';
 import { IPaymentEntity } from '../../../domain/entities/payment.entity';
+import { IContestAttemptModel } from '../models/contest-attempt.model';
+import { IContestAttemptEntity } from '../../../domain/entities/contest-attempt-entity';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -95,8 +97,6 @@ export const walletMapper = {
     };
   },
 };
-
-
 
 export const accountRepositoryMapper = {
   toEntity(data: IAccountsModel): IAccountsEntity {
@@ -292,6 +292,7 @@ export const contestRepositoryMapper = {
           : (data.creatorId as IAccountsEntity),
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
+      endDateAndTime: data.endDateAndTime,
     };
   },
   toModel(data: Partial<IContestEntity>): Partial<IContestModel> {
@@ -314,10 +315,10 @@ export const contestRepositoryMapper = {
       ...(data.creatorId && {
         creatorId: new Types.ObjectId(String(data.creatorId)),
       }),
+      ...(data.endDateAndTime && { endDateAndTime: data.endDateAndTime }),
     };
   },
 };
-
 
 export const followerRepositoryMapper = {
   toEntity(data: IFollowerModel): IFollowerEntity {
@@ -335,84 +336,118 @@ export const followerRepositoryMapper = {
       ...(data.followeeId && { followeeId: new Types.ObjectId(String(data.followeeId)) }),
     };
   },
-}
-
+};
 
 export const submitProblemRepositoryMapper = {
-    toEntity(data: ISubmitProblemModel): ISubmitProblemEntity {
-        return {
-            _id: String(data._id),
-            userId: String(data.userId) ,
-            problemId: String(data.problemId),
-            solution: data.solution,
-            language: data.language,
-            status: data.status,
-            createdAt: data.createdAt,
-            updatedAt: data.updatedAt,
-        };
-    },
-    toModel(data: Partial<ISubmitProblemEntity>): Partial<ISubmitProblemModel> {
-        return {
-            ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
-            ...(data.problemId && { problemId: new Types.ObjectId(String(data.problemId)) }),
-            ...(data.solution && { solution: data.solution }),
-            ...(data.language && { language: data.language }),
-            ...(data.status && { status: data.status }),
-        };
-    },
-}
-
-
+  toEntity(data: ISubmitProblemModel): ISubmitProblemEntity {
+    return {
+      _id: String(data._id),
+      userId: String(data.userId),
+      problemId: String(data.problemId),
+      solution: data.solution,
+      language: data.language,
+      status: data.status,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<ISubmitProblemEntity>): Partial<ISubmitProblemModel> {
+    return {
+      ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+      ...(data.problemId && { problemId: new Types.ObjectId(String(data.problemId)) }),
+      ...(data.solution && { solution: data.solution }),
+      ...(data.language && { language: data.language }),
+      ...(data.status && { status: data.status }),
+    };
+  },
+};
 
 export const planRepositoryMapper = {
-    toEntity(data: IPlanModel): IPlanEntity {
-        return {
-            _id: String(data._id),
-            name: data.name,
-            price: data.price,
-            durationInMonths: data.durationInMonths,
-            description: data.description,
-            features: data.features,
-            createdAt: data.createdAt,
-            updatedAt: data.updatedAt,
-        };
-    },
-    toModel(data: Partial<IPlanEntity>): Partial<IPlanModel> {
-        return {
-            ...(data.name && { name: data.name }),
-            ...(data.price && { price: data.price }),
-            ...(data.durationInMonths && { durationInMonths: data.durationInMonths }),
-            ...(data.description && { description: data.description }),
-            ...(data.features && { features: data.features }),
-        };
-    },
-}
-
+  toEntity(data: IPlanModel): IPlanEntity {
+    return {
+      _id: String(data._id),
+      name: data.name,
+      price: data.price,
+      durationInMonths: data.durationInMonths,
+      description: data.description,
+      features: data.features,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<IPlanEntity>): Partial<IPlanModel> {
+    return {
+      ...(data.name && { name: data.name }),
+      ...(data.price && { price: data.price }),
+      ...(data.durationInMonths && { durationInMonths: data.durationInMonths }),
+      ...(data.description && { description: data.description }),
+      ...(data.features && { features: data.features }),
+    };
+  },
+};
 
 export const paymentRepositoryMapper = {
-    toEntity(data: IPaymentModel): IPaymentEntity {
-        return {
-            _id: String(data._id),
-            userId: data.userId instanceof Types.ObjectId ? String(data.userId) : (data.userId as IAccountsEntity),
-            planId: data.planId instanceof Types.ObjectId ? String(data.planId) : (data.planId as IPlanEntity),
-            razorpayOrderId: data.razorpayOrderId,
-            razorpayPaymentId: data.razorpayPaymentId,
-            amount: data.amount,
-            currency: data.currency,
-            status: data.status,
-            createdAt: data.createdAt,
-            updatedAt: data.updatedAt,
-        };
-    },
-    toModel(data: Partial<IPaymentEntity>): Partial<IPaymentModel> {
-        return {
-            ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
-            ...(data.planId && { planId: new Types.ObjectId(String(data.planId)) }),
-            ...(data.razorpayOrderId && { razorpayOrderId: data.razorpayOrderId }),
-            ...(data.razorpayPaymentId && { razorpayPaymentId: data.razorpayPaymentId }),
-            ...(data.amount && { amount: data.amount }),
-            ...(data.currency && { currency: data.currency }),
-            ...(data.status && { status: data.status }),
-        };
-    },
-}
+  toEntity(data: IPaymentModel): IPaymentEntity {
+    return {
+      _id: String(data._id),
+      userId:
+        data.userId instanceof Types.ObjectId
+          ? String(data.userId)
+          : (data.userId as IAccountsEntity),
+      planId:
+        data.planId instanceof Types.ObjectId ? String(data.planId) : (data.planId as IPlanEntity),
+      razorpayOrderId: data.razorpayOrderId,
+      razorpayPaymentId: data.razorpayPaymentId,
+      amount: data.amount,
+      currency: data.currency,
+      status: data.status,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<IPaymentEntity>): Partial<IPaymentModel> {
+    return {
+      ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+      ...(data.planId && { planId: new Types.ObjectId(String(data.planId)) }),
+      ...(data.razorpayOrderId && { razorpayOrderId: data.razorpayOrderId }),
+      ...(data.razorpayPaymentId && { razorpayPaymentId: data.razorpayPaymentId }),
+      ...(data.amount && { amount: data.amount }),
+      ...(data.currency && { currency: data.currency }),
+      ...(data.status && { status: data.status }),
+    };
+  },
+};
+
+export const contestAttemptRepositoryMapper = {
+  toEntity(data: IContestAttemptModel): IContestAttemptEntity {
+    return {
+      _id: String(data._id),
+      contestId:
+        data.contestId instanceof Types.ObjectId
+          ? String(data.contestId)
+          : (data.contestId as IContestEntity),
+      userId:
+        data.userId instanceof Types.ObjectId
+          ? String(data.userId)
+          : (data.userId as IUserEntity),
+      score: data.score,
+      totalProblems: data.totalProblems,
+      solvedProblems: data.solvedProblems,
+      totalSubmissions: data.totalSubmissions,
+      startDateAndTime: data.startDateAndTime,
+      endDateAndTime: data.endDateAndTime,
+    };
+  },
+  toModel(data: Partial<IContestAttemptEntity>): Partial<IContestAttemptModel> {
+    return {
+      ...(data.contestId && { contestId: new Types.ObjectId(String(data.contestId)) }),
+      ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+      ...(data.score && { score: data.score }),
+      ...(data.totalProblems && { totalProblems: data.totalProblems }),
+      ...(data.solvedProblems && { solvedProblems: data.solvedProblems }),
+      ...(data.totalSubmissions && { totalSubmissions: data.totalSubmissions }),
+      ...(data.startDateAndTime && { startDateAndTime: data.startDateAndTime }),
+      ...(data.endDateAndTime && { endDateAndTime: data.endDateAndTime }),
+    };
+  },
+};

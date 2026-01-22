@@ -72,6 +72,10 @@ export const contestSchema = new Schema<IContestModel>(
       ref: 'Account',
       required: true,
     },
+    endDateAndTime: {
+      type: Date,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -20,6 +20,7 @@ export interface ICompanyContestDto {
   dateAndTime: Date;
   duration: number;
   view: TView;
+  endDateAndTime: Date;
 }
 
 export interface IGetCompanyContestUsecaseOutputDto {
@@ -31,3 +32,8 @@ export interface IGetCompanyContestUsecaseOutputDto {
 export interface IGetContestUsecaseOutputDto extends ICreateContestUsecaseInputDto {
  id:string;
 }
+
+export interface IUpdateContestInputDto extends ICreateContestUsecaseInputDto {
+ id:string;
+}
+

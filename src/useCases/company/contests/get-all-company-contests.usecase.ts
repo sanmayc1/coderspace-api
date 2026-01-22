@@ -40,6 +40,7 @@ export class GetAllCompanyContestsUsecase implements IGetAllCompanyContestsUseca
         dateAndTime: contest.dateAndTime,
         duration: contest.duration,
         view: contest.view,
+        endDateAndTime: contest.endDateAndTime,
       })),
       totalPages,
       currentPage: page,

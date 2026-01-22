@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 import { commonResponse, HTTP_STATUS, SUCCESS_MESSAGES } from '../auth/index';
-import { createContestSchema, companyContestQuerySchema } from './validation/schema';
+import { createContestSchema, companyContestQuerySchema, updateContestSchema } from './validation/schema';
 import { ICreateContestUsecase } from '../../../useCases/Interfaces/company/contests/create-contest.usecase.interface';
 import { IGetAllCompanyContestsUsecase } from '../../../useCases/Interfaces/company/contests/get-all-company-contests.usecase.interface';
 import { IGetContestUsecase } from '../../../useCases/Interfaces/company/contests/get-contest.usecase.interface';
+import { IUpdateContestUseCaseInterface } from '../../../useCases/Interfaces/company/contests/update-contest.usecase.interface';
+import { IDeleteContestUseCaseInterface } from '../../../useCases/Interfaces/company/contests/delete-contest.usecase.interface';
 
 @injectable()
 export class CompanyContestController {
@@ -14,7 +16,11 @@ export class CompanyContestController {
     @inject('IGetAllCompanyContestsUsecase')
     private _getAllCompanyContestsUsecase: IGetAllCompanyContestsUsecase,
     @inject('IGetContestUsecase')
-    private _getContestByIdUsecase: IGetContestUsecase
+    private _getContestByIdUsecase: IGetContestUsecase,
+    @inject('IUpdateContestUseCase')
+    private _updateContestUseCase: IUpdateContestUseCaseInterface,
+    @inject('IDeleteContestUseCase')
+    private _deleteContestUseCase: IDeleteContestUseCaseInterface
   ) {}
 
   async createContest(req: Request, res: Response) {
@@ -38,4 +44,17 @@ export class CompanyContestController {
     const response = await this._getContestByIdUsecase.execute(id);
     res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_FETCHED, response));
   }
+
+  async updateContest(req: Request, res: Response) {
+    const validatedContest = updateContestSchema.parse(req.body);
+    await this._updateContestUseCase.execute(validatedContest);
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_UPDATED));
+  }
+
+  async deleteContest(req: Request, res: Response) {
+    const {id} = req.params
+    await this._deleteContestUseCase.execute(id);
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_DELETED));
+  }
+
 }

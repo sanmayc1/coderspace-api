@@ -31,6 +31,8 @@ import { PaymentsManagementController } from '../../interfaceAdapters/controller
 import { PaymentsManagementRoutes } from '../express/routes/admin/payments.routes';
 import { PremiumGuardMiddleware } from '../../interfaceAdapters/middleware/premium.guard.middleware';
 import { ContestRoute } from '../express/routes/company/contest.routes';
+import { UserContestRoute } from '../express/routes/user/contest/contest.routes';
+import { UserContestController } from '../../interfaceAdapters/controllers/user/contest.controller';
 
 DependencyInjection.registerAll();
 
@@ -53,6 +55,7 @@ export const problemManagementController = container.resolve(ProblemManagementCo
 export const skillAndDomainManagementController = container.resolve(
   SkillAndDomainManagementController
 );
+export const userContestController = container.resolve(UserContestController);
 export const userProblemController = container.resolve(UserProblemController);
 export const companyContestController = container.resolve(CompanyContestController);
 export const commonController = container.resolve(CommonController);
@@ -70,6 +73,7 @@ export const adminRoutes = container.resolve(AdminRoutes);
 export const codersRoutes = container.resolve(CodersRoute);
 export const problemRoutes = container.resolve(ProblemRoute);
 export const paymentRoutes = container.resolve(PaymentRoute);
+export const userContestRoutes = container.resolve(UserContestRoute);
 export const userRoutes = container.resolve(UserRoutes);
 export const contestRoutes = container.resolve(ContestRoute);
 export const companyRoutes = container.resolve(CompanyRoutes);

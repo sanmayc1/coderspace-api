@@ -25,8 +25,10 @@ export class CompanyRoutes extends BaseRoute {
       companyController.updateProfile.bind(companyController)
     );
 
-    this.router.use('/contests',asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware), contestRoutes.router);
-
-    
+    this.router.use(
+      '/contests',
+      asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware),
+      contestRoutes.router
+    );
   }
 }

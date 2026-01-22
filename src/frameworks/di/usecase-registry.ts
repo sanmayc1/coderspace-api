@@ -57,6 +57,15 @@ import { EditPlanUseCase } from '../../useCases/admin/payments/edit-plan.usecase
 import { GetAllPaymentsUseCase } from '../../useCases/admin/payments/get-all-payments.usecase';
 import { CreateContestUsecase } from '../../useCases/company/contests/create-contest.usecase';
 import { GetContestUsecase } from '../../useCases/company/contests/get-contest.usecase';
+import { UpdateContestUseCase } from '../../useCases/company/contests/update-contest.usecase';
+import { DeleteContestUseCase } from '../../useCases/company/contests/delete-contest.usecase';
+import { GetAllUpcomingAndOngoingContestUseCase } from '../../useCases/user/contest/get-all-upcoming-and-ongoing-contest.usecase';
+import { GetAllPastContestUsecase } from '../../useCases/user/contest/get-all-past-contest.usecase';
+import { GetContestProblemsUsecase } from '../../useCases/user/contest/get-contest-problems.usecase';
+import { ContestProblemSubmitUsecase } from '../../useCases/user/contest/contest-problem-submit.usecase';
+import { JoinContestUsecase } from '../../useCases/user/contest/join-contest.usecase';
+import { FinishContestUsecase } from '../../useCases/user/contest/finish-contest.usecase';
+import { GetContestLeaderboardUsecase } from '../../useCases/user/contest/get-contest-leaderboard';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -210,6 +219,39 @@ export class UsecaseRegistery {
 
     container.register('IGetContestUsecase', {
       useClass: GetContestUsecase,
+    });
+
+    container.register('IUpdateContestUseCase', {
+      useClass: UpdateContestUseCase,
+    });
+
+    container.register('IDeleteContestUseCase', {
+      useClass: DeleteContestUseCase,
+    });
+    container.register('IGetAllUpcomingAndOngoingContestUseCase', {
+      useClass: GetAllUpcomingAndOngoingContestUseCase,
+    });
+
+    container.register('IGetAllPastContestUsecase', {
+      useClass: GetAllPastContestUsecase,
+    });
+
+    container.register('IGetContestProblemsUsecase', {
+      useClass: GetContestProblemsUsecase,
+    });
+
+    container.register('IContestProblemSubmitUsecase', {
+      useClass: ContestProblemSubmitUsecase,
+    });
+
+    container.register('IJoinContestUsecase', {
+      useClass: JoinContestUsecase,
+    });
+    container.register('IFinishContestUsecase', {
+      useClass: FinishContestUsecase,
+    });
+    container.register('IGetContestLeaderboardUsecase', {
+      useClass: GetContestLeaderboardUsecase,
     });
   }
 }

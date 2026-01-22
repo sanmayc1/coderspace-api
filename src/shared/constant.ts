@@ -100,6 +100,10 @@ export const ERROR_MESSAGES = {
   SUBSCRIPTION_ALREADY_EXISTS: 'Subscription already exists',
   PREMIUM_REQUIRED: 'Access denied, premium required',
   CONTEST_NOT_FOUND: 'Contest not found',
+  CONTEST_ENDED: 'Contest ended',
+  CONTEST_NOT_STARTED: 'Contest not started',
+  CONTEST_ATTEMPT_NOT_FOUND: 'Contest attempt not found.Invalid join',
+  CONTEST_ALREADY_JOINED: 'Contest already joined',
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -151,6 +155,12 @@ export const SUCCESS_MESSAGES = {
   VERIFY_PAYMENT: 'Payment verified successfully',
   MARK_FAILED_PAYMENT: 'Payment marked failed successfully',
   CONTEST_FETCHED: 'Contest fetched successfully',
+  CONTEST_UPDATED: 'Contest updated successfully',
+  CONTEST_DELETED: 'Contest deleted successfully',
+  CONTEST_PROBLEMS_FETCHED: 'Contest problems fetched successfully',
+  CONTEST_JOINED: 'Contest joined successfully',
+  CONTEST_FINISHED: 'Contest finished successfully',
+  CONTEST_LEADERBOARD_FETCHED: 'Contest leaderboard fetched successfully',
 };
 
 export const COOKIES_NAMES = {
@@ -207,6 +217,12 @@ export const availableLanguages = {
   python: { name: 'python', extension: 'py', version: '3.12.0' },
   javascript: { name: 'javascript', extension: 'js', version: '20.11.1' },
 };
+
+export const CONTEST_SCORE_BASED_ON_DIFFICULTY:Record<TDifficulty, number> = {
+    easy: 100,
+    medium: 200,
+    hard: 300,
+}
 
 export type TStatus = 'attempted' | 'solved';
 export const STATUS: TStatus[] = ['attempted', 'solved'];
