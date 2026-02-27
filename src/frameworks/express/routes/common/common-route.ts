@@ -9,5 +9,11 @@ export class CommonRoute extends BaseRoute {
 
   protected initializeRoutes(): void {
     this.router.get('/skills', asyncHandler(commonController.getAllSkills.bind(commonController)));
+
+    this.router.get(
+      '/contest/:id/leaderboard',
+      asyncHandler(authMiddleware.handle(['company', 'user']).bind(authMiddleware)),
+      asyncHandler(commonController.getContestLeaderboard.bind(commonController))
+    );
   }
 }

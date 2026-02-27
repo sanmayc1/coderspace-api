@@ -38,12 +38,6 @@ export class CreateRazorpayOrderUseCase implements ICreateRazorpayOrderUseCase {
       throw new CustomError(HTTP_STATUS.OK, ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
-    const user = await this._userRepository.findByAccountId(data.accountId);
-
-    if (user?.subscription) {
-      throw new CustomError(HTTP_STATUS.OK, ERROR_MESSAGES.SUBSCRIPTION_ALREADY_EXISTS);
-    }
-
     const order = await this._paymentService.createRazorpayOrder(plan.price);
 
     await this._paymentRepository.create({

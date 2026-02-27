@@ -30,6 +30,8 @@ import { IPaymentModel } from '../models/payment.model';
 import { IPaymentEntity } from '../../../domain/entities/payment.entity';
 import { IContestAttemptModel } from '../models/contest-attempt.model';
 import { IContestAttemptEntity } from '../../../domain/entities/contest-attempt-entity';
+import { IChatModel } from '../models/chat.model';
+import { IChatEntity } from '../../../domain/entities/chat-entity';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -448,6 +450,35 @@ export const contestAttemptRepositoryMapper = {
       ...(data.totalSubmissions && { totalSubmissions: data.totalSubmissions }),
       ...(data.startDateAndTime && { startDateAndTime: data.startDateAndTime }),
       ...(data.endDateAndTime && { endDateAndTime: data.endDateAndTime }),
+    };
+  },
+};
+
+
+export const chatRepositoryMapper = {
+  toEntity(data: IChatModel): IChatEntity {
+    return {
+      _id: String(data._id),
+      senderId:
+        data.senderId instanceof Types.ObjectId
+          ? String(data.senderId)
+          : (data.senderId as IAccountsEntity),
+      receiverId:
+        data.receiverId instanceof Types.ObjectId
+          ? String(data.receiverId)
+          : (data.receiverId as IAccountsEntity),
+      content: data.content,
+      seen:data.seen,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<IChatEntity>): Partial<IChatModel> {
+    return {
+      ...(data.senderId && { senderId: new Types.ObjectId(String(data.senderId)) }),
+      ...(data.receiverId && { receiverId: new Types.ObjectId(String(data.receiverId)) }),
+      ...(data.content && { content: data.content }),
+      ...(data.seen && { seen: data.seen }),
     };
   },
 };

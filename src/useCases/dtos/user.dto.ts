@@ -1,4 +1,3 @@
-import { int } from 'zod';
 import { Rating } from '../../domain/entities/user.entity';
 import { TDifficulty } from '../../shared/constant';
 import { IContestRewardDto, ISkillDto, ITemplateCodes } from './admin.dto';
@@ -62,6 +61,7 @@ export interface IGetCoderUsecaseOutputDto {
   problemSolved: number;
   profileUrl: string;
   isFollowing: boolean;
+  accountId:string
 }
 
 export interface ISubmitProblemUsecaseOutputDto {
@@ -198,6 +198,42 @@ export interface IContestProblemSubmitUsecaseInputDto {
   accountId: string;
 }
 
-export interface IGetContestLeaderboardUsecaseOutputDto extends ILeaderboardUserDTO {
-    
+export interface IGetContestLeaderboardUsecaseOutputDto  {
+  leaderboard:ILeaderboardUserDTO[];
+  currentPage:number;
+  totalPages:number;
+}
+
+
+
+export interface IGetAllChatsUsecaseOutputDto  {
+    chatPartner:{
+    id:string,
+    name:string
+    profilePicture:string
+  }
+  lastMessage:{
+    content:string,
+    timestamp:Date
+  }
+  unreadCount:number
+}
+
+
+export interface IGetChatDto {
+  id:string,
+  message:string,
+  timestamp:Date,
+  receiverId:string,
+  senderId:string,
+  seen:boolean
+}
+
+export interface IGetChatUsecaseOutputDto {
+  chats:IGetChatDto[];
+  chatPartner:{
+    id:string,
+    name:string
+    profilePicture:string
+  }
 }

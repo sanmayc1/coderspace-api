@@ -23,6 +23,11 @@ export class ProblemRepository
   constructor() {
     super(ProblemModel, problemRepositoryMapper.toEntity, problemRepositoryMapper.toModel);
   }
+  async getAllProblemWithoutLimit(options: Partial<IMongoOptions>): Promise<IProblemEntity[] | []> {
+    const filter = options.filter ? convertToMongoFilter(options.filter) : {};
+    const doc = await ProblemModel.find(filter);
+    return doc ? doc.map(problemRepositoryMapper.toEntity) : [];
+  }
 
   async getProblem(id: string, options: IGetProblemInput): Promise<IProblemEntity | null> {
     const projection = options.projections ? convertToMongoProjection(options.projections) : {};
@@ -59,6 +64,7 @@ export class ProblemRepository
       total,
     };
   }
+
   async findProblemCount(): Promise<number> {
     return await ProblemModel.countDocuments();
   }

@@ -14,7 +14,7 @@ export class UpdateUserPasswordUsecase implements IUpdateUserPasswordUsecase {
     @inject('IBcrypt')
     private _bcryptService: IBcrypt
   ) {}
-  async execute(data: IUpdateUserPasswordInputDto): Promise<any> {
+  async execute(data: IUpdateUserPasswordInputDto): Promise<void> {
     const account = await this._accountRepository.findById(data.accountId);
 
     if (!account) {

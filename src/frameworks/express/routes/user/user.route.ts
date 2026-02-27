@@ -3,8 +3,8 @@ import { BaseRoute } from '../base-route';
 import { asyncHandler } from '../../../../shared/async-handler';
 import {
   authMiddleware,
+  chatRoutes,
   codersRoutes,
-  contestRoutes,
   paymentRoutes,
   problemRoutes,
   userContestRoutes,
@@ -48,5 +48,6 @@ export class UserRoutes extends BaseRoute {
     this.router.use('/coders', codersRoutes.router);
     this.router.use('/payments', paymentRoutes.router);
     this.router.use('/contests', userContestRoutes.router);
+    this.router.use('/chats', chatRoutes.router);
   }
 }

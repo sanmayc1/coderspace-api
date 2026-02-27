@@ -28,5 +28,5 @@ export class CompanyController {
     res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.COMPANY_UPDATED));
   }
 
-  async getAllProblem(req: Request, res: Request) {}
+  // async getAllProblem(req: Request, res: Request) {}
 }

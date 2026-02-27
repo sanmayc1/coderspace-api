@@ -56,4 +56,5 @@ export const config = {
   },
   environment: process.env.NODE_ENV,
   cookieSecret: process.env.COOKIES_SECRET,
+  geminiApiKey:process.env.GEMINI_API_KEY as string
 };

@@ -12,8 +12,6 @@ import { Types } from 'mongoose';
 import { IMongoOptions } from '../../domain/repositoryInterfaces/problem-repository.interface';
 import {
   convertToMongoFilter,
-  convertToMongoProjection,
-  convertToMongoSort,
 } from '../../shared/utils/mongo-utils';
 import { IProblemEntity } from '../../domain/entities/problem-entity';
 import { IProblemModel } from '../../frameworks/database/models/problem.model';
@@ -51,7 +49,6 @@ export class ContestRepository
     data: IMongoOptions
   ): Promise<{ contests: IContestEntity[]; count: number }> {
     const filter = data.filter ? convertToMongoFilter(data.filter) : {};
-    const projection = data.projections ? convertToMongoProjection(data.projections) : {};
     const relations = data.relations ? data.relations.join(' ') : '';
     const skip = data.skip ?? 0;
     const limit = data.limit ?? 6;

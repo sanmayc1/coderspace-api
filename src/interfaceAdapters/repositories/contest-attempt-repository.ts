@@ -24,15 +24,14 @@ export class ContestAttemptRepository
       contestAttemptRepositoryMapper.toModel
     );
   }
-  async getLeaderBoardByContestId(contestId: string): Promise<ILeaderboardUserDTO[]> {
-    const leaderboard = await ContestAttemptModel.aggregate([
+  async getLeaderBoardByContestId(contestId: string, skip: number, search: string, limit: number): Promise<{ leaderboard: ILeaderboardUserDTO[]; total: number }> {
+    const pipeline: any[] = [
       {
         $match: {
           contestId: new Types.ObjectId(contestId),
           score: { $gt: 1 },
         },
       },
-
       {
         $addFields: {
           timeTaken: {
@@ -40,15 +39,6 @@ export class ContestAttemptRepository
           },
         },
       },
-      {
-        $lookup: {
-          from: 'contests',
-          localField: 'contestId',
-          foreignField: '_id',
-          as: 'contest',
-        },
-      },
-      { $unwind: '$contest' },
       {
         $lookup: {
           from: 'users',
@@ -67,6 +57,21 @@ export class ContestAttemptRepository
         },
       },
       { $unwind: '$account' },
+    ];
+
+    // 🔍 SEARCH
+    if (search?.trim()) {
+      pipeline.push({
+        $match: {
+          $or: [
+            { 'user.username': { $regex: search, $options: 'i' } },
+            { 'account.name': { $regex: search, $options: 'i' } },
+          ],
+        },
+      });
+    }
+
+    pipeline.push(
       {
         $sort: {
           score: -1,
@@ -75,10 +80,11 @@ export class ContestAttemptRepository
           timeTaken: 1,
         },
       },
+      { $skip: skip },
+      { $limit: limit },
       {
         $project: {
           _id: 0,
-          contestName: '$contest.title',
           userId: '$user._id',
           username: '$user.username',
           name: '$account.name',
@@ -90,10 +96,20 @@ export class ContestAttemptRepository
           totalProblems: 1,
           score: 1,
         },
-      },
-    ]);
+      }
+    );
 
-    return leaderboard.map((l) => ({
+    const leaderboard = await ContestAttemptModel.aggregate(pipeline);
+
+    const totalCountPipeline = pipeline
+      .filter((stage) => !stage.$skip && !stage.$limit && !stage.$project)
+      .concat({ $count: 'total' });
+
+    const countResult = await ContestAttemptModel.aggregate(totalCountPipeline);
+
+    const total = countResult[0]?.total || 0;
+
+    const mapedLeaderboard = leaderboard.map((l) => ({
       userId: l.userId,
       username: l.username,
       name: l.name,
@@ -105,8 +121,12 @@ export class ContestAttemptRepository
       score: l.score,
       contestName: l.contestName,
       totalProblems: l.totalProblems,
-
     }));
+
+    return {
+      leaderboard: mapedLeaderboard,
+      total,
+    };
   }
 
   async updateContestByUserIdAndContestId(

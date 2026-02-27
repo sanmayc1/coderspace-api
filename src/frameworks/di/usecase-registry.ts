@@ -65,7 +65,11 @@ import { GetContestProblemsUsecase } from '../../useCases/user/contest/get-conte
 import { ContestProblemSubmitUsecase } from '../../useCases/user/contest/contest-problem-submit.usecase';
 import { JoinContestUsecase } from '../../useCases/user/contest/join-contest.usecase';
 import { FinishContestUsecase } from '../../useCases/user/contest/finish-contest.usecase';
-import { GetContestLeaderboardUsecase } from '../../useCases/user/contest/get-contest-leaderboard';
+import { GetContestLeaderboardUsecase } from '../../useCases/common/get-contest-leaderboard';
+import { GetAllAvailableProblemsForContestUsecase } from '../../useCases/company/contests/get-all-available-problems-for-contest.usecase';
+import { AutoGenerateTestcasesUsecasse } from '../../useCases/admin/problem-management/auto-generate-testcase';
+import { GetAllChatsUsecase } from '../../useCases/user/chat/get-all-chats';
+import { GetChatsUsecase } from '../../useCases/user/chat/get-chat';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -253,5 +257,19 @@ export class UsecaseRegistery {
     container.register('IGetContestLeaderboardUsecase', {
       useClass: GetContestLeaderboardUsecase,
     });
+    container.register('IGetAllAvailableProblemsForContestUsecase',{
+      useClass:GetAllAvailableProblemsForContestUsecase
+    })
+    container.register("IAutoGenerateTestcasesUsecasse",{
+      useClass:AutoGenerateTestcasesUsecasse
+    })
+
+    container.register("IGetAllChatsUsecase",{
+      useClass:GetAllChatsUsecase
+    })
+    
+    container.register("IGetChatUsecase",{
+      useClass:GetChatsUsecase
+    })
   }
 }

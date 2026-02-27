@@ -1,4 +1,3 @@
-import { IDomainEntity } from '../../domain/entities/domain-entity';
 import { IExample } from '../../domain/entities/problem-entity';
 import { TBadge, TLanguages, TView } from '../../shared/constant';
 

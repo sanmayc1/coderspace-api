@@ -1,6 +1,5 @@
 import { inject, injectable } from 'tsyringe';
 import { ICompilerService } from '../../../domain/services/compiler-service.interface';
-import { IRunProblemUsecase } from '../../Interfaces/users/problem/run-problem.usecase.interface';
 import {
   availableLanguages,
   ERROR_MESSAGES,
@@ -17,7 +16,6 @@ import { ISubmitProblemUsecase } from '../../Interfaces/users/problem/sumbit-pro
 import { ISubmitProblemUsecaseInputDto, ISubmitProblemUsecaseOutputDto } from '../../dtos/user.dto';
 import { IUserRepository } from '../../../domain/repositoryInterfaces/user-repository.interface';
 import { ISubmitProblemRepository } from '../../../domain/repositoryInterfaces/submit-problem-repository.interface';
-import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
 import { testCodeGenerators } from '../../../shared/testCodeGenerator';
 
 @injectable()

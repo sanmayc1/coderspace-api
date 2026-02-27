@@ -2,7 +2,6 @@ import { injectable } from 'tsyringe';
 import { BaseRoute } from '../base-route';
 import {
   authMiddleware,
-  paymentRoutes,
   paymentsManagementRoutes,
   problemManagementRoutes,
   skillsAndDomainManagementRoute,

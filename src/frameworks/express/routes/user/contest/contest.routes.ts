@@ -41,9 +41,9 @@ export class UserContestRoute extends BaseRoute {
       asyncHandler(userContestController.finishContest.bind(userContestController))
     );
 
-    this.router.get(
-      '/:id/leaderboard',
-      asyncHandler(userContestController.getContestLeaderboard.bind(userContestController))
-    );
+    // this.router.get(
+    //   '/:id/leaderboard',
+    //   asyncHandler(userContestController.getContestLeaderboard.bind(userContestController))
+    // );
   }
 }

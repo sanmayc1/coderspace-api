@@ -33,6 +33,9 @@ import { PremiumGuardMiddleware } from '../../interfaceAdapters/middleware/premi
 import { ContestRoute } from '../express/routes/company/contest.routes';
 import { UserContestRoute } from '../express/routes/user/contest/contest.routes';
 import { UserContestController } from '../../interfaceAdapters/controllers/user/contest.controller';
+import { SocketHandler } from '../socket/chat.socket';
+import { ChatRoutes } from '../express/routes/user/chat/chat.routes';
+import { ChatController } from '../../interfaceAdapters/controllers/user/chat.controller';
 
 DependencyInjection.registerAll();
 
@@ -43,6 +46,7 @@ export const premiumGuardMiddleware = container.resolve(PremiumGuardMiddleware);
 
 // Services
 export const googleAuthService = container.resolve(GoogleAuthService);
+export const socketHandler = container.resolve(SocketHandler);
 
 // Controllers
 export const authController = container.resolve(AuthController);
@@ -62,6 +66,7 @@ export const commonController = container.resolve(CommonController);
 export const codersController = container.resolve(CodersController);
 export const paymentController = container.resolve(PaymentsController);
 export const paymentsManagementController = container.resolve(PaymentsManagementController);
+export const chatController = container.resolve(ChatController);
 
 // Routes
 export const authRoutes = container.resolve(AuthRoute);
@@ -74,6 +79,7 @@ export const codersRoutes = container.resolve(CodersRoute);
 export const problemRoutes = container.resolve(ProblemRoute);
 export const paymentRoutes = container.resolve(PaymentRoute);
 export const userContestRoutes = container.resolve(UserContestRoute);
+export const chatRoutes = container.resolve(ChatRoutes);
 export const userRoutes = container.resolve(UserRoutes);
 export const contestRoutes = container.resolve(ContestRoute);
 export const companyRoutes = container.resolve(CompanyRoutes);

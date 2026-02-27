@@ -13,7 +13,6 @@ import { IGetContestProblemsUsecase } from '../../../useCases/Interfaces/users/c
 import { IContestProblemSubmitUsecase } from '../../../useCases/Interfaces/users/contest/contest-problem-submit.usecase.interface';
 import { IJoinContestUsecase } from '../../../useCases/Interfaces/users/contest/join-contest.usecase.interface';
 import { IFinishContestUsecase } from '../../../useCases/Interfaces/users/contest/finish-contest.usecase.interface';
-import { IGetContestLeaderboardUsecase } from '../../../useCases/Interfaces/users/contest/get-contest-leaderboard';
 
 @injectable()
 export class UserContestController {
@@ -29,9 +28,9 @@ export class UserContestController {
     @inject('IJoinContestUsecase')
     private _joinContestUsecase: IJoinContestUsecase,
     @inject('IFinishContestUsecase')
-    private _finishContestUsecase: IFinishContestUsecase,
-    @inject('IGetContestLeaderboardUsecase')
-    private _getContestLeaderboardUsecase: IGetContestLeaderboardUsecase
+    private _finishContestUsecase: IFinishContestUsecase
+    // @inject('IGetContestLeaderboardUsecase')
+    // private _getContestLeaderboardUsecase: IGetContestLeaderboardUsecase
   ) {}
 
   async getAllUpcomingAndOngoingContests(req: Request, res: Response) {
@@ -85,26 +84,26 @@ export class UserContestController {
   async joinContest(req: Request, res: Response) {
     const { contestId } = req.body;
     await this._joinContestUsecase.execute(contestId, req.user?.accountId as string);
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_JOINED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_JOINED));
   }
-
 
   async finishContest(req: Request, res: Response) {
     const { contestId } = req.body;
-     await this._finishContestUsecase.execute(contestId, req.user?.accountId as string);
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_FINISHED));
+    await this._finishContestUsecase.execute(contestId, req.user?.accountId as string);
+    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_FINISHED));
   }
 
-  async getContestLeaderboard(req: Request, res: Response) {
-    const { id } = req.params;
-    const response = await this._getContestLeaderboardUsecase.execute(id);
-    res
-      .status(HTTP_STATUS.OK)
-      .json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_LEADERBOARD_FETCHED, response));
-  }
+  // async getContestLeaderboard(req: Request, res: Response) {
+  //   const { id } = req.params;
+  //   const { page, search } = req.query;
+  //   const currentPage = Number(page);
 
+  //   if (isNaN(currentPage)) {
+  //     throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.PAGE_NOT_NUMBER);
+  //   }
+  //   const response = await this._getContestLeaderboardUsecase.execute(id, currentPage, search as string || "");
+  //   res
+  //     .status(HTTP_STATUS.OK)
+  //     .json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_LEADERBOARD_FETCHED, response));
+  // }
 }

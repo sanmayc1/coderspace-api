@@ -2,7 +2,6 @@ import { asyncHandler } from '../../../../shared/async-handler';
 import {
   authMiddleware,
   companyController,
-  companyContestController,
   contestRoutes,
 } from '../../../di/di-resolver';
 import { BaseRoute } from '../base-route';
@@ -30,5 +29,7 @@ export class CompanyRoutes extends BaseRoute {
       asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware),
       contestRoutes.router
     );
+
+  
   }
 }

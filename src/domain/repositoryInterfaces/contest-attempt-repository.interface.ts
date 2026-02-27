@@ -13,7 +13,7 @@ export interface IContestAttemptRepository extends IBaseRepository<IContestAttem
     contestId: string
   ): Promise<IContestAttemptEntity | null>;
 
-  getLeaderBoardByContestId(contestId: string): Promise<ILeaderboardUserDTO[]>;
+  getLeaderBoardByContestId(contestId: string,skip:number,search:string,limit:number): Promise<{ leaderboard: ILeaderboardUserDTO[]; total: number }>;
 
 }
 

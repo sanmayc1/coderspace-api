@@ -3,7 +3,7 @@ import { IGetProblemUsecaseOutput } from '../../dtos/admin.dto';
 import { IGetProblemUsecase } from '../../Interfaces/admin/problem-management/get-problem.usecase.interface';
 import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem-repository.interface';
 import { CustomError } from '../../../domain/utils/custom-error';
-import { ERROR_MESSAGES, HTTP_STATUS, Projection } from '../../../shared/constant';
+import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
 import { getProblemUsecaseMapper } from '../../dtos/mappers/mappers';
 
 @injectable()

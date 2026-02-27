@@ -104,6 +104,7 @@ export const ERROR_MESSAGES = {
   CONTEST_NOT_STARTED: 'Contest not started',
   CONTEST_ATTEMPT_NOT_FOUND: 'Contest attempt not found.Invalid join',
   CONTEST_ALREADY_JOINED: 'Contest already joined',
+  NEED_MINIMUM_TESTCASE:"Atleast one test case needed to auto generate please add that"
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -159,8 +160,11 @@ export const SUCCESS_MESSAGES = {
   CONTEST_DELETED: 'Contest deleted successfully',
   CONTEST_PROBLEMS_FETCHED: 'Contest problems fetched successfully',
   CONTEST_JOINED: 'Contest joined successfully',
+  PROBLEMS_FETCHED:"Problems fetched successfully",
   CONTEST_FINISHED: 'Contest finished successfully',
   CONTEST_LEADERBOARD_FETCHED: 'Contest leaderboard fetched successfully',
+  TEST_CASE_AUTO_GENERATE:"Testcase auto generate successfully",
+  CHAT_FETCHED:"Chats fetched successfully"
 };
 
 export const COOKIES_NAMES = {

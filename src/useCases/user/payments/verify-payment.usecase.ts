@@ -49,17 +49,33 @@ export class VerifyPaymentUseCase implements IVerifyPaymentUseCase {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.PLAN_NOT_FOUND);
     }
 
-    const startDate = new Date();
-    const endDate = new Date(startDate);
-    endDate.setMonth(endDate.getMonth() + plan.durationInMonths);
+    const now = new Date();
 
-    await this._userRepository.updateById(user._id as string, {
-      subscription: {
-        planId: payment.planId as string,
-        startDate,
-        endDate,
-      },
-    });
+    if (user.subscription && user.subscription.endDate > now) {
+      const startDate = user.subscription.startDate;
+      const endDate = new Date(user.subscription.endDate);
+      endDate.setMonth(endDate.getMonth() + plan.durationInMonths);
+
+      await this._userRepository.updateById(user._id as string, {
+        subscription: {
+          planId: payment.planId as string,
+          startDate,
+          endDate,
+        },
+      });
+    } else {
+      const startDate = now;
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + plan.durationInMonths);
+
+      await this._userRepository.updateById(user._id as string, {
+        subscription: {
+          planId: payment.planId as string,
+          startDate,
+          endDate,
+        },
+      });
+    }
 
     await this._paymentRepository.updatePaymentByRazorpayOrderId(razorpayOrderId, {
       razorpayPaymentId,

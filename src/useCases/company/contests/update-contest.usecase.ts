@@ -9,7 +9,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
 export class UpdateContestUseCase implements IUpdateContestUseCaseInterface {
   constructor(@inject('IContestRepository') private _contestRepository: IContestRepository) {}
 
-  async execute(data: IUpdateContestInputDto): Promise<any> {
+  async execute(data: IUpdateContestInputDto): Promise<void> {
     const contest = await this._contestRepository.findById(data.id);
 
     if (!contest) {

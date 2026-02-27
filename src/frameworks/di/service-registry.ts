@@ -11,6 +11,7 @@ import { GoogleAuthService } from '../../interfaceAdapters/services/google-auth.
 import { ImageStoreService } from '../../interfaceAdapters/services/image-store.service';
 import { CompilerService } from '../../interfaceAdapters/services/compiler.service';
 import { PaymentService } from '../../interfaceAdapters/services/payment.service';
+import { GeminiService } from '../../interfaceAdapters/services/gemini.service';
 
 export class ServiceRegistry {
   static registerServices() {
@@ -22,6 +23,7 @@ export class ServiceRegistry {
     container.registerSingleton('IImageStoreService', ImageStoreService);
     container.registerSingleton('ICompilerService', CompilerService);
     container.registerSingleton('IPaymentService', PaymentService)
+    container.registerSingleton('IGeminiService',GeminiService)
     // logger
     container.registerSingleton('ILogger', WinstonLoggerAdapter);
     // security

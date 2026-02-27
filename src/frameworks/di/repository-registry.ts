@@ -17,6 +17,7 @@ import { SubmitProblemRepository } from '../../interfaceAdapters/repositories/su
 import { PlanRepository } from '../../interfaceAdapters/repositories/plan-repository';
 import { PaymentRepository } from '../../interfaceAdapters/repositories/payment-repository';
 import { ContestAttemptRepository } from '../../interfaceAdapters/repositories/contest-attempt-repository';
+import { ChatRepository } from '../../interfaceAdapters/repositories/chat-repository';
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -38,5 +39,6 @@ export class RepositoryRegistery {
     container.register('IPlanRepository',{useClass:PlanRepository})
     container.register('IPaymentRepository',{useClass:PaymentRepository})
     container.register('IContestAttemptRepository',{useClass:ContestAttemptRepository})
+    container.register('IChatRepository',{useClass:ChatRepository})
   }
 }

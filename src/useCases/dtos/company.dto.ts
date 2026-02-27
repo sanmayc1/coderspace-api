@@ -30,10 +30,13 @@ export interface IGetCompanyContestUsecaseOutputDto {
 }
 
 export interface IGetContestUsecaseOutputDto extends ICreateContestUsecaseInputDto {
- id:string;
+  id: string;
 }
 
 export interface IUpdateContestInputDto extends ICreateContestUsecaseInputDto {
- id:string;
+  id: string;
 }
 
+export interface IGetAllAvailableProblemsForContestUsecaseOutput {
+  problems: { id: string; title: string }[];
+}

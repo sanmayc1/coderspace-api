@@ -3,7 +3,6 @@ import { ISkillEntity } from './skill-entity';
 import { IProblemEntity } from './problem-entity';
 import { TView } from '../../shared/constant';
 import { IAccountsEntity } from './accounts-entity';
-import { IProblemModel } from '../../frameworks/database/models/problem.model';
 
 export interface IContestRewardEntity {
   rank: number;

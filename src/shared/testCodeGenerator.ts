@@ -128,7 +128,7 @@ export const pythonTestCodeGenerator = (
 ): string => {
   const inputs = JSON.parse(testcase.input);
 
-  const toPythonValue = (value: any): string => {
+  const toPythonValue = (value: string | boolean | number | null | Object): string => {
     if (value === null) return 'None';
     if (typeof value === 'number') return value.toString();
     if (typeof value === 'boolean') return value ? 'True' : 'False';
