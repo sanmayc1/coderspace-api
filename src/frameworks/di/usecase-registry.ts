@@ -70,6 +70,7 @@ import { GetAllAvailableProblemsForContestUsecase } from '../../useCases/company
 import { AutoGenerateTestcasesUsecasse } from '../../useCases/admin/problem-management/auto-generate-testcase';
 import { GetAllChatsUsecase } from '../../useCases/user/chat/get-all-chats';
 import { GetChatsUsecase } from '../../useCases/user/chat/get-chat';
+import { CreateInterviewUsecase } from '../../useCases/admin/interview/create-interview.usecase';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -270,6 +271,10 @@ export class UsecaseRegistery {
     
     container.register("IGetChatUsecase",{
       useClass:GetChatsUsecase
+    })
+
+    container.register("ICreateInterviewUsecase",{
+      useClass:CreateInterviewUsecase
     })
   }
 }

@@ -164,7 +164,8 @@ export const SUCCESS_MESSAGES = {
   CONTEST_FINISHED: 'Contest finished successfully',
   CONTEST_LEADERBOARD_FETCHED: 'Contest leaderboard fetched successfully',
   TEST_CASE_AUTO_GENERATE:"Testcase auto generate successfully",
-  CHAT_FETCHED:"Chats fetched successfully"
+  CHAT_FETCHED:"Chats fetched successfully",
+  INTERVIEW_CREATED:"Interview created successfully"
 };
 
 export const COOKIES_NAMES = {
@@ -230,3 +231,5 @@ export const CONTEST_SCORE_BASED_ON_DIFFICULTY:Record<TDifficulty, number> = {
 
 export type TStatus = 'attempted' | 'solved';
 export const STATUS: TStatus[] = ['attempted', 'solved'];
+
+export const INTERVIEW_STATUS =["ongoing","completed","partially_completed"]

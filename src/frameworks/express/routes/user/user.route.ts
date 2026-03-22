@@ -5,6 +5,7 @@ import {
   authMiddleware,
   chatRoutes,
   codersRoutes,
+  interviewRoutes,
   paymentRoutes,
   problemRoutes,
   userContestRoutes,
@@ -49,5 +50,6 @@ export class UserRoutes extends BaseRoute {
     this.router.use('/payments', paymentRoutes.router);
     this.router.use('/contests', userContestRoutes.router);
     this.router.use('/chats', chatRoutes.router);
+    this.router.use('/interviews', interviewRoutes.router);
   }
 }

@@ -12,6 +12,7 @@ import { ImageStoreService } from '../../interfaceAdapters/services/image-store.
 import { CompilerService } from '../../interfaceAdapters/services/compiler.service';
 import { PaymentService } from '../../interfaceAdapters/services/payment.service';
 import { GeminiService } from '../../interfaceAdapters/services/gemini.service';
+import { TtsAndSttService } from '../../interfaceAdapters/services/tts-and-stt.service';
 
 export class ServiceRegistry {
   static registerServices() {
@@ -24,6 +25,7 @@ export class ServiceRegistry {
     container.registerSingleton('ICompilerService', CompilerService);
     container.registerSingleton('IPaymentService', PaymentService)
     container.registerSingleton('IGeminiService',GeminiService)
+    container.registerSingleton('ITtsAndSttService',TtsAndSttService)
     // logger
     container.registerSingleton('ILogger', WinstonLoggerAdapter);
     // security

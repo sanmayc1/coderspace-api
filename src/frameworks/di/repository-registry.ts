@@ -18,6 +18,9 @@ import { PlanRepository } from '../../interfaceAdapters/repositories/plan-reposi
 import { PaymentRepository } from '../../interfaceAdapters/repositories/payment-repository';
 import { ContestAttemptRepository } from '../../interfaceAdapters/repositories/contest-attempt-repository';
 import { ChatRepository } from '../../interfaceAdapters/repositories/chat-repository';
+import { InterviewRepository } from '../../interfaceAdapters/repositories/interview-repository';
+import { InterviewSessionRepository } from '../../interfaceAdapters/repositories/interview-session-repository';
+import { InterviewQuestionsRepository } from '../../interfaceAdapters/repositories/interview-questions-repository';
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -40,5 +43,8 @@ export class RepositoryRegistery {
     container.register('IPaymentRepository',{useClass:PaymentRepository})
     container.register('IContestAttemptRepository',{useClass:ContestAttemptRepository})
     container.register('IChatRepository',{useClass:ChatRepository})
+    container.register('IInterviewRepository',{useClass:InterviewRepository})
+    container.register('IInterviewSessionRepository',{useClass:InterviewSessionRepository})
+    container.register('IInterviewQuestionsRepository',{useClass:InterviewQuestionsRepository})
   }
 }

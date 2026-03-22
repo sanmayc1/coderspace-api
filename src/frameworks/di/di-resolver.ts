@@ -36,6 +36,10 @@ import { UserContestController } from '../../interfaceAdapters/controllers/user/
 import { SocketHandler } from '../socket/chat.socket';
 import { ChatRoutes } from '../express/routes/user/chat/chat.routes';
 import { ChatController } from '../../interfaceAdapters/controllers/user/chat.controller';
+import { InterviewRoutes } from '../express/routes/user/interview/interview.routes';
+import { InterviewController } from '../../interfaceAdapters/controllers/user/interview.controller';
+import { InterviewAdminRoutes } from '../express/routes/admin/interview.routes';
+import { InterviewManagementAdminController } from '../../interfaceAdapters/controllers/admin/interviews.management.controller';
 
 DependencyInjection.registerAll();
 
@@ -67,6 +71,9 @@ export const codersController = container.resolve(CodersController);
 export const paymentController = container.resolve(PaymentsController);
 export const paymentsManagementController = container.resolve(PaymentsManagementController);
 export const chatController = container.resolve(ChatController);
+export const interviewController = container.resolve(InterviewController);
+export const interviewManagementAdminController = container.resolve(InterviewManagementAdminController)
+
 
 // Routes
 export const authRoutes = container.resolve(AuthRoute);
@@ -74,15 +81,18 @@ export const userManagementRoute = container.resolve(UserManagementRoute);
 export const problemManagementRoutes = container.resolve(ProblemManagementRoutes);
 export const skillsAndDomainManagementRoute = container.resolve(SkillsAndDomainManagementRoute);
 export const paymentsManagementRoutes = container.resolve(PaymentsManagementRoutes);
+export const interviewAdminRoutes = container.resolve(InterviewAdminRoutes);
 export const adminRoutes = container.resolve(AdminRoutes);
 export const codersRoutes = container.resolve(CodersRoute);
 export const problemRoutes = container.resolve(ProblemRoute);
 export const paymentRoutes = container.resolve(PaymentRoute);
 export const userContestRoutes = container.resolve(UserContestRoute);
 export const chatRoutes = container.resolve(ChatRoutes);
+export const interviewRoutes = container.resolve(InterviewRoutes);
 export const userRoutes = container.resolve(UserRoutes);
 export const contestRoutes = container.resolve(ContestRoute);
 export const companyRoutes = container.resolve(CompanyRoutes);
 export const commonRoutes = container.resolve(CommonRoute);
+
 
 

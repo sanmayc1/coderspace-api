@@ -32,6 +32,12 @@ import { IContestAttemptModel } from '../models/contest-attempt.model';
 import { IContestAttemptEntity } from '../../../domain/entities/contest-attempt-entity';
 import { IChatModel } from '../models/chat.model';
 import { IChatEntity } from '../../../domain/entities/chat-entity';
+import { IInterviewModel } from '../models/interview.model';
+import { IInterviewEntity } from '../../../domain/entities/interview-entity';
+import { IInterviewSessionModel } from '../models/interview-session';
+import { IInterviewSessionEntity } from '../../../domain/entities/interview-session';
+import { IInterviewQuestionsModel } from '../models/interview-questions.model';
+import { IInterviewQuestionsEntity } from '../../../domain/entities/interview-questions';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -479,6 +485,95 @@ export const chatRepositoryMapper = {
       ...(data.receiverId && { receiverId: new Types.ObjectId(String(data.receiverId)) }),
       ...(data.content && { content: data.content }),
       ...(data.seen && { seen: data.seen }),
+    };
+  },
+};
+
+
+
+export const interviewRepositoryMapper = {
+  toEntity(data: IInterviewModel): IInterviewEntity {
+    return{
+      _id: String(data._id),
+      title: data.title,
+      description: data.description,
+      context:data.context,
+      createdAt:data.createdAt,
+      updatedAt:data.updatedAt,
+      difficulty:data.difficulty,
+      durationInMinutes:data.durationInMinutes,
+      isPremium:data.isPremium,
+      numberOfQuestions:data.numberOfQuestions
+    }
+  },
+  toModel(data: Partial<IInterviewEntity>): Partial<IInterviewModel> {
+    return {
+      ...(data.title && { title: data.title }),
+      ...(data.description && { description: data.description }),
+      ...(data.context && { context: data.context }),
+      ...(data.difficulty && { difficulty: data.difficulty }),
+      ...(data.durationInMinutes && { durationInMinutes: data.durationInMinutes }),
+      ...(data.isPremium && { isPremium: data.isPremium }),
+      ...(data.numberOfQuestions && { numberOfQuestions: data.numberOfQuestions }),
+      ...(data._id && { _id: new Types.ObjectId(String(data._id)) }),
+    };
+  },
+};
+
+
+export const interviewSessionRepositoryMapper = {
+  toEntity(data: IInterviewSessionModel): IInterviewSessionEntity {
+    return{
+      _id: String(data._id),
+      userId: String(data.userId),
+      interviewId: String(data.interviewId),
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      startedAt:data.startedAt,
+      completedAt:data.completedAt,
+      status:data.status,
+      overallFeedback:data.overallFeedback,
+      finalScore:data.finalScore,
+    }
+  },
+  toModel(data: Partial<IInterviewSessionEntity>): Partial<IInterviewSessionModel> {
+    return {
+      ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+      ...(data.interviewId && { interviewId: new Types.ObjectId(String(data.interviewId)) }),
+      ...(data._id && { _id: new Types.ObjectId(String(data._id)) }),
+      ...(data.startedAt && { startedAt: data.startedAt }),
+      ...(data.completedAt && { completedAt: data.completedAt }),
+      ...(data.status && { status: data.status }),
+      ...(data.overallFeedback && { overallFeedback: data.overallFeedback }),
+      ...(data.finalScore && { finalScore: data.finalScore }),
+    };
+  },
+};
+
+
+export const interviewQuestionsRepositoryMapper = {
+  toEntity(data: IInterviewQuestionsModel): IInterviewQuestionsEntity {
+    return{
+      _id: String(data._id),
+      sessionId: String(data.sessionId),
+      question: data.question,
+      answer: data.answer,
+      attempted: data.attempted,
+      feedback: data.feedback,
+      score: data.score,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    }
+  },
+  toModel(data: Partial<IInterviewQuestionsEntity>): Partial<IInterviewQuestionsModel> {
+    return {
+      ...(data.sessionId && { sessionId: new Types.ObjectId(String(data.sessionId)) }),
+      ...(data._id && { _id: new Types.ObjectId(String(data._id)) }),
+      ...(data.question && { question: data.question }),
+      ...(data.answer && { answer: data.answer }),
+      ...(data.attempted && { attempted: data.attempted }),
+      ...(data.feedback && { feedback: data.feedback }),
+      ...(data.score && { score: data.score }),
     };
   },
 };

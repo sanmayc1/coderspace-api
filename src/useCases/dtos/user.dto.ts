@@ -3,6 +3,7 @@ import { TDifficulty } from '../../shared/constant';
 import { IContestRewardDto, ISkillDto, ITemplateCodes } from './admin.dto';
 import { IExample } from '../../domain/entities/problem-entity';
 import { ILeaderboardUserDTO } from '../../domain/repositoryInterfaces/contest-attempt-repository.interface';
+import { int } from 'zod';
 
 export interface IGetUserUsecaseOutputDto {
   id: string;
@@ -236,4 +237,14 @@ export interface IGetChatUsecaseOutputDto {
     name:string
     profilePicture:string
   }
+}
+
+export interface ICreateInterviewUsecaseInputDto {
+  title: string,
+  description: string,
+  context: string,
+  numberOfQuestions: number,
+  difficulty: TDifficulty,
+  duration: number,
+  premium: boolean
 }

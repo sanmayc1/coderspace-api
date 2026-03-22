@@ -73,3 +73,16 @@ export const testcaseSchema = z.object({
 export const updateProblemSchema = createProblemSchema.omit({validationType: true}).extend({
   problemId: objectId,
 });
+
+
+
+
+export const interviewSchema = z.object({
+  title: z.string().min(3, 'Title must be at least 3 characters'),
+  description: z.string().min(10, 'Description must be at least 10 characters'),
+  context: z.string().min(10, 'Context must be at least 10 characters'),
+  numberOfQuestions: z.coerce.number().min(1, 'At least 1 question is required'),
+  difficulty: z.enum(DIFFICULTY,{message:"Invalid difficulty"}),
+  duration: z.coerce.number().min(1, 'Duration must be at least 1 minute'),
+  premium: z.boolean(),
+});
