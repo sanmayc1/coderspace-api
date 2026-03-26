@@ -8,13 +8,13 @@ import { INTERVIEW_STATUS } from "../../../shared/constant";
 
 export const interviewSessionSchema = new Schema<IInterviewSessionModel>(
     {
-        userId: { type: Schema.Types.ObjectId, ref: 'User' },
-        interviewId: { type: Schema.Types.ObjectId, ref: 'Interview' },
-        status: { type: String, required: true ,enum:INTERVIEW_STATUS},
+        accountId: { type: Schema.Types.ObjectId, ref: 'Account',required:true },
+        interviewId: { type: Schema.Types.ObjectId, ref: 'Interview',required:true },
+        status: { type: String, enum:INTERVIEW_STATUS,default:"ongoing"},
         startedAt: { type: Date, required: true },
-        completedAt: { type: Date, required: true },
-        finalScore: { type: Number, required: true },
-        overallFeedback: { type: String, required: true },
+        completedAt: { type: Date, required:true},
+        finalScore: { type: Number, default:0},
+        overallFeedback: { type: String, default:""},
     },
     { timestamps: true }
 )

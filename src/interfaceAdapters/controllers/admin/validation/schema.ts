@@ -86,3 +86,13 @@ export const interviewSchema = z.object({
   duration: z.coerce.number().min(1, 'Duration must be at least 1 minute'),
   premium: z.boolean(),
 });
+
+export const interviewQuerySchema = z.object({
+  page: z.string().regex(/^\d+$/).transform(Number).default(1),
+
+  limit: z.string().regex(/^\d+$/).transform(Number).default(6),
+
+  sortBy: z.string().optional().default('createdAt'),
+
+  search: z.string().optional().default(''),
+});

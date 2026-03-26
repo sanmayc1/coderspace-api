@@ -16,5 +16,19 @@ export class InterviewAdminRoutes extends BaseRoute {
         interviewManagementAdminController.createInterview.bind(interviewManagementAdminController)
       )
     );
+
+    this.router.get(
+      '/',
+      asyncHandler(
+        interviewManagementAdminController.getAllInterviews.bind(interviewManagementAdminController)
+      )
+    );
+
+    this.router.delete(
+      '/:id/delete',
+      asyncHandler(
+        interviewManagementAdminController.deleteInterview.bind(interviewManagementAdminController)
+      )
+    );
   }
 }

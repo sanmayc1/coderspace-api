@@ -14,7 +14,7 @@ export class TtsAndSttService implements ITtsAndSttService {
 
    async textToSpeech(text: string): Promise<Buffer> {
        
-     const audio = await this.serviceProvider.textToSpeech.convert("RtMAdWpbg7L7ONDzqHhC",{
+     const audio = await this.serviceProvider.textToSpeech.convert("zbf1mNIv57v46njTEPXZ",{
         text,
         modelId:"eleven_multilingual_v2",
         outputFormat:"mp3_44100_128"
@@ -30,7 +30,6 @@ export class TtsAndSttService implements ITtsAndSttService {
      const audioBuffer = Buffer.concat(chunks);
      return audioBuffer
 
-     
     }
    async speechToText(audio: string): Promise<string> {
         return ""

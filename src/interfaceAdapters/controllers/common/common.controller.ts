@@ -9,6 +9,8 @@ import {
 } from '../auth/index';
 import { Request, Response } from 'express';
 import { IGetContestLeaderboardUsecase } from '../../../useCases/Interfaces/common/get-contest-leaderboard';
+import { IChangeAccountPasswordUsecase } from '../../../useCases/Interfaces/common/change-account-password.usecase.interface';
+import { UpdatePasswordSchema } from '../auth/validation/user-validation-schema';
 
 @injectable()
 export class CommonController {
@@ -16,7 +18,9 @@ export class CommonController {
     @inject('IGetAllSkillsUsecase')
     private _getAllSkillsUsecase: IGetAllSkillsUsecase,
     @inject('IGetContestLeaderboardUsecase')
-    private _getContestLeaderboardUsecase: IGetContestLeaderboardUsecase
+    private _getContestLeaderboardUsecase: IGetContestLeaderboardUsecase,
+    @inject('IChangeAccountPasswordUsecase')
+    private _changeAccountPasswordUsecase: IChangeAccountPasswordUsecase
   ) {}
 
   async getAllSkills(req: Request, res: Response) {
@@ -42,5 +46,15 @@ export class CommonController {
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.CONTEST_LEADERBOARD_FETCHED, response));
+  }
+
+  async changeAccountPassword(req: Request, res: Response) {
+    const response = await this._changeAccountPasswordUsecase.execute({
+      ...req.body,
+      accountId: req?.user?.accountId as string,
+    });
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.ACCOUNT_PASSWORD_CHANGED, response));
   }
 }

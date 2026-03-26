@@ -239,12 +239,30 @@ export interface IGetChatUsecaseOutputDto {
   }
 }
 
-export interface ICreateInterviewUsecaseInputDto {
+
+export interface IGetAllInterviewsUserUsecaseInterviewDto {
   title: string,
+  id:string,
   description: string,
-  context: string,
   numberOfQuestions: number,
-  difficulty: TDifficulty,
   duration: number,
   premium: boolean
+}
+
+
+export interface IGetAllInterviewsUserUsecaseOutputDto {
+  interviews: IGetAllInterviewsUserUsecaseInterviewDto[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export interface ICreateInterviewSessionUsecaseOutputDto{
+  sessionId:string
+}
+
+
+export interface IGetInterviewQuestionUsecaseOutputDto{
+  question:string,
+  audio:string,
+  questionNumber:number
 }

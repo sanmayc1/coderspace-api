@@ -15,6 +15,7 @@ import {
 } from '../../shared/utils/mongo-utils';
 import { IProblemEntity } from '../../domain/entities/problem-entity';
 import { IProblemModel } from '../../frameworks/database/models/problem.model';
+import mongoose from 'mongoose';
 
 @injectable()
 export class ContestRepository
@@ -94,5 +95,62 @@ export class ContestRepository
       problems:(doc?.problemsIds as IProblemModel[]).map(problemRepositoryMapper.toEntity),
       endDateAndTime:doc?.endDateAndTime as Date
     }
+  }
+
+  async getCompanyDashboardStats(creatorId: string): Promise<{ totalContests: number; activeContests: number; upcomingContests: number; totalParticipants: number; monthlyParticipantsData: { name: string; participants: number; submissions: number; }[] }> {
+    const creatorObjectId = new Types.ObjectId(creatorId);
+    const now = new Date();
+
+    const [totalContests, activeContests, upcomingContests, contests] = await Promise.all([
+      ContestModel.countDocuments({ creatorId: creatorObjectId }),
+      ContestModel.countDocuments({ creatorId: creatorObjectId, dateAndTime: { $lte: now }, endDateAndTime: { $gte: now } }),
+      ContestModel.countDocuments({ creatorId: creatorObjectId, dateAndTime: { $gt: now } }),
+      ContestModel.find({ creatorId: creatorObjectId }).select('_id').lean()
+    ]);
+
+    const contestIds = contests.map((c: any) => c._id);
+  
+    const ContestAttemptModel = mongoose.model('ContestAttempt');
+
+    const totalParticipants = await ContestAttemptModel.countDocuments({ contestId: { $in: contestIds } });
+
+    const currentYear = new Date().getFullYear();
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    const monthlyStats = await ContestAttemptModel.aggregate([
+      {
+        $match: {
+          contestId: { $in: contestIds },
+          startDateAndTime: {
+            $gte: new Date(`${currentYear}-01-01T00:00:00.000Z`),
+            $lte: new Date(`${currentYear}-12-31T23:59:59.999Z`)
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { $month: "$startDateAndTime" },
+          participants: { $sum: 1 },
+          submissions: { $sum: { $cond: [{ $isNumber: "$totalSubmissions" }, "$totalSubmissions", 0] } }
+        }
+      }
+    ]);
+
+    const monthlyParticipantsData = months.map((name, index) => {
+      const monthData = monthlyStats.find((stat: any) => stat._id === index + 1);
+      return {
+        name,
+        participants: monthData ? monthData.participants : 0,
+        submissions: monthData ? monthData.submissions : 0
+      };
+    });
+
+    return {
+      totalContests,
+      activeContests,
+      upcomingContests,
+      totalParticipants,
+      monthlyParticipantsData,
+    };
   }
 }

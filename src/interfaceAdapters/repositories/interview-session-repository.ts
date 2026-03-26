@@ -13,4 +13,10 @@ export class InterviewSessionRepository extends BaseRepository<IInterviewSession
     constructor(){
         super(InterviewSessionModel, interviewSessionRepositoryMapper.toEntity, interviewSessionRepositoryMapper.toModel);
     }
+   async checkSessionExist(interviewId: string, accountId: string): Promise<boolean> {
+      
+    const session = await InterviewSessionModel.findOne({interviewId,accountId});
+    return !!session;
+     
+    }
 }

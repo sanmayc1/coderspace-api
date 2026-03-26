@@ -104,7 +104,12 @@ export const ERROR_MESSAGES = {
   CONTEST_NOT_STARTED: 'Contest not started',
   CONTEST_ATTEMPT_NOT_FOUND: 'Contest attempt not found.Invalid join',
   CONTEST_ALREADY_JOINED: 'Contest already joined',
-  NEED_MINIMUM_TESTCASE:"Atleast one test case needed to auto generate please add that"
+  NEED_MINIMUM_TESTCASE:"Atleast one test case needed to auto generate please add that",
+  INTERVIEW_NOT_FOUND:"Interview not found",
+  SESSION_ALREADY_EXISTS:"You have already appeared for this interview",
+  INTERVIEW_QUESTION_NOT_FOUND:"Interview question not found",
+  INVALID_CURRENT_PASSWORD:"Invalid current password",
+
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -165,7 +170,13 @@ export const SUCCESS_MESSAGES = {
   CONTEST_LEADERBOARD_FETCHED: 'Contest leaderboard fetched successfully',
   TEST_CASE_AUTO_GENERATE:"Testcase auto generate successfully",
   CHAT_FETCHED:"Chats fetched successfully",
-  INTERVIEW_CREATED:"Interview created successfully"
+  INTERVIEW_CREATED:"Interview created successfully",
+  INTERVIEWS_FETCHED:"Interviews fetched successfully",
+  INTERVIEW_DELETED:"Interview deleted successfully",
+  INTERVIEW_SESSION_CREATED:"Interview session created successfully",
+  INTERVIEW_QUESTION_FETCHED:"Interview question fetched successfully",
+  ACCOUNT_PASSWORD_CHANGED:"Account password changed successfully",
+  DASHBOARD_FETCHED:"Dashboard fetched successfully",
 };
 
 export const COOKIES_NAMES = {

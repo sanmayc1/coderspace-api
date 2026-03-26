@@ -1,7 +1,7 @@
 
 export interface IInterviewSessionEntity {
   _id: string;
-  userId: string;
+  accountId: string;
   interviewId: string;
   status: "ongoing" | "completed" | "partially_completed";
   startedAt: Date;

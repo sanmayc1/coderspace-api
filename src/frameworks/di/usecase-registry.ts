@@ -71,7 +71,13 @@ import { AutoGenerateTestcasesUsecasse } from '../../useCases/admin/problem-mana
 import { GetAllChatsUsecase } from '../../useCases/user/chat/get-all-chats';
 import { GetChatsUsecase } from '../../useCases/user/chat/get-chat';
 import { CreateInterviewUsecase } from '../../useCases/admin/interview/create-interview.usecase';
-
+import { GetAllInterviewsUsecase } from '../../useCases/admin/interview/get-all-interviews.usecase';
+import { DeleteInterviewUsecase } from '../../useCases/admin/interview/delete-interview.usecase';
+import { GetAllInterviewsUserUsecase } from '../../useCases/user/interview/get-all-interview-user.usecase';
+import { CreateInterviewSessionUsecase } from '../../useCases/user/interview/create-interview-session.usecase';
+import { GetInterviewQuestionUsecase } from '../../useCases/user/interview/get-interview-question.usecase';
+import { ChangeAccountPasswordUsecase } from '../../useCases/common/change-account-password.usecase';
+import { GetDashboardUsecase } from '../../useCases/company/get-dashboard.usecase';
 export class UsecaseRegistery {
   static registerUsecase() {
     container.register('IUserRegisterUsecase', {
@@ -165,6 +171,10 @@ export class UsecaseRegistery {
     });
     container.register('IGetAllCompanyContestsUsecase', {
       useClass: GetAllCompanyContestsUsecase,
+    });
+    
+    container.register('IGetDashboardUsecase', {
+      useClass: GetDashboardUsecase,
     });
 
     container.register('IUpdateUserProfileUsecase', {
@@ -275,6 +285,26 @@ export class UsecaseRegistery {
 
     container.register("ICreateInterviewUsecase",{
       useClass:CreateInterviewUsecase
+    })
+
+    container.register("IGetAllInterviewsUsecase",{
+      useClass:GetAllInterviewsUsecase
+    })
+
+    container.register("IDeleteInterviewUsecase",{
+      useClass:DeleteInterviewUsecase
+    })
+    container.register("IGetAllInterviewsUserUsecase",{
+      useClass:GetAllInterviewsUserUsecase
+    })
+    container.register("ICreateInterviewSessionUsecase",{
+      useClass:CreateInterviewSessionUsecase
+    })
+    container.register("IGetInterviewQuestionUsecase",{
+      useClass:GetInterviewQuestionUsecase
+    })
+    container.register("IChangeAccountPasswordUsecase",{
+      useClass:ChangeAccountPasswordUsecase
     })
   }
 }

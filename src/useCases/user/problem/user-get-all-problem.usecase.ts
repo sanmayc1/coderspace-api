@@ -31,7 +31,7 @@ export class UserGetAllProblemsUsecase implements IUserGetAllProblemsUsecase {
       ...(data.skill && { skillsIds: { op: 'in', value: data.skill || '' } }),
     };
 
-    const limit = 1;
+    const limit = 4;
     const skip = (data.page - 1) * limit;
     const sort: Sort = { problemNumber: 'asc' };
 

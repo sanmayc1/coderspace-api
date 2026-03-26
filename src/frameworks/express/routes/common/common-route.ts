@@ -15,5 +15,11 @@ export class CommonRoute extends BaseRoute {
       asyncHandler(authMiddleware.handle(['company', 'user']).bind(authMiddleware)),
       asyncHandler(commonController.getContestLeaderboard.bind(commonController))
     );
+
+    this.router.patch(
+      '/change-password',
+      asyncHandler(authMiddleware.handle(['company', 'admin']).bind(authMiddleware)),
+      asyncHandler(commonController.changeAccountPassword.bind(commonController))
+    )
   }
 }

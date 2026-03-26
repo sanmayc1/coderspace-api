@@ -3,6 +3,7 @@ import { IChatEntity } from '../../../domain/entities/chat-entity';
 import { ICompanyEntity } from '../../../domain/entities/company-entity';
 import { IContestEntity } from '../../../domain/entities/contest-entity';
 import { IDomainEntity } from '../../../domain/entities/domain-entity';
+import { IInterviewEntity } from '../../../domain/entities/interview-entity';
 import { ILanguageEntity } from '../../../domain/entities/langauge-entity';
 import { IPaymentEntity } from '../../../domain/entities/payment.entity';
 import { IPlanEntity } from '../../../domain/entities/plan-entity';
@@ -13,6 +14,7 @@ import { IUserEntity } from '../../../domain/entities/user.entity';
 import { IGetChatsOutputDto } from '../../../domain/repositoryInterfaces/chat-repository.interface';
 import { TBadge, TRole } from '../../../shared/constant';
 import {
+  ICreateInterviewUsecaseOutputDto,
   IDomainDto,
   IGetAllPaymentsUsecasePaymentDto,
   IGetAllProblemUsecaseOutputDto,
@@ -34,6 +36,8 @@ import {
 import {
   IGetAllChatsUsecaseOutputDto,
   IGetAllCodersUsecaseOutputDto,
+  IGetAllInterviewsUserUsecaseInterviewDto,
+  IGetAllInterviewsUserUsecaseOutputDto,
   IGetAllPlansUsecaseOutputDto,
   IGetChatDto,
   IGetCoderUsecaseOutputDto,
@@ -439,6 +443,35 @@ export const getChatMessageMapper = {
       receiverId: data.receiverId as string,
       senderId: data.senderId as string,
       seen: data.seen,
+    };
+  },
+};
+
+
+export const createInterviewUsecaseMapper = {
+  toResponse(data: IInterviewEntity): ICreateInterviewUsecaseOutputDto {
+    return {
+      id: String(data._id),
+      title: data.title,
+      description: data.description,
+      numberOfQuestions: data.numberOfQuestions,
+      difficulty: data.difficulty,
+      premium: data.isPremium,
+      duration: data.durationInMinutes,
+    };
+  },
+};
+
+
+export const getAllInterviewsUserUsecaseMapper = {
+  toResponse(data: IInterviewEntity): IGetAllInterviewsUserUsecaseInterviewDto {
+    return {
+           description:data.description,
+           id:String(data._id),
+           numberOfQuestions:data.numberOfQuestions,
+           premium:data.isPremium,
+           duration:data.durationInMinutes,
+           title:data.title
     };
   },
 };

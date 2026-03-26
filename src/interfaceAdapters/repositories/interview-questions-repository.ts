@@ -17,4 +17,9 @@ export class InterviewQuestionsRepository
       interviewQuestionsRepositoryMapper.toModel
     );
   }
+async  findBySessionIdAndOrder(sessionId: string, order: number): Promise<IInterviewQuestionsEntity |null> {
+    const question = await InterviewQuestionsModel.findOne({sessionId,order});
+ 
+    return question ? interviewQuestionsRepositoryMapper.toEntity(question) : null;
+  }
 }

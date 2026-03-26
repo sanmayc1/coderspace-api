@@ -7,7 +7,8 @@ export interface IContestRepository extends IBaseRepository<IContestEntity> {
   getCompanyContests(data: IGetCompanyContestInput): Promise<ICompanyContestList>;
   getAllContests(data: IMongoOptions): Promise<{count:number,contests:IContestEntity[]}>;
   getContestWithAllDetails(id:string):Promise<IContestEntity | null>
-  getAllProblemsOfContest(id:string):Promise<{problems:IProblemEntity[],endDateAndTime:Date}>
+  getAllProblemsOfContest(id:string):Promise<{problems:IProblemEntity[],endDateAndTime:Date}>;
+  getCompanyDashboardStats(creatorId: string): Promise<{ totalContests: number; activeContests: number; upcomingContests: number; totalParticipants: number; monthlyParticipantsData: { name: string; participants: number; submissions: number; }[] }>;
 }
 
 export interface IGetCompanyContestInput {

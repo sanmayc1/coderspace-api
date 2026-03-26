@@ -1,9 +1,5 @@
 import { asyncHandler } from '../../../../shared/async-handler';
-import {
-  authMiddleware,
-  companyController,
-  contestRoutes,
-} from '../../../di/di-resolver';
+import { authMiddleware, companyController, contestRoutes } from '../../../di/di-resolver';
 import { BaseRoute } from '../base-route';
 
 export class CompanyRoutes extends BaseRoute {
@@ -30,6 +26,10 @@ export class CompanyRoutes extends BaseRoute {
       contestRoutes.router
     );
 
-  
+    this.router.get(
+      '/dashboard',
+      asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware),
+      companyController.getDashboard.bind(companyController)
+    );
   }
 }

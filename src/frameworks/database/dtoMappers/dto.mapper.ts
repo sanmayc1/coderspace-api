@@ -507,13 +507,14 @@ export const interviewRepositoryMapper = {
     }
   },
   toModel(data: Partial<IInterviewEntity>): Partial<IInterviewModel> {
+    
     return {
       ...(data.title && { title: data.title }),
       ...(data.description && { description: data.description }),
       ...(data.context && { context: data.context }),
       ...(data.difficulty && { difficulty: data.difficulty }),
       ...(data.durationInMinutes && { durationInMinutes: data.durationInMinutes }),
-      ...(data.isPremium && { isPremium: data.isPremium }),
+      ...(data.isPremium !== undefined && { isPremium: data.isPremium }),
       ...(data.numberOfQuestions && { numberOfQuestions: data.numberOfQuestions }),
       ...(data._id && { _id: new Types.ObjectId(String(data._id)) }),
     };
@@ -525,7 +526,7 @@ export const interviewSessionRepositoryMapper = {
   toEntity(data: IInterviewSessionModel): IInterviewSessionEntity {
     return{
       _id: String(data._id),
-      userId: String(data.userId),
+      accountId: String(data.accountId),
       interviewId: String(data.interviewId),
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
@@ -538,7 +539,7 @@ export const interviewSessionRepositoryMapper = {
   },
   toModel(data: Partial<IInterviewSessionEntity>): Partial<IInterviewSessionModel> {
     return {
-      ...(data.userId && { userId: new Types.ObjectId(String(data.userId)) }),
+      ...(data.accountId && { accountId: new Types.ObjectId(String(data.accountId)) }),
       ...(data.interviewId && { interviewId: new Types.ObjectId(String(data.interviewId)) }),
       ...(data._id && { _id: new Types.ObjectId(String(data._id)) }),
       ...(data.startedAt && { startedAt: data.startedAt }),
@@ -561,6 +562,7 @@ export const interviewQuestionsRepositoryMapper = {
       attempted: data.attempted,
       feedback: data.feedback,
       score: data.score,
+      order:data.order,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     }
@@ -574,6 +576,7 @@ export const interviewQuestionsRepositoryMapper = {
       ...(data.attempted && { attempted: data.attempted }),
       ...(data.feedback && { feedback: data.feedback }),
       ...(data.score && { score: data.score }),
+      ...(data.order && { order: data.order }),
     };
   },
 };
