@@ -38,6 +38,8 @@ import { IInterviewSessionModel } from '../models/interview-session';
 import { IInterviewSessionEntity } from '../../../domain/entities/interview-session';
 import { IInterviewQuestionsModel } from '../models/interview-questions.model';
 import { IInterviewQuestionsEntity } from '../../../domain/entities/interview-questions';
+import { INotificationEntity } from '../../../domain/entities/notification-entity';
+import { INotificationModel } from '../models/notification.model';
 
 export const userMapperRepo = {
   toEntity(data: IUserModel): IUserEntity {
@@ -577,6 +579,35 @@ export const interviewQuestionsRepositoryMapper = {
       ...(data.feedback && { feedback: data.feedback }),
       ...(data.score && { score: data.score }),
       ...(data.order && { order: data.order }),
+    };
+  },
+};
+
+export const notificationRepositoryMapper = {
+  toEntity(data: INotificationModel): INotificationEntity {
+    return {
+      _id: String(data._id),
+      accountId:
+        data.accountId instanceof Types.ObjectId
+          ? String(data.accountId)
+          : (data.accountId as IAccountsEntity),
+      message: data.message,
+      title: data.title,
+      type: data.type,
+      isRead: data.isRead,
+      link: data.link,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    };
+  },
+  toModel(data: Partial<INotificationEntity>): Partial<INotificationModel> {
+    return {
+      ...(data.accountId && { accountId: new Types.ObjectId(String(data.accountId)) }),
+      ...(data.message && { message: data.message }),
+      ...(data.title && { title: data.title }),
+      ...(data.type && { type: data.type }),
+      ...(data.isRead !== undefined && { isRead: data.isRead }),
+      ...(data.link && { link: data.link }),
     };
   },
 };

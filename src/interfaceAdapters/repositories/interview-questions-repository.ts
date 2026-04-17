@@ -17,6 +17,10 @@ export class InterviewQuestionsRepository
       interviewQuestionsRepositoryMapper.toModel
     );
   }
+ async findBySessionId(sessionId: string): Promise<IInterviewQuestionsEntity[] | null> {
+    const questions = await InterviewQuestionsModel.find({sessionId});
+    return questions ? questions.map(interviewQuestionsRepositoryMapper.toEntity) : null;
+  }
 async  findBySessionIdAndOrder(sessionId: string, order: number): Promise<IInterviewQuestionsEntity |null> {
     const question = await InterviewQuestionsModel.findOne({sessionId,order});
  

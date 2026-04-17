@@ -7,6 +7,7 @@ import {
   problemManagementRoutes,
   skillsAndDomainManagementRoute,
   userManagementRoute,
+  adminDashboardRoute,
 } from '../../../di/di-resolver';
 import { asyncHandler } from '../../../../shared/async-handler';
 
@@ -43,6 +44,12 @@ export class AdminRoutes extends BaseRoute {
       '/interviews',
       asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
       interviewAdminRoutes.router
+    );
+
+    this.router.use(
+      '/dashboard',
+      asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
+      adminDashboardRoute.router
     );
 
   }

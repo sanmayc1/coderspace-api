@@ -5,6 +5,9 @@ import { IGetAllInterviewsUserUsecase } from '../../../useCases/Interfaces/users
 import { commonResponse, HTTP_STATUS, SUCCESS_MESSAGES } from '../auth';
 import { ICreateInterviewSessionUsecase } from '../../../useCases/Interfaces/users/interview/create-interview-session.usecase';
 import { IGetInterviewQuestionUsecase } from '../../../useCases/Interfaces/users/interview/get-interview.question.usecase.interface';
+import { IUpdateAnswerAndFeedbackUsecase } from '../../../useCases/Interfaces/users/interview/update-answer-and-feedback.usecase.interface';
+import { IFinishInterviewUsecase } from '../../../useCases/Interfaces/users/interview/finish-interview.usecase.interface';
+import { IGetInterviewFeedbackUsecase } from '../../../useCases/Interfaces/users/interview/get-interview-feedback.usecase.interface';
 
 @injectable()
 export class InterviewController {
@@ -14,12 +17,16 @@ export class InterviewController {
     @inject('IGetAllInterviewsUserUsecase')
     private _getAllInterviewsUserUsecase: IGetAllInterviewsUserUsecase,
     @inject('ICreateInterviewSessionUsecase') private _createInterviewSessionUsecase: ICreateInterviewSessionUsecase,
-    @inject('IGetInterviewQuestionUsecase') private _getInterviewQuestionUsecase: IGetInterviewQuestionUsecase
+    @inject('IGetInterviewQuestionUsecase') private _getInterviewQuestionUsecase: IGetInterviewQuestionUsecase,
+    @inject('IUpdateAnswerAndFeedbackUsecase') private _updateAnswerAndFeedbackUsecase: IUpdateAnswerAndFeedbackUsecase,
+    @inject('IFinishInterviewUsecase') private _finishInterviewUsecase: IFinishInterviewUsecase,
+    @inject('IGetInterviewFeedbackUsecase') private _getInterviewFeedbackUsecase: IGetInterviewFeedbackUsecase,
   ) {}
 
   async getAllInterviews(req: Request, res: Response) {
     const page = Number(req.query.page) || 1;
-    const data = await this._getAllInterviewsUserUsecase.execute(page);
+    const accountId = req.user?.accountId;
+    const data = await this._getAllInterviewsUserUsecase.execute(page,accountId as string);
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.INTERVIEWS_FETCHED, data));
@@ -43,5 +50,31 @@ export class InterviewController {
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.INTERVIEW_QUESTION_FETCHED, data));
+  }
+
+  async submitAnswer(req: Request, res: Response) {
+    const {sessionId,order,answer} = req.body;
+    await this._updateAnswerAndFeedbackUsecase.execute(sessionId,order,answer);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.ANSWER_SUBMITTED));
+
+
+  }
+
+  async finishInterview(req: Request, res: Response) {
+    const {sessionId} = req.body;
+    await this._finishInterviewUsecase.execute(sessionId);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.INTERVIEW_FINISHED));
+  }
+
+  async getInterviewFeedback(req: Request, res: Response) {
+    const {sessionId} = req.params;
+    const data = await this._getInterviewFeedbackUsecase.execute(sessionId);
+    res
+      .status(HTTP_STATUS.OK)
+      .json(commonResponse(true, SUCCESS_MESSAGES.INTERVIEW_FEEDBACK_FETCHED, data));
   }
 }

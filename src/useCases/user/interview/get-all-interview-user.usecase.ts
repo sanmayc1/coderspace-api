@@ -9,7 +9,7 @@ import { getAllInterviewsUserUsecaseMapper } from '../../dtos/mappers/mappers';
 export class GetAllInterviewsUserUsecase implements IGetAllInterviewsUserUsecase {
   constructor(@inject('IInterviewRepository') private _interviewRepository: IInterviewRepository) {}
 
-  async execute(page: number): Promise<IGetAllInterviewsUserUsecaseOutputDto> {
+  async execute(page: number,accountId:string): Promise<IGetAllInterviewsUserUsecaseOutputDto> {
     const sort: Sort = { createdAt: 'desc' };
 
     const limit = 4;

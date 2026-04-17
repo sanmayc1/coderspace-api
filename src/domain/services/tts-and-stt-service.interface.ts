@@ -1,4 +1,4 @@
 export interface ITtsAndSttService {
-  textToSpeech(text: string): Promise<Buffer>;
+  textToSpeech(text: string): Promise<string>;
   speechToText(audio: string): Promise<string>;
 }

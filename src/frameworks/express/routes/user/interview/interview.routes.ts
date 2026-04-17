@@ -25,5 +25,23 @@ export class InterviewRoutes extends BaseRoute {
       asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
       asyncHandler(interviewController.getInterviewQuestion.bind(interviewController))
     )
+
+    this.router.patch(
+      "/submit-answer",
+      asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
+      asyncHandler(interviewController.submitAnswer.bind(interviewController))
+    )
+
+    this.router.patch(
+      "/finish-interview",
+      asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
+      asyncHandler(interviewController.finishInterview.bind(interviewController))
+    )
+
+    this.router.get(
+      "/:sessionId/feedback",
+      asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
+      asyncHandler(interviewController.getInterviewFeedback.bind(interviewController))
+    )
   }
 }

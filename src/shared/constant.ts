@@ -14,7 +14,7 @@ export const BADGE = ['silver', 'gold', 'platinum'];
 export const DIFFICULTY: TDifficulty[] = ['easy', 'medium', 'hard'];
 export type TView = 'public' | 'private';
 export const VIEW: TView[] = ['public', 'private'];
-export const PAYMENT_STATUS_ENUM = ['pending', 'paid', 'failed'];
+export const PAYMENT_STATUS_ENUM = ['pending', 'success', 'failed'];
 type FilterOp = 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'in' | 'contains';
 
 interface FilterCondition {
@@ -43,6 +43,11 @@ export const HTTP_STATUS = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+export const SCORES = {
+  'easy':1,
+  'medium':2,
+  'hard':3
+}
 export const ERROR_MESSAGES = {
   SERVER_ERROR: 'An error occurred, please try again later.',
   VALIDATION_ERROR: 'Validation error occurred',
@@ -109,6 +114,8 @@ export const ERROR_MESSAGES = {
   SESSION_ALREADY_EXISTS:"You have already appeared for this interview",
   INTERVIEW_QUESTION_NOT_FOUND:"Interview question not found",
   INVALID_CURRENT_PASSWORD:"Invalid current password",
+  SESSION_NOT_FOUND:"Session not found",
+  QUESTIONS_NOT_FOUND:"Questions not found",
 
 };
 export const SUCCESS_MESSAGES = {
@@ -177,6 +184,9 @@ export const SUCCESS_MESSAGES = {
   INTERVIEW_QUESTION_FETCHED:"Interview question fetched successfully",
   ACCOUNT_PASSWORD_CHANGED:"Account password changed successfully",
   DASHBOARD_FETCHED:"Dashboard fetched successfully",
+  ANSWER_SUBMITTED:"Answer submitted successfully",
+  INTERVIEW_FINISHED:"Interview finished successfully",
+  INTERVIEW_FEEDBACK_FETCHED:"Interview feedback fetched successfully",
 };
 
 export const COOKIES_NAMES = {

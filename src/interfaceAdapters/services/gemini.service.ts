@@ -4,10 +4,73 @@ import { ITestcaseEntity } from '../../domain/entities/testcase-entity';
 import { GoogleGenAI } from '@google/genai';
 import { config } from '../controllers/auth';
 import { IInterviewEntity } from '../../domain/entities/interview-entity';
+import { IInterviewQuestionsEntity } from '../../domain/entities/interview-questions';
 
 @injectable()
 export class GeminiService implements IGeminiService {
   constructor(private _ai = new GoogleGenAI({ apiKey: config.geminiApiKey })) {}
+  async generateInterviewAnswerFeedback(
+    questions: IInterviewQuestionsEntity[],
+    totalQuestions:number,
+    attemptedQuestions:number
+  ): Promise<{ feedback: string; rating: number }> {
+    const prompt = `
+You are an expert interviewer.
+
+Interview Data:
+- Total Questions: ${totalQuestions}
+- Attempted Questions: ${attemptedQuestions}
+
+Questions and Candidate Answers:
+${questions.map((item, index) => `
+${index + 1}. Question: ${item.question}
+   Answer: ${item.answer || "No answer provided"}
+`).join("\n")}
+
+Important Context:
+- The candidate’s answers were converted from speech to text using the browser Web Speech API.
+- The transcription may contain minor grammatical errors, missing words, or slight inaccuracies.
+- Focus on the intent and meaning rather than small language mistakes.
+
+Evaluation Rules:
+- Evaluate overall performance across all questions
+- Consider correctness, clarity, and completeness
+- Consider normal cases, edge cases, and invalid inputs (if relevant)
+- Use realistic expectations based on attempted questions
+
+Instructions:
+- Provide constructive and concise overall feedback
+- Highlight strengths and key areas of improvement
+- Do not penalize heavily for minor transcription or grammar issues
+- Focus on technical understanding and explanation quality
+
+Special Conditions:
+- If all answers are empty → feedback: "The candidate did not answer any questions." and rating: 0
+- If some answers are empty → consider only attempted ones but mention lack of attempts in feedback
+
+Output Rules:
+- Return ONLY raw JSON
+- DO NOT wrap in markdown
+- DO NOT include any text outside JSON
+- Ensure valid JSON format
+
+Return STRICT JSON ONLY in the following format:
+{
+  "feedback": "...",
+  "rating": 0-5
+}
+`;
+
+    const response = await this._ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+    });
+    const text = response.text as string;
+
+    const feedback = JSON.parse(text);
+    
+    return feedback;
+  }
 
   async generateTestcase(problem: string, exampleTestCase: string): Promise<ITestcaseEntity[]> {
     const prompt = `
@@ -102,4 +165,6 @@ Now generate the questions.
     const questions = JSON.parse(text);
     return questions;
   }
+
+
 }

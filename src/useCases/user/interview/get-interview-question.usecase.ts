@@ -24,9 +24,8 @@ export class GetInterviewQuestionUsecase implements IGetInterviewQuestionUsecase
     if (!question) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.INTERVIEW_QUESTION_NOT_FOUND);
     }
-    const audioBuffer = await this._ttsAndSttService.textToSpeech(question.question);
-    const audio = Buffer.from(audioBuffer).toString("base64")
-
+    const audio = await this._ttsAndSttService.textToSpeech(question.question);
+  
     return { question: question.question, audio, questionNumber: question.order };
   }
 }

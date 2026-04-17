@@ -73,6 +73,9 @@ export interface ISubmitProblemUsecaseOutputDto {
     isCorrect: boolean;
   }[];
   success: boolean;
+  levelReached:number
+  badgeReached:string
+  xpCoinEarned:number
 }
 
 export interface ISubmitProblemUsecaseInputDto {

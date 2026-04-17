@@ -21,6 +21,8 @@ import { ChatRepository } from '../../interfaceAdapters/repositories/chat-reposi
 import { InterviewRepository } from '../../interfaceAdapters/repositories/interview-repository';
 import { InterviewSessionRepository } from '../../interfaceAdapters/repositories/interview-session-repository';
 import { InterviewQuestionsRepository } from '../../interfaceAdapters/repositories/interview-questions-repository';
+import { AdminDashboardRepository } from '../../interfaceAdapters/repositories/admin-dashboard.repository';
+import { NotificationRepository } from '../../interfaceAdapters/repositories/notification.repository';
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -46,5 +48,7 @@ export class RepositoryRegistery {
     container.register('IInterviewRepository',{useClass:InterviewRepository})
     container.register('IInterviewSessionRepository',{useClass:InterviewSessionRepository})
     container.register('IInterviewQuestionsRepository',{useClass:InterviewQuestionsRepository})
+    container.register('IAdminDashboardRepository', { useClass: AdminDashboardRepository });
+    container.register('INotificationRepository', { useClass: NotificationRepository });
   }
 }

@@ -78,6 +78,13 @@ import { CreateInterviewSessionUsecase } from '../../useCases/user/interview/cre
 import { GetInterviewQuestionUsecase } from '../../useCases/user/interview/get-interview-question.usecase';
 import { ChangeAccountPasswordUsecase } from '../../useCases/common/change-account-password.usecase';
 import { GetDashboardUsecase } from '../../useCases/company/get-dashboard.usecase';
+import { GetAdminDashboardUsecase } from '../../useCases/admin/get-dashboard.usecase';
+import { GetAllNotificationsUsecase } from '../../useCases/common/notification/get-all-notifications.usecase';
+import { MarkNotificationReadUsecase } from '../../useCases/common/notification/mark-notification-read.usecase';
+import { UpdateAnswerAndFeedbackUsecase } from '../../useCases/user/interview/update-answer-and-feedback.usecase';
+import { FinishInterviewUsecase } from '../../useCases/user/interview/finish-interview.usecase';
+import { GetInterviewFeedbackUsecase } from '../../useCases/user/interview/get-interview-feedback.usecase';
+
 export class UsecaseRegistery {
   static registerUsecase() {
     container.register('IUserRegisterUsecase', {
@@ -306,5 +313,26 @@ export class UsecaseRegistery {
     container.register("IChangeAccountPasswordUsecase",{
       useClass:ChangeAccountPasswordUsecase
     })
+    container.register('IGetAdminDashboardUsecase', {
+      useClass: GetAdminDashboardUsecase,
+    });
+    container.register('IGetAllNotificationsUsecase', {
+      useClass: GetAllNotificationsUsecase,
+    });
+    container.register('IMarkNotificationReadUsecase', {
+      useClass: MarkNotificationReadUsecase,
+    });
+
+    container.register('IUpdateAnswerAndFeedbackUsecase', {
+      useClass: UpdateAnswerAndFeedbackUsecase,
+    });
+
+    container.register('IFinishInterviewUsecase', {
+      useClass: FinishInterviewUsecase,
+    });
+
+    container.register('IGetInterviewFeedbackUsecase', {
+      useClass: GetInterviewFeedbackUsecase,
+    });
   }
 }

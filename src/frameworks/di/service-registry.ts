@@ -23,9 +23,9 @@ export class ServiceRegistry {
     container.registerSingleton('IGoogleAuthService', GoogleAuthService);
     container.registerSingleton('IImageStoreService', ImageStoreService);
     container.registerSingleton('ICompilerService', CompilerService);
-    container.registerSingleton('IPaymentService', PaymentService)
-    container.registerSingleton('IGeminiService',GeminiService)
-    container.registerSingleton('ITtsAndSttService',TtsAndSttService)
+    container.registerSingleton('IPaymentService', PaymentService);
+    container.registerSingleton('IGeminiService', GeminiService);
+    container.registerSingleton('ITtsAndSttService', TtsAndSttService);
     // logger
     container.registerSingleton('ILogger', WinstonLoggerAdapter);
     // security

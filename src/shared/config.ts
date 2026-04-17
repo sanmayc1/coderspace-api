@@ -54,8 +54,8 @@ export const config = {
     apiKey:process.env.RAZORPAY_API_KEY,
     secert:process.env.RAZORPAY_SECRET
   },
-  elevenLabs:{
-    apiKey:process.env.ELEVENLABS_API_KEY
+  tts:{
+    url:process.env.TTS_API as string
   },
   environment: process.env.NODE_ENV,
   cookieSecret: process.env.COOKIES_SECRET,
