@@ -106,7 +106,8 @@ export const getUserUsecaseMapper = {
   toOutput(
     user: IUserEntity,
     account: IAccountsEntity,
-    followersAndFollowingCount: { followersCount: number; followingCount: number }
+    followersAndFollowingCount: { followersCount: number; followingCount: number },
+    solvedProblemsCount: number
   ): IGetUserUsecaseOutputDto {
     return {
       accountId: user.accountId as string,
@@ -122,6 +123,7 @@ export const getUserUsecaseMapper = {
       auth: account.authProvider as string,
       followers: followersAndFollowingCount.followersCount,
       following: followersAndFollowingCount.followingCount,
+      problemSolved: solvedProblemsCount,
     };
   },
 };
@@ -464,14 +466,16 @@ export const createInterviewUsecaseMapper = {
 
 
 export const getAllInterviewsUserUsecaseMapper = {
-  toResponse(data: IInterviewEntity): IGetAllInterviewsUserUsecaseInterviewDto {
+  toResponse(data: IInterviewEntity & {isAttempted:boolean,sessionId?:string}): IGetAllInterviewsUserUsecaseInterviewDto {
     return {
            description:data.description,
            id:String(data._id),
            numberOfQuestions:data.numberOfQuestions,
            premium:data.isPremium,
            duration:data.durationInMinutes,
-           title:data.title
+           title:data.title,
+           isAttempted:data.isAttempted,
+           sessionId:data.sessionId
     };
   },
 };

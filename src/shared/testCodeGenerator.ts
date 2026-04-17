@@ -40,8 +40,6 @@ export const javaTestCodeGenerator = (
   return `
 import java.util.*;
 
-
-
 class Runner {
     public static void main(String[] args) {
         Solution solution = new Solution();

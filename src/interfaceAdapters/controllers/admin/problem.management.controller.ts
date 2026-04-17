@@ -103,9 +103,9 @@ export class ProblemManagementController {
       example,
     });
 
-    await this._addSingleTestcaseUsecase.execute(validated);
+    const response = await this._addSingleTestcaseUsecase.execute(validated);
 
-    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.SINGLE_TESTCASE_ADDED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(response.isAllPassed, SUCCESS_MESSAGES.SINGLE_TESTCASE_VALIDATED, response.passedLanguages));
   }
 
   async getAllTestcases(req: Request, res: Response) {

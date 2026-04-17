@@ -12,6 +12,7 @@ export class InterviewRoutes extends BaseRoute {
   protected initializeRoutes(): void {
     this.router.get(
       '/',
+      asyncHandler(authMiddleware.handle(['user']).bind(authMiddleware)),
       asyncHandler(interviewController.getAllInterviews.bind(interviewController))
     );
     this.router.post(

@@ -19,4 +19,12 @@ export class InterviewSessionRepository extends BaseRepository<IInterviewSession
     return !!session;
      
     }
+
+    async findByInterviewIdAndAccountId(interviewId: string, accountId: string): Promise<IInterviewSessionEntity | null> {
+      
+      
+      const session = await InterviewSessionModel.findOne({interviewId,accountId});
+      
+      return session ? interviewSessionRepositoryMapper.toEntity(session) : null;
+    }
 }

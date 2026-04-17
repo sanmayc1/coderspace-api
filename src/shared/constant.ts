@@ -116,6 +116,9 @@ export const ERROR_MESSAGES = {
   INVALID_CURRENT_PASSWORD:"Invalid current password",
   SESSION_NOT_FOUND:"Session not found",
   QUESTIONS_NOT_FOUND:"Questions not found",
+  TESTCASE_ALREADY_EXISTS:"Testcase already exists",
+  NO_LANGUAGE_ADDED_TO_PROBLEM:"Please add one language to the problem before adding testcase",
+  NO_TESTCASE_ADDED:"Please add one testcase to the problem before changing visibility",
 
 };
 export const SUCCESS_MESSAGES = {
@@ -146,7 +149,7 @@ export const SUCCESS_MESSAGES = {
   LANGUAGE_ADDED: 'Language Successfully added',
   LANGUAGES_FETCHED: 'Language successfully fetched',
   LANGUAGE_UPDATED: 'Language updated successfully',
-  SINGLE_TESTCASE_ADDED: 'Single testcase added successfully',
+  SINGLE_TESTCASE_VALIDATED: 'Single testcase validated successfully',
   GET_TESTCASES: 'Testcase successfully fetched',
   TESTCASE_DELETED: 'Testcase successfully deleted',
   GET_PROBLEM: 'Problem fetched successfully',

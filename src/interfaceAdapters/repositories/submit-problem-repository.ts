@@ -7,6 +7,7 @@ import {
   SubmitProblemModel,
 } from '../../frameworks/database/models/submit-problem.model';
 import { submitProblemRepositoryMapper } from '../../frameworks/database/dtoMappers/dto.mapper';
+import mongoose from 'mongoose';
 
 @injectable()
 export class SubmitProblemRepository
@@ -19,6 +20,26 @@ export class SubmitProblemRepository
       submitProblemRepositoryMapper.toEntity,
       submitProblemRepositoryMapper.toModel
     );
+  }
+  async getAllSolvedProblemsCount(userId: string): Promise<number> {
+    const id = new mongoose.Types.ObjectId(userId);
+    const doc = await SubmitProblemModel.aggregate([
+      {
+        $match: {
+          userId: id,
+          status: 'solved',
+        },
+      },
+      {
+        $group: {
+          _id: '$problemId',
+        },
+      },
+      {
+        $count: 'count',
+      },
+    ]);
+    return doc[0]?.count || 0;
   }
   async getAllSubmissionByProblemIdAndUserId(
     problemId: string,

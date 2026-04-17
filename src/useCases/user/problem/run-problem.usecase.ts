@@ -83,9 +83,6 @@ export class RunProblemUsecase implements IRunProblemUsecase {
       }
 
       const normalizedOutput = normalize(result.stdout);
-      console.log(normalizedOutput);
-      console.log(testcases[i].input);
-      console.log(result.stdout);
 
       const isCorrect = validator(normalizeMongoOutput(testcases[i].output), normalizedOutput);
       if (!isCorrect) {

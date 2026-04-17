@@ -25,8 +25,8 @@ export class InterviewController {
 
   async getAllInterviews(req: Request, res: Response) {
     const page = Number(req.query.page) || 1;
-    const accountId = req.user?.accountId;
-    const data = await this._getAllInterviewsUserUsecase.execute(page,accountId as string);
+    const accountId = req.user?.accountId as string;
+    const data = await this._getAllInterviewsUserUsecase.execute(page,accountId);
     res
       .status(HTTP_STATUS.OK)
       .json(commonResponse(true, SUCCESS_MESSAGES.INTERVIEWS_FETCHED, data));

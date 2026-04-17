@@ -16,7 +16,7 @@ export class UpdateAnswerAndFeedbackUsecase implements IUpdateAnswerAndFeedbackU
     @inject('IGeminiService') private _geminiService: IGeminiService
   ) {}
   async execute(sessionId: string, order: number, answer: string): Promise<void> {
-    console.log(answer);
+   
     const existSession = await this._interviewSessionRepository.findById(sessionId);
     if (!existSession) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.SESSION_NOT_FOUND);
@@ -28,7 +28,7 @@ export class UpdateAnswerAndFeedbackUsecase implements IUpdateAnswerAndFeedbackU
     if (!existQuestion) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.INTERVIEW_QUESTION_NOT_FOUND);
     }
-    
+
     await this._interviewQuestionsRepository.updateById(existQuestion._id, {
       answer,
       attempted: true,

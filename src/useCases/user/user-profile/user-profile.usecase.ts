@@ -7,6 +7,7 @@ import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
 import { IAccountsRepository } from '../../../domain/repositoryInterfaces/accounts-repository.interface';
 import { getUserUsecaseMapper } from '../../dtos/mappers/mappers';
 import { IFollowerRepository } from '../../../domain/repositoryInterfaces/follower-repository.interface';
+import { ISubmitProblemRepository } from '../../../domain/repositoryInterfaces/submit-problem-repository.interface';
 
 @injectable()
 export class GetUserUsecase implements IGetUserUsecase {
@@ -15,7 +16,9 @@ export class GetUserUsecase implements IGetUserUsecase {
     @inject('IAccountRepository')
     private _accountRepository: IAccountsRepository,
     @inject('IFollowerRepository')
-    private _followerRepository: IFollowerRepository
+    private _followerRepository: IFollowerRepository,
+    @inject('ISubmitProblemRepository')
+    private _submitProblemRepository: ISubmitProblemRepository,
   ) {}
   async execute(accountId: string): Promise<IGetUserUsecaseOutputDto> {
     const account = await this._accountRepository.findById(accountId);
@@ -30,9 +33,11 @@ export class GetUserUsecase implements IGetUserUsecase {
       throw new CustomError(HTTP_STATUS.NOT_FOUND, ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
+    const solvedProblemsCount = await this._submitProblemRepository.getAllSolvedProblemsCount(String(user._id));
+
     const followersAndFollowingCount = await this._followerRepository.countFollowersAndFollowingCount(String(user._id));
 
-    const response = getUserUsecaseMapper.toOutput(user, account,followersAndFollowingCount);
+    const response = getUserUsecaseMapper.toOutput(user, account,followersAndFollowingCount,solvedProblemsCount);
     return response;
   }
 }

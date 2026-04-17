@@ -19,6 +19,7 @@ export interface IGetUserUsecaseOutputDto {
   profileUrl: string;
   skills: Rating[];
   auth: string;
+  problemSolved: number;
 }
 
 export interface IUpdateSuggestionLevelInputDto {
@@ -249,7 +250,9 @@ export interface IGetAllInterviewsUserUsecaseInterviewDto {
   description: string,
   numberOfQuestions: number,
   duration: number,
-  premium: boolean
+  premium: boolean,
+  isAttempted:boolean
+  sessionId?:string
 }
 
 

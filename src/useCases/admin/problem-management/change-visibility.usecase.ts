@@ -3,10 +3,14 @@ import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem
 import { IChangeVisibilityUsecase } from '../../Interfaces/admin/problem-management/change-visibility.usecase.interface';
 import { CustomError } from '../../../domain/utils/custom-error';
 import { ERROR_MESSAGES, HTTP_STATUS } from '../../../shared/constant';
+import { ITestcaseRepository } from '../../../domain/repositoryInterfaces/testcase-respository.interface';
 
 @injectable()
 export class ChangeVisibilityUsecase implements IChangeVisibilityUsecase {
-  constructor(@inject('IProblemRepository') private _problemRepository: IProblemRepository) {}
+  constructor(@inject('IProblemRepository') private _problemRepository: IProblemRepository,
+    @inject('ITestcaseRepository')
+    private _testcaseRepository: ITestcaseRepository
+  ) {}
   async execute(id: string): Promise<void> {
     const exits = await this._problemRepository.findById(id);
 
@@ -16,6 +20,10 @@ export class ChangeVisibilityUsecase implements IChangeVisibilityUsecase {
 
     if (exits.view === 'private' && exits.addedLanguagesId.length === 0) {
       throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.NO_LANGUAGE_ADDED);
+    }
+    const testcases = await this._testcaseRepository.getTestcasesByProblemId(id);
+    if (testcases.length === 0) {
+      throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.NO_TESTCASE_ADDED);
     }
 
     await this._problemRepository.updateById(id, {
