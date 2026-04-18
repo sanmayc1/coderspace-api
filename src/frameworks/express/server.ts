@@ -40,7 +40,6 @@ export class Server {
     };
 
     this._app.use(cors(corsOptions));
-    this._app.options('*', cors(corsOptions));
     this._app.use(express.json());
     this._app.use(express.urlencoded({ extended: true }));
     this._app.use(cookieParser(config.cookieSecret));
