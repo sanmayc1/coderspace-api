@@ -24,7 +24,7 @@ export class Server {
     this._app = express();
     this._server = createServer(this._app);
     this._io = new SocketServer(this._server, {
-      cors: { origin: [config.client.uri, config.client.uri2], credentials: true },
+      cors: { origin:config.client.uri, credentials: true },
     });
     authMiddleware.socketAuthMiddleware(this._io);
     socketHandler.registerChatSocketHandlers(this._io);
@@ -34,18 +34,18 @@ export class Server {
   }
 
   private configureMiddleware(): void {
-    
+    const corsOptions = {
+      origin: [config.client.uri, config.client.uri2],
+      credentials: true,
+    };
+
+    this._app.use(cors(corsOptions));
     this._app.use(express.json());
     this._app.use(express.urlencoded({ extended: true }));
     this._app.use(cookieParser(config.cookieSecret));
   }
 
   private configureRouter(): void {
-    const corsOptions = {
-      origin: '*',
-      credentials: true,
-    };
-    this._app.use(cors(corsOptions));
     this._app.use('/api/v1/auth', authRoutes.router);
     this._app.use('/api/v1/admin', adminRoutes.router);
     this._app.use('/api/v1/user', userRoutes.router);
