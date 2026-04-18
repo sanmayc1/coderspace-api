@@ -19,11 +19,14 @@ export class TestcaseRepository
   constructor() {
     super(TestcaseModel, testcaseRepositoryMapper.toEntity, testcaseRepositoryMapper.toModel);
   }
+ async bulkUpload(testcase: ITestcaseEntity[]): Promise<void> {
+    TestcaseModel.insertMany(testcase)
+  }
   async getTestcasesByProblemId(
     problemId: string,
     options?: Partial<IMongoOptions>
   ): Promise<ITestcaseEntity[]> {
-    const filter = options?.filter ? convertToMongoFilter(options.filter) : {};
+   
     const projection = options?.projections ? convertToMongoProjection(options.projections) : {};
     const sort = options?.sort ? convertToMongoSort(options.sort) : {};
     const relations = options?.relations ? options.relations.join(' ') : '';

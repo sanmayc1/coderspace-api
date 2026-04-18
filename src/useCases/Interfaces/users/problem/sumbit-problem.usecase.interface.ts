@@ -5,5 +5,5 @@ import {
 
 
 export interface ISubmitProblemUsecase {
-  execute(data: ISubmitProblemUsecaseInputDto): Promise<void>;
+  execute(data: ISubmitProblemUsecaseInputDto): Promise<ISubmitProblemUsecaseOutputDto>;
 }

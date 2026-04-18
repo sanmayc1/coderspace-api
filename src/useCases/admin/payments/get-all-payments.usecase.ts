@@ -1,17 +1,16 @@
 import { inject, injectable } from 'tsyringe';
 import { IGetAllPaymentsUseCase } from '../../Interfaces/admin/payments/get-all-payments.usecase.interface';
 import { IPaymentRepository } from '../../../domain/repositoryInterfaces/payment-repository.interface';
-import { IUserRepository } from '../../../domain/repositoryInterfaces/user-repository.interface';
-import { PAYMENT_SORTING, PROBLEM_SORTING } from '../../../shared/utils/mongo-utils';
+import { PAYMENT_SORTING } from '../../../shared/utils/mongo-utils';
 import { GenericFilter, Projection, Sort } from '../../../shared/constant';
 import { IGetAllPaymentsUsecaseOutputDto } from '../../dtos/admin.dto';
 import { getAllPaymentsUsecaseMapper } from '../../dtos/mappers/mappers';
+import { IPaymentEntity } from '../../../domain/entities/payment.entity';
 
 @injectable()
 export class GetAllPaymentsUseCase implements IGetAllPaymentsUseCase {
   constructor(
     @inject('IPaymentRepository') private _paymentRepository: IPaymentRepository,
-    @inject('IUserRepository') private _userRepository: IUserRepository
   ) {}
 
   async execute(
@@ -48,7 +47,7 @@ export class GetAllPaymentsUseCase implements IGetAllPaymentsUseCase {
       limit,
     });
 
-    const response = data.map((payment: any) => getAllPaymentsUsecaseMapper.toResponse(payment));
+    const response = data.map((payment: IPaymentEntity) => getAllPaymentsUsecaseMapper.toResponse(payment));
 
     return {
       data: response,

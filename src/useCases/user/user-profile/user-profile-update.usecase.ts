@@ -18,7 +18,7 @@ export class UpdateUserProfileUsecase implements IUpdateUserProfileUsecase {
     private _userRepository: IUserRepository,
     @inject('IImageStoreService') private _imageStoreService: IImageStoreService
   ) {}
-  async execute(data: IUpdateUserProfileInputDto): Promise<any> {
+  async execute(data: IUpdateUserProfileInputDto): Promise<void> {
     const { name, username, about, profileImage, accountId } = data;
     const accountUpadate: Partial<IAccountsEntity> = {};
     const userUpadate: Partial<IUserEntity> = {};

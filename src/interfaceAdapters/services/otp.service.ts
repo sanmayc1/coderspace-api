@@ -2,7 +2,6 @@ import { inject, injectable } from 'tsyringe';
 import { IOtpService } from '../../domain/services/otp-service.interface';
 import { IBcrypt } from '../../domain/services/bcrypt.interface';
 import { IOtpRespository } from '../../domain/repositoryInterfaces/otp.interface';
-import { IOtpEntity } from '../../domain/entities/otp.entity';
 
 @injectable()
 export class OtpService implements IOtpService {

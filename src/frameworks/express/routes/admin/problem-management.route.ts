@@ -1,6 +1,5 @@
 import { injectable } from 'tsyringe';
 import { BaseRoute } from '../base-route';
-import { Request, Response } from 'express';
 import { problemManagementController } from '../../../di/di-resolver';
 import { asyncHandler } from '../../../../shared/async-handler';
 
@@ -63,5 +62,7 @@ export class ProblemManagementRoutes extends BaseRoute {
       '/:id/testcase',
       asyncHandler(problemManagementController.deleteTestcase.bind(problemManagementController))
     );
+
+    this.router.post("/testcase/auto-generate",problemManagementController.autoGenerateTestcases.bind(problemManagementController))
   }
 }

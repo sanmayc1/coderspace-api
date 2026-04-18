@@ -1,5 +1,6 @@
 import { ITokenEntity } from '../../domain/entities/token.entity';
 import { TRole } from '../../shared/constant';
+import { IUpdateUserPasswordInputDto } from './user.dto';
 
 export interface RegisterUserRequestDto {
   name: string;
@@ -46,4 +47,10 @@ export interface RegisterCompanyRequestDto {
   gstin: string;
   email: string;
   password: string;
+}
+
+
+
+  
+export interface IChangePasswordUsecaseInputDto extends IUpdateUserPasswordInputDto{
 }

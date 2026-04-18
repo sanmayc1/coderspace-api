@@ -5,13 +5,15 @@ import cookieParser from 'cookie-parser';
 import { config } from '../../shared/config';
 import {
   adminRoutes,
+  authMiddleware,
   authRoutes,
   commonRoutes,
   companyRoutes,
   errorMiddleware,
+  socketHandler,
   userRoutes,
 } from '../di/di-resolver';
-import { Socket, Server as SocketServer } from 'socket.io';
+import { Server as SocketServer } from 'socket.io';
 
 export class Server {
   private _app: Application;
@@ -24,6 +26,8 @@ export class Server {
     this._io = new SocketServer(this._server, {
       cors: { origin: config.client.uri, credentials: true },
     });
+    authMiddleware.socketAuthMiddleware(this._io);
+    socketHandler.registerChatSocketHandlers(this._io);
     this.configureMiddleware();
     this.configureRouter();
     this.configureErrorHandling();
@@ -42,11 +46,6 @@ export class Server {
     this._app.use('/api/v1/user', userRoutes.router);
     this._app.use('/api/v1/company', companyRoutes.router);
     this._app.use('/api/v1/common', commonRoutes.router);
-    this._io.on('connection', async (socket: Socket) => {
-      const accessToken = socket.handshake.headers.cookie?.split(';')[0].split('=')[1];
-
-      // console.log("auth",accessToken)
-    });
   }
 
   private configureErrorHandling() {

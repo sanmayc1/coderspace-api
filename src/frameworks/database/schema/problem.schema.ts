@@ -2,7 +2,6 @@ import { Schema, Types } from 'mongoose';
 import { IProblemModel } from '../models/problem.model';
 import { DIFFICULTY, VALIDATOR_TYPE, VIEW } from '../../../shared/constant';
 import { IExample } from '../../../domain/entities/problem-entity';
-import { string } from 'zod';
 
 const exampleSchema = new Schema<IExample>({
   explanation: {

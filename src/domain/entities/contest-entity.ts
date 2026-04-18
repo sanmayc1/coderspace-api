@@ -18,6 +18,7 @@ export interface IContestEntity {
   problemsIds: (string | IProblemEntity)[];
   rewards: IContestRewardEntity[];
   dateAndTime: Date;
+  endDateAndTime: Date;
   duration: number;
   view: TView;
   creatorId: string | IAccountsEntity;

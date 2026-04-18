@@ -1,6 +1,5 @@
-import { IDomainEntity } from '../../domain/entities/domain-entity';
 import { IExample } from '../../domain/entities/problem-entity';
-import { TBadge, TLanguages, TView } from '../../shared/constant';
+import { TBadge, TDifficulty, TLanguages, TView } from '../../shared/constant';
 
 export interface IGetUsersUsecaseOutputDto {
   page: number;
@@ -145,7 +144,10 @@ export interface IGetProblemUsecaseOutput {
   examples: IExample[];
 }
 
-export interface IUpdateProblemUsecaseInput extends Omit<ICreateProblemUsecaseInputDto,'validationType'> {
+export interface IUpdateProblemUsecaseInput extends Omit<
+  ICreateProblemUsecaseInputDto,
+  'validationType'
+> {
   problemId: string;
 }
 
@@ -180,9 +182,8 @@ export interface ITemplateCodes {
 export interface IUserGetProblemUsecaseOutput extends IGetProblemUsecaseOutput {
   templateCodes: ITemplateCodes[];
   number: number;
-  testcases:{input:string,output:string,expected:string}[];
+  testcases: { input: string; output: string; expected: string }[];
 }
-
 
 export interface IGetAllPaymentsUsecaseOutputDto {
   data: IGetAllPaymentsUsecasePaymentDto[];
@@ -196,7 +197,44 @@ export interface IGetAllPaymentsUsecasePaymentDto {
   status: string;
   planId: string;
   date: string;
-  email:string;
-  planName:string;
-  username:string;
+  email: string;
+  planName: string;
+  username: string;
 }
+
+
+export interface ICreateInterviewUsecaseInputDto {
+  title: string,
+  description: string,
+  context: string,
+  numberOfQuestions: number,
+  difficulty: TDifficulty,
+  duration: number,
+  premium: boolean
+}
+
+export interface ICreateInterviewUsecaseOutputDto {
+  title: string;
+  id: string;
+  description: string;
+  numberOfQuestions: number;
+  difficulty: string;
+  premium: boolean;
+  duration: number;
+}
+
+export interface IGetAllInterviewsUsecaseInputDto {
+  page: number;
+  limit: number;
+  sortBy: string;
+  search: string;
+}
+
+export interface IGetAllInterviewsUsecaseOutputDto {
+  interviews: ICreateInterviewUsecaseOutputDto[];
+  totalPages: number;
+  currentPage: number;
+  itemsPerPage: number;
+}
+
+

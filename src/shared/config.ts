@@ -54,6 +54,10 @@ export const config = {
     apiKey:process.env.RAZORPAY_API_KEY,
     secert:process.env.RAZORPAY_SECRET
   },
+  tts:{
+    url:process.env.TTS_API as string
+  },
   environment: process.env.NODE_ENV,
   cookieSecret: process.env.COOKIES_SECRET,
+  geminiApiKey:process.env.GEMINI_API_KEY as string
 };

@@ -7,6 +7,7 @@ export interface IProblemRepository extends IBaseRepository<IProblemEntity> {
   getAllProblems(data: IMongoOptions): Promise<IGetAllProblems>;
   addLanguage(id: string, languageId: string): Promise<void>;
   getProblem(id: string, options?: IGetProblemInput): Promise<IProblemEntity | null>;
+  getAllProblemWithoutLimit(options: Partial<IMongoOptions>): Promise<IProblemEntity[] | []>;
 }
 
 export interface IGetAllProblems {

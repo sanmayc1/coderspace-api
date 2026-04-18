@@ -1,5 +1,4 @@
 import { inject, injectable } from 'tsyringe';
-import { IProblemEntity } from '../../../domain/entities/problem-entity';
 import { IProblemRepository } from '../../../domain/repositoryInterfaces/problem-repository.interface';
 import { GenericFilter, Projection, Sort } from '../../../shared/constant';
 import { PROBLEM_SORTING } from '../../../shared/utils/mongo-utils';

@@ -16,6 +16,13 @@ import { FollowerRepository } from '../../interfaceAdapters/repositories/followe
 import { SubmitProblemRepository } from '../../interfaceAdapters/repositories/submit-problem-repository';
 import { PlanRepository } from '../../interfaceAdapters/repositories/plan-repository';
 import { PaymentRepository } from '../../interfaceAdapters/repositories/payment-repository';
+import { ContestAttemptRepository } from '../../interfaceAdapters/repositories/contest-attempt-repository';
+import { ChatRepository } from '../../interfaceAdapters/repositories/chat-repository';
+import { InterviewRepository } from '../../interfaceAdapters/repositories/interview-repository';
+import { InterviewSessionRepository } from '../../interfaceAdapters/repositories/interview-session-repository';
+import { InterviewQuestionsRepository } from '../../interfaceAdapters/repositories/interview-questions-repository';
+import { AdminDashboardRepository } from '../../interfaceAdapters/repositories/admin-dashboard.repository';
+import { NotificationRepository } from '../../interfaceAdapters/repositories/notification.repository';
 
 export class RepositoryRegistery {
   static registerRepository() {
@@ -36,5 +43,12 @@ export class RepositoryRegistery {
     container.register('ISubmitProblemRepository',{useClass:SubmitProblemRepository})
     container.register('IPlanRepository',{useClass:PlanRepository})
     container.register('IPaymentRepository',{useClass:PaymentRepository})
+    container.register('IContestAttemptRepository',{useClass:ContestAttemptRepository})
+    container.register('IChatRepository',{useClass:ChatRepository})
+    container.register('IInterviewRepository',{useClass:InterviewRepository})
+    container.register('IInterviewSessionRepository',{useClass:InterviewSessionRepository})
+    container.register('IInterviewQuestionsRepository',{useClass:InterviewQuestionsRepository})
+    container.register('IAdminDashboardRepository', { useClass: AdminDashboardRepository });
+    container.register('INotificationRepository', { useClass: NotificationRepository });
   }
 }

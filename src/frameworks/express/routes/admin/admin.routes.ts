@@ -2,11 +2,12 @@ import { injectable } from 'tsyringe';
 import { BaseRoute } from '../base-route';
 import {
   authMiddleware,
-  paymentRoutes,
+  interviewAdminRoutes,
   paymentsManagementRoutes,
   problemManagementRoutes,
   skillsAndDomainManagementRoute,
   userManagementRoute,
+  adminDashboardRoute,
 } from '../../../di/di-resolver';
 import { asyncHandler } from '../../../../shared/async-handler';
 
@@ -37,6 +38,18 @@ export class AdminRoutes extends BaseRoute {
       '/payments',
       asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
       paymentsManagementRoutes.router
+    );
+
+    this.router.use(
+      '/interviews',
+      asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
+      interviewAdminRoutes.router
+    );
+
+    this.router.use(
+      '/dashboard',
+      asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
+      adminDashboardRoute.router
     );
 
   }
