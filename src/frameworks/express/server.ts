@@ -35,7 +35,7 @@ export class Server {
 
   private configureMiddleware(): void {
     const corsOptions = {
-      origin: [config.client.uri, config.client.uri2],
+      origin:config.client.uri,
       credentials: true,
     };
 
