@@ -15,7 +15,7 @@ export class GetInterviewFeedbackUsecase implements IGetInterviewFeedbackUsecase
   
     ) {}
     async execute(sessionId:string):Promise<{feedback:string,rating:number}>{
-        console.log(sessionId)
+       
         const existSession = await this._interviewSessionRepository.findById(sessionId);
         if (!existSession) {
             throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.SESSION_NOT_FOUND);
