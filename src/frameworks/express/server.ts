@@ -34,12 +34,32 @@ export class Server {
   }
 
   private configureMiddleware(): void {
-    const corsOptions = {
-      origin: [config.client.uri, config.client.uri2],
-      credentials: true,
-    };
+    // const corsOptions = {
+    //   origin: [config.client.uri, config.client.uri2],
+    //   credentials: true,
+    // };
 
-    this._app.use(cors(corsOptions));
+    // this._app.use(cors(corsOptions));
+
+    const allowedOrigins = ['https://coderspaces.xyz', 'https://www.coderspaces.xyz'];
+
+    this._app.use((req, res, next) => {
+      const origin = req.headers.origin;
+
+      if (allowedOrigins.includes(origin as string)) {
+        res.setHeader('Access-Control-Allow-Origin', origin as string);
+      }
+
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+      if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+      }
+
+      next();
+    });
     this._app.use(express.json());
     this._app.use(express.urlencoded({ extended: true }));
     this._app.use(cookieParser(config.cookieSecret));
