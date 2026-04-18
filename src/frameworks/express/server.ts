@@ -24,7 +24,7 @@ export class Server {
     this._app = express();
     this._server = createServer(this._app);
     this._io = new SocketServer(this._server, {
-      cors: { origin: config.client.uri, credentials: true },
+      cors: { origin: [config.client.uri ,config.client.uri2], credentials: true },
     });
     authMiddleware.socketAuthMiddleware(this._io);
     socketHandler.registerChatSocketHandlers(this._io);

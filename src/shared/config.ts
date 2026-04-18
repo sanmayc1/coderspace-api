@@ -3,7 +3,8 @@ dotenv.config();
 
 export const config = {
   client: {
-    uri: process.env.CLIENT_URL,
+    uri: process.env.CLIENT_URL as string,
+    uri2:process.env.CLIENT_URL2 as string
   },
   server: {
     port: process.env.PORT,
