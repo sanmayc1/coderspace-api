@@ -42,7 +42,7 @@ export class Server {
 
   private configureRouter(): void {
     const corsOptions = {
-      origin: 'https://www.coderspaces.xyz',
+      origin: '*',
       credentials: true,
     };
     this._app.use(cors(corsOptions));
