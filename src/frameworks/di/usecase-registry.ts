@@ -57,6 +57,33 @@ import { EditPlanUseCase } from '../../useCases/admin/payments/edit-plan.usecase
 import { GetAllPaymentsUseCase } from '../../useCases/admin/payments/get-all-payments.usecase';
 import { CreateContestUsecase } from '../../useCases/company/contests/create-contest.usecase';
 import { GetContestUsecase } from '../../useCases/company/contests/get-contest.usecase';
+import { UpdateContestUseCase } from '../../useCases/company/contests/update-contest.usecase';
+import { DeleteContestUseCase } from '../../useCases/company/contests/delete-contest.usecase';
+import { GetAllUpcomingAndOngoingContestUseCase } from '../../useCases/user/contest/get-all-upcoming-and-ongoing-contest.usecase';
+import { GetAllPastContestUsecase } from '../../useCases/user/contest/get-all-past-contest.usecase';
+import { GetContestProblemsUsecase } from '../../useCases/user/contest/get-contest-problems.usecase';
+import { ContestProblemSubmitUsecase } from '../../useCases/user/contest/contest-problem-submit.usecase';
+import { JoinContestUsecase } from '../../useCases/user/contest/join-contest.usecase';
+import { FinishContestUsecase } from '../../useCases/user/contest/finish-contest.usecase';
+import { GetContestLeaderboardUsecase } from '../../useCases/common/get-contest-leaderboard';
+import { GetAllAvailableProblemsForContestUsecase } from '../../useCases/company/contests/get-all-available-problems-for-contest.usecase';
+import { AutoGenerateTestcasesUsecasse } from '../../useCases/admin/problem-management/auto-generate-testcase';
+import { GetAllChatsUsecase } from '../../useCases/user/chat/get-all-chats';
+import { GetChatsUsecase } from '../../useCases/user/chat/get-chat';
+import { CreateInterviewUsecase } from '../../useCases/admin/interview/create-interview.usecase';
+import { GetAllInterviewsUsecase } from '../../useCases/admin/interview/get-all-interviews.usecase';
+import { DeleteInterviewUsecase } from '../../useCases/admin/interview/delete-interview.usecase';
+import { GetAllInterviewsUserUsecase } from '../../useCases/user/interview/get-all-interview-user.usecase';
+import { CreateInterviewSessionUsecase } from '../../useCases/user/interview/create-interview-session.usecase';
+import { GetInterviewQuestionUsecase } from '../../useCases/user/interview/get-interview-question.usecase';
+import { ChangeAccountPasswordUsecase } from '../../useCases/common/change-account-password.usecase';
+import { GetDashboardUsecase } from '../../useCases/company/get-dashboard.usecase';
+import { GetAdminDashboardUsecase } from '../../useCases/admin/get-dashboard.usecase';
+import { GetAllNotificationsUsecase } from '../../useCases/common/notification/get-all-notifications.usecase';
+import { MarkNotificationReadUsecase } from '../../useCases/common/notification/mark-notification-read.usecase';
+import { UpdateAnswerAndFeedbackUsecase } from '../../useCases/user/interview/update-answer-and-feedback.usecase';
+import { FinishInterviewUsecase } from '../../useCases/user/interview/finish-interview.usecase';
+import { GetInterviewFeedbackUsecase } from '../../useCases/user/interview/get-interview-feedback.usecase';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -152,6 +179,10 @@ export class UsecaseRegistery {
     container.register('IGetAllCompanyContestsUsecase', {
       useClass: GetAllCompanyContestsUsecase,
     });
+    
+    container.register('IGetDashboardUsecase', {
+      useClass: GetDashboardUsecase,
+    });
 
     container.register('IUpdateUserProfileUsecase', {
       useClass: UpdateUserProfileUsecase,
@@ -210,6 +241,98 @@ export class UsecaseRegistery {
 
     container.register('IGetContestUsecase', {
       useClass: GetContestUsecase,
+    });
+
+    container.register('IUpdateContestUseCase', {
+      useClass: UpdateContestUseCase,
+    });
+
+    container.register('IDeleteContestUseCase', {
+      useClass: DeleteContestUseCase,
+    });
+    container.register('IGetAllUpcomingAndOngoingContestUseCase', {
+      useClass: GetAllUpcomingAndOngoingContestUseCase,
+    });
+
+    container.register('IGetAllPastContestUsecase', {
+      useClass: GetAllPastContestUsecase,
+    });
+
+    container.register('IGetContestProblemsUsecase', {
+      useClass: GetContestProblemsUsecase,
+    });
+
+    container.register('IContestProblemSubmitUsecase', {
+      useClass: ContestProblemSubmitUsecase,
+    });
+
+    container.register('IJoinContestUsecase', {
+      useClass: JoinContestUsecase,
+    });
+    container.register('IFinishContestUsecase', {
+      useClass: FinishContestUsecase,
+    });
+    container.register('IGetContestLeaderboardUsecase', {
+      useClass: GetContestLeaderboardUsecase,
+    });
+    container.register('IGetAllAvailableProblemsForContestUsecase',{
+      useClass:GetAllAvailableProblemsForContestUsecase
+    })
+    container.register("IAutoGenerateTestcasesUsecasse",{
+      useClass:AutoGenerateTestcasesUsecasse
+    })
+
+    container.register("IGetAllChatsUsecase",{
+      useClass:GetAllChatsUsecase
+    })
+    
+    container.register("IGetChatUsecase",{
+      useClass:GetChatsUsecase
+    })
+
+    container.register("ICreateInterviewUsecase",{
+      useClass:CreateInterviewUsecase
+    })
+
+    container.register("IGetAllInterviewsUsecase",{
+      useClass:GetAllInterviewsUsecase
+    })
+
+    container.register("IDeleteInterviewUsecase",{
+      useClass:DeleteInterviewUsecase
+    })
+    container.register("IGetAllInterviewsUserUsecase",{
+      useClass:GetAllInterviewsUserUsecase
+    })
+    container.register("ICreateInterviewSessionUsecase",{
+      useClass:CreateInterviewSessionUsecase
+    })
+    container.register("IGetInterviewQuestionUsecase",{
+      useClass:GetInterviewQuestionUsecase
+    })
+    container.register("IChangeAccountPasswordUsecase",{
+      useClass:ChangeAccountPasswordUsecase
+    })
+    container.register('IGetAdminDashboardUsecase', {
+      useClass: GetAdminDashboardUsecase,
+    });
+    container.register('IGetAllNotificationsUsecase', {
+      useClass: GetAllNotificationsUsecase,
+    });
+    container.register('IMarkNotificationReadUsecase', {
+      useClass: MarkNotificationReadUsecase,
+    });
+
+    container.register('IUpdateAnswerAndFeedbackUsecase', {
+      useClass: UpdateAnswerAndFeedbackUsecase,
+    });
+
+    container.register('IFinishInterviewUsecase', {
+      useClass: FinishInterviewUsecase,
+    });
+
+    container.register('IGetInterviewFeedbackUsecase', {
+      useClass: GetInterviewFeedbackUsecase,
     });
   }
 }

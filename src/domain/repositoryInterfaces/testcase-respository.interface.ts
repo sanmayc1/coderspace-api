@@ -4,4 +4,5 @@ import { IMongoOptions } from './problem-repository.interface';
 
 export interface ITestcaseRepository extends IBaseRepository<ITestcaseEntity> {
   getTestcasesByProblemId(problemId: string,options?:Partial<IMongoOptions>): Promise<ITestcaseEntity[]>;
+  bulkUpload(testcase:ITestcaseEntity[]):Promise<void>
 }

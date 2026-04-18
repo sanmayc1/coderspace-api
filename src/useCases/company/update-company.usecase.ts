@@ -1,5 +1,4 @@
 import { inject, injectable } from 'tsyringe';
-import { ICompanyRepository } from '../../domain/repositoryInterfaces/company-repository.interface';
 import { IUpdateCompanyUsecase } from '../Interfaces/company/update-company.usecase.interface';
 import { CustomError } from '../../domain/utils/custom-error';
 import { ERROR_MESSAGES, HTTP_STATUS } from '../../shared/constant';

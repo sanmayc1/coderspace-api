@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 import { BaseRoute } from '../base-route';
 import { asyncHandler } from '../../../../shared/async-handler';
-import { authMiddleware, paymentsManagementController } from '../../../di/di-resolver';
+import { paymentsManagementController } from '../../../di/di-resolver';
 
 @injectable()
 export class PaymentsManagementRoutes extends BaseRoute {

@@ -46,12 +46,12 @@ export class FollowerRepository
       followingCount: counts[0].pipeline1[0]?.followingCount || 0,
     };
   }
-  findFollowerByUserId(userId: string): Promise<IFollowerEntity[]> {
-    throw new Error('Method not implemented.');
-  }
-  findFollowingByUserId(userId: string): Promise<IFollowerEntity[]> {
-    throw new Error('Method not implemented.');
-  }
+  // findFollowerByUserId(userId: string): Promise<IFollowerEntity[]> {
+  //   throw new Error('Method not implemented.');
+  // }
+  // findFollowingByUserId(userId: string): Promise<IFollowerEntity[]> {
+  //   throw new Error('Method not implemented.');
+  // }
   async findFollowerByUserIdAndFolloweeId(
     followerId: string,
     followeeId: string

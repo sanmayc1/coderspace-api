@@ -10,7 +10,6 @@ import {
 } from '../auth/index';
 import { IGetAllDomainsUsecase } from '../../../useCases/Interfaces/admin/skills-and-domain-management/get-all-domains.interface.usecase';
 import { IDeleteDomainUsecase } from '../../../useCases/Interfaces/admin/skills-and-domain-management/delete-domain.usecase.interface';
-import { IGetAllSkillsUsecase } from '../../../useCases/Interfaces/common/get-all-skills.usecase.interface';
 import { IDeleteSkillUsecase } from '../../../useCases/Interfaces/admin/skills-and-domain-management/delete-skill.usecase.interface';
 import { ICreateSkillUsecase } from '../../../useCases/Interfaces/admin/skills-and-domain-management/create-skill.usecase.interface';
 

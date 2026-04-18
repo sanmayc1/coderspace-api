@@ -1,4 +1,4 @@
-import { Document, model, ObjectId, Types } from "mongoose";
+import { Document, model,  Types } from "mongoose";
 import { IFollowerEntity } from "../../../domain/entities/follower-entity";
 import { followerSchema } from "../schema/follower.schema";
 

@@ -5,7 +5,10 @@ import { COOKIES_NAMES, ERROR_MESSAGES, HTTP_STATUS, TRole } from '../../shared/
 import { NextFunction, Request, Response } from 'express';
 import { IBlackListTokenRepository } from '../../domain/repositoryInterfaces/blacklist-token.interface';
 import { IAccountsRepository } from '../../domain/repositoryInterfaces/accounts-repository.interface';
-import { commonResponse, CustomError } from '../controllers/auth/index';
+import { commonResponse } from '../controllers/auth/index';
+import { Server } from 'socket.io';
+import cookie from "cookie";
+
 
 @injectable()
 export class AuthMiddleware implements IAuthMiddleware {
@@ -74,4 +77,25 @@ export class AuthMiddleware implements IAuthMiddleware {
       next();
     };
   }
+
+socketAuthMiddleware(io: Server) {
+  io.use(async (socket, next) => {
+    try {
+      const cookies = cookie.parse(socket.handshake.headers.cookie || "");
+      const token = cookies[COOKIES_NAMES.ACCESS_TOKEN];
+ 
+      if (!token) {
+        return next(new Error("TOKEN_EXPIRE"));
+      }
+      
+      const decoded = this._jwtService.verifyAccess(token);
+   
+      socket.data.user = decoded;
+
+      next();
+    } catch (error) {
+      return next(new Error("TOKEN_INVALID"));
+    }
+  });
+}
 }

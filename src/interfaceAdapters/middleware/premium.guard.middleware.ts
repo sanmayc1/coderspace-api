@@ -25,12 +25,12 @@ export class PremiumGuardMiddleware implements IPremiumGuardMiddleware {
           throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.PROBLEM_NOT_FOUND);
         }
         if (!problem.isPremium) {
-          next();
+          
+          return next();
         }
         
         const user = await this._userRepository.findByAccountId(req.user?.accountId as string);
         if (!user) {
-            console.log(req.user?.accountId );
           throw new CustomError(HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.USER_NOT_FOUND);
         }
         
@@ -45,11 +45,11 @@ export class PremiumGuardMiddleware implements IPremiumGuardMiddleware {
           throw new CustomError(HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.PREMIUM_REQUIRED);
         }
 
-        next();
+      return next();
       }
 
       if (content === 'interview') {
-        next();
+        return next();
       }
     };
   }

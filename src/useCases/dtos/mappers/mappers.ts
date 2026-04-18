@@ -1,7 +1,9 @@
 import { IAccountsEntity } from '../../../domain/entities/accounts-entity';
+import { IChatEntity } from '../../../domain/entities/chat-entity';
 import { ICompanyEntity } from '../../../domain/entities/company-entity';
 import { IContestEntity } from '../../../domain/entities/contest-entity';
 import { IDomainEntity } from '../../../domain/entities/domain-entity';
+import { IInterviewEntity } from '../../../domain/entities/interview-entity';
 import { ILanguageEntity } from '../../../domain/entities/langauge-entity';
 import { IPaymentEntity } from '../../../domain/entities/payment.entity';
 import { IPlanEntity } from '../../../domain/entities/plan-entity';
@@ -9,8 +11,10 @@ import { IProblemEntity } from '../../../domain/entities/problem-entity';
 import { ISkillEntity } from '../../../domain/entities/skill-entity';
 import { ITestcaseEntity } from '../../../domain/entities/testcase-entity';
 import { IUserEntity } from '../../../domain/entities/user.entity';
-import { TBadge, TLanguages, TRole } from '../../../shared/constant';
+import { IGetChatsOutputDto } from '../../../domain/repositoryInterfaces/chat-repository.interface';
+import { TBadge, TRole } from '../../../shared/constant';
 import {
+  ICreateInterviewUsecaseOutputDto,
   IDomainDto,
   IGetAllPaymentsUsecasePaymentDto,
   IGetAllProblemUsecaseOutputDto,
@@ -21,16 +25,24 @@ import {
   IGetUsersUsecaseUserDto,
   ISkillDto,
   IUserGetAllProblem,
-  IUserGetAllProblemsUsecaseOutput,
   IUserGetProblemUsecaseOutput,
 } from '../admin.dto';
 import { IAuthResponseDto, IGoogleAuthUsecaseInputDto } from '../auth.dto';
-import { IGetCompanyUsecaseOutputDto, IGetContestUsecaseOutputDto } from '../company.dto';
 import {
-  ICreateRazorpayOrderUsecaseOutputDto,
+  IGetAllAvailableProblemsForContestUsecaseOutput,
+  IGetCompanyUsecaseOutputDto,
+  IGetContestUsecaseOutputDto,
+} from '../company.dto';
+import {
+  IGetAllChatsUsecaseOutputDto,
   IGetAllCodersUsecaseOutputDto,
+  IGetAllInterviewsUserUsecaseInterviewDto,
+  IGetAllInterviewsUserUsecaseOutputDto,
   IGetAllPlansUsecaseOutputDto,
+  IGetChatDto,
   IGetCoderUsecaseOutputDto,
+  IGetContestProblem,
+  IGetContestUsecase,
   IGetUserUsecaseOutputDto,
 } from '../user.dto';
 
@@ -94,7 +106,8 @@ export const getUserUsecaseMapper = {
   toOutput(
     user: IUserEntity,
     account: IAccountsEntity,
-    followersAndFollowingCount: { followersCount: number; followingCount: number }
+    followersAndFollowingCount: { followersCount: number; followingCount: number },
+    solvedProblemsCount: number
   ): IGetUserUsecaseOutputDto {
     return {
       accountId: user.accountId as string,
@@ -110,6 +123,7 @@ export const getUserUsecaseMapper = {
       auth: account.authProvider as string,
       followers: followersAndFollowingCount.followersCount,
       following: followersAndFollowingCount.followingCount,
+      problemSolved: solvedProblemsCount,
     };
   },
 };
@@ -247,7 +261,7 @@ export const userGetProblemUsecaseMapper = {
           .map((arg: any, i: number) => `param${i + 1} = ${JSON.stringify(arg)}`)
           .join(',  '),
         expected: t.output,
-        output: "",
+        output: '',
       })),
       templateCodes: (data.addedLanguagesId as ILanguageEntity[]).map((l) => ({
         id: String(l._id),
@@ -293,58 +307,175 @@ export const getCoderUsecaseMapper = {
       following: data.followingCount,
       about: data.about,
       joinDate: formatted,
+      accountId:data.accountId as string,
       problemSolved: 0,
       level: data.level as number,
     };
   },
 };
 
-
 export const getAllPlansUsecaseMapper = {
-    toResponse(data: IPlanEntity): IGetAllPlansUsecaseOutputDto {
-        return {
-            id: String(data._id),
-            name: data.name,
-            price: data.price,
-            description: data.description,
-            features: data.features,
-            duration: String(data.durationInMonths),
-        };
-    },
+  toResponse(data: IPlanEntity): IGetAllPlansUsecaseOutputDto {
+    return {
+      id: String(data._id),
+      name: data.name,
+      price: data.price,
+      description: data.description,
+      features: data.features,
+      duration: String(data.durationInMonths),
+    };
+  },
 };
-
-
 
 export const getAllPaymentsUsecaseMapper = {
-    toResponse(data: IPaymentEntity): IGetAllPaymentsUsecasePaymentDto {
-        return {
-         
-            username: (data.userId as IAccountsEntity).name,
-            email: (data.userId as IAccountsEntity).email,
-            amount: data.amount,
-            status: data.status,
-            planId: (data.planId as IPlanEntity)._id,
-            planName: (data.planId as IPlanEntity).name,
-            date: data.createdAt.toISOString().split('T')[0],
-            paymentId:data.razorpayPaymentId
-        };
-    },
+  toResponse(data: IPaymentEntity): IGetAllPaymentsUsecasePaymentDto {
+    return {
+      username: (data.userId as IAccountsEntity).name,
+      email: (data.userId as IAccountsEntity).email,
+      amount: data.amount,
+      status: data.status,
+      planId: (data.planId as IPlanEntity)._id,
+      planName: (data.planId as IPlanEntity).name,
+      date: data.createdAt.toISOString().split('T')[0],
+      paymentId: data.razorpayPaymentId,
+    };
+  },
+};
+
+export const getContestUsecaseMapper = {
+  toResponse(data: IContestEntity): IGetContestUsecaseOutputDto {
+    return {
+      id: String(data._id),
+      title: data.title,
+      description: data.description,
+      dateAndTime: String(data.dateAndTime),
+      duration: data.duration,
+      visibility: data.view,
+      rewards: data.rewards,
+      domain: data.domainId as string,
+      skills: data.skillsIds as string[],
+      problems: data.problemsIds as string[],
+    };
+  },
+};
+
+export const getAllContestUsecaseMapper = {
+  toResponse(data: IContestEntity): IGetContestUsecase {
+    return {
+      id: String(data._id),
+      title: data.title,
+      description: data.description,
+      dateAndTime: String(data.dateAndTime),
+      duration: String(data.duration),
+      rewards: data.rewards,
+      domain: (data.domainId as IDomainEntity).title,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        title: s.title,
+        id: String(s._id),
+      })),
+    };
+  },
+};
+
+export const getContestProblemUsecaseMapper = {
+  toResponse(data: IProblemEntity, testcases: ITestcaseEntity[]): IGetContestProblem {
+    return {
+      id: String(data._id),
+      constrain: data.constraints,
+      description: data.description,
+      difficulty: data.difficulty,
+      domain: data.domainId as string,
+      examples: data.examples,
+      premium: data.isPremium,
+      number: data.problemNumber as number,
+      skills: (data.skillsIds as ISkillEntity[]).map((s) => ({
+        id: String(s._id),
+        title: s.title,
+      })),
+      testcases: testcases.map((t) => ({
+        input: JSON.parse(t.input)
+          .map((arg: any, i: number) => `param${i + 1} = ${JSON.stringify(arg)}`)
+          .join(',  '),
+        expected: t.output,
+        output: '',
+      })),
+      templateCodes: (data.addedLanguagesId as ILanguageEntity[]).map((l) => ({
+        id: String(l._id),
+        language: l.language,
+        templateCode: String(l.templateCode),
+      })),
+      title: data.title,
+    };
+  },
+};
+
+export const getAllAvailableProblemsForContestUsecaseMapper = {
+  toResponse(data: IProblemEntity[]): IGetAllAvailableProblemsForContestUsecaseOutput {
+    return {
+      problems: data.map((problem) => ({ id: problem._id as string, title: problem.title })),
+    };
+  },
+};
+
+export const getAllChatsUsecaseMapper = {
+  toResponse(data: IGetChatsOutputDto): IGetAllChatsUsecaseOutputDto {
+    return {
+      chatPartner: {
+        name: data.chatPartner.name,
+        profilePicture: data.chatPartner.profileUrl,
+        id: data.chatPartner._id,
+      },
+      lastMessage: {
+        content: data.lastMessage ,
+        timestamp: data.lastMessageTime ,
+      },
+      unreadCount: data.unseenCount,
+    };
+  },
 };
 
 
-export const getContestUsecaseMapper = {
-    toResponse(data: IContestEntity): IGetContestUsecaseOutputDto {
-        return {
-            id: String(data._id),
-            title: data.title,
-            description: data.description,
-            dateAndTime:String(data.dateAndTime),
-            duration: data.duration,
-            visibility: data.view,
-            rewards:data.rewards,
-            domain:data.domainId as string,
-            skills:data.skillsIds as string[],
-            problems:data.problemsIds as string[],
-        };
-    },
+
+export const getChatMessageMapper = {
+  toResponse(data: IChatEntity): IGetChatDto {
+    return {
+      id: data._id as string,
+      message: data.content,
+      timestamp: data.createdAt,
+      receiverId: data.receiverId as string,
+      senderId: data.senderId as string,
+      seen: data.seen,
+    };
+  },
+};
+
+
+export const createInterviewUsecaseMapper = {
+  toResponse(data: IInterviewEntity): ICreateInterviewUsecaseOutputDto {
+    return {
+      id: String(data._id),
+      title: data.title,
+      description: data.description,
+      numberOfQuestions: data.numberOfQuestions,
+      difficulty: data.difficulty,
+      premium: data.isPremium,
+      duration: data.durationInMinutes,
+    };
+  },
+};
+
+
+export const getAllInterviewsUserUsecaseMapper = {
+  toResponse(data: IInterviewEntity & {isAttempted:boolean,sessionId?:string}): IGetAllInterviewsUserUsecaseInterviewDto {
+    return {
+           description:data.description,
+           id:String(data._id),
+           numberOfQuestions:data.numberOfQuestions,
+           premium:data.isPremium,
+           duration:data.durationInMinutes,
+           title:data.title,
+           isAttempted:data.isAttempted,
+           sessionId:data.sessionId
+    };
+  },
 };

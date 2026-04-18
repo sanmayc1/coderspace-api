@@ -1,6 +1,9 @@
-import { int } from 'zod';
 import { Rating } from '../../domain/entities/user.entity';
 import { TDifficulty } from '../../shared/constant';
+import { IContestRewardDto, ISkillDto, ITemplateCodes } from './admin.dto';
+import { IExample } from '../../domain/entities/problem-entity';
+import { ILeaderboardUserDTO } from '../../domain/repositoryInterfaces/contest-attempt-repository.interface';
+import { int } from 'zod';
 
 export interface IGetUserUsecaseOutputDto {
   id: string;
@@ -9,13 +12,14 @@ export interface IGetUserUsecaseOutputDto {
   xpCoin: number;
   currentLevel: number;
   currentBadge: string;
-  following:number
-  followers:number
+  following: number;
+  followers: number;
   accountId: string;
   about?: string;
   profileUrl: string;
   skills: Rating[];
   auth: string;
+  problemSolved: number;
 }
 
 export interface IUpdateSuggestionLevelInputDto {
@@ -37,96 +41,234 @@ export interface IUpdateUserPasswordInputDto {
   accountId: string;
 }
 
-
 export interface IGetAllCodersUsecaseOutputDto {
-    userId:string
-    name:string
-    username:string
-    badge:string
-    profileUrl:string
-    isFollowing:boolean
+  userId: string;
+  name: string;
+  username: string;
+  badge: string;
+  profileUrl: string;
+  isFollowing: boolean;
 }
 
-
 export interface IGetCoderUsecaseOutputDto {
-    userId:string
-    name:string
-    username:string
-    badge:string
-    level:number
-    following:number
-    followers:number
-    about?:string
-    joinDate:string
-    problemSolved:number
-    profileUrl:string
-    isFollowing:boolean
+  userId: string;
+  name: string;
+  username: string;
+  badge: string;
+  level: number;
+  following: number;
+  followers: number;
+  about?: string;
+  joinDate: string;
+  problemSolved: number;
+  profileUrl: string;
+  isFollowing: boolean;
+  accountId:string
 }
 
 export interface ISubmitProblemUsecaseOutputDto {
-
-  suggestionProblemId:string
-  suggestionProblemName:string
-    
+  testcases: {
+    input: string;
+    output: string;
+    expected: string;
+    isCorrect: boolean;
+  }[];
+  success: boolean;
+  levelReached:number
+  badgeReached:string
+  xpCoinEarned:number
 }
 
 export interface ISubmitProblemUsecaseInputDto {
-    problemId:string
-    solution:string
-    language:string
-    accountId:string
+  problemId: string;
+  solution: string;
+  language: string;
+  accountId: string;
 }
+
 
 
 export interface IGetProblemUpdatesUsecaseInputDto {
-    accountId:string
-    problemId:string
-    language:string
+  accountId: string;
+  problemId: string;
+  language: string;
 }
 
-export interface IGetProblemUpdatesUsecaseOutputDto{
-    status:string
-    solution:string
-    language:string
+export interface IGetProblemUpdatesUsecaseOutputDto {
+  status: string;
+  solution: string;
+  language: string;
 }
 
-export interface IRunProblemUsecaseOutputDto{
-  testcases:{
-    input:string
-    output:string
-    expected:string
-    isCorrect:boolean
-  }[]   
-  success:boolean
+export interface IRunProblemUsecaseOutputDto {
+  testcases: {
+    input: string;
+    output: string;
+    expected: string;
+    isCorrect: boolean;
+  }[];
+  success: boolean;
 }
 
-export interface IGetAllPlansUsecaseOutputDto{
-    id:string
+export interface IGetAllPlansUsecaseOutputDto {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  features: string[];
+  duration: string;
+}
+
+export interface ICreateRazorpayOrderUsecaseOutputDto {
+  orderId: string;
+  amount: string;
+  currency: string;
+  name: string;
+  email: string;
+}
+
+export interface ICreateRazorpayOrderUsecaseInputDto {
+  planId: string;
+  accountId: string;
+}
+
+export interface IEditPlanInputDto {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  features: string[];
+  duration: string;
+}
+
+export interface IGetContestUsecase {
+  id: string;
+  title: string;
+  description: string;
+  dateAndTime: string;
+  domain: string;
+  skills: ISkillDto[];
+  duration: string;
+  rewards: IContestRewardDto[];
+}
+
+export interface IGetAllUpcomingAndOngoingContestUsecaseOutputDto {
+  contests: IGetContestUsecase[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export interface IGetAllPastContestUsecaseOutputDto {
+  contests: IGetContestUsecase[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export interface IGetContestProblem {
+  id: string;
+  templateCodes: ITemplateCodes[];
+  number: number;
+  testcases: { input: string; output: string; expected: string }[];
+  title: string;
+  description: string;
+  difficulty: string;
+  skills: ISkillDto[];
+  premium: boolean;
+  domain: string;
+  constrain: string;
+  examples: IExample[];
+}
+
+export interface IGetContestProblemUsecaseOutputDto {
+  problems: IGetContestProblem[];
+  endDateAndTime: Date;
+}
+
+
+export interface IContestProblemSubmitUsecaseOutputDto {
+  testcases: {
+    input: string;
+    output: string;
+    expected: string;
+    isCorrect: boolean;
+  }[];
+  success: boolean;
+}
+
+export interface IContestProblemSubmitUsecaseInputDto {
+  problemId: string;
+  contestId: string;
+  solution: string;
+  language: string;
+  accountId: string;
+}
+
+export interface IGetContestLeaderboardUsecaseOutputDto  {
+  leaderboard:ILeaderboardUserDTO[];
+  currentPage:number;
+  totalPages:number;
+}
+
+
+
+export interface IGetAllChatsUsecaseOutputDto  {
+    chatPartner:{
+    id:string,
     name:string
-    price:number
-    description:string
-    features:string[]
-    duration:string
+    profilePicture:string
+  }
+  lastMessage:{
+    content:string,
+    timestamp:Date
+  }
+  unreadCount:number
 }
 
-export interface ICreateRazorpayOrderUsecaseOutputDto{
-    orderId:string
-    amount:string
-    currency:string
+
+export interface IGetChatDto {
+  id:string,
+  message:string,
+  timestamp:Date,
+  receiverId:string,
+  senderId:string,
+  seen:boolean
+}
+
+export interface IGetChatUsecaseOutputDto {
+  chats:IGetChatDto[];
+  chatPartner:{
+    id:string,
     name:string
-    email:string
+    profilePicture:string
+  }
 }
 
-export interface ICreateRazorpayOrderUsecaseInputDto{
-    planId:string
-    accountId:string
+
+export interface IGetAllInterviewsUserUsecaseInterviewDto {
+  title: string,
+  id:string,
+  description: string,
+  numberOfQuestions: number,
+  duration: number,
+  premium: boolean,
+  isAttempted:boolean
+  sessionId?:string
 }
 
-export interface IEditPlanInputDto{
-    id:string
-    name:string
-    price:number
-    description:string
-    features:string[]
-    duration:string
+
+export interface IGetAllInterviewsUserUsecaseOutputDto {
+  interviews: IGetAllInterviewsUserUsecaseInterviewDto[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export interface ICreateInterviewSessionUsecaseOutputDto{
+  sessionId:string
+}
+
+
+export interface IGetInterviewQuestionUsecaseOutputDto{
+  question:string,
+  audio:string,
+  questionNumber:number
 }

@@ -1,4 +1,4 @@
-import { Request, response, Response } from 'express';
+import { Request,  Response } from 'express';
 import { inject, injectable } from 'tsyringe';
 import {
   createProblemSchema,
@@ -21,6 +21,7 @@ import { IDeleteTestcaseUsecase } from '../../../useCases/Interfaces/admin/probl
 import { IGetProblemUsecase } from '../../../useCases/Interfaces/admin/problem-management/get-problem.usecase.interface';
 import { IUpdateProblemUsecase } from '../../../useCases/Interfaces/admin/problem-management/update-problem.usecase.interface';
 import { IChangeVisibilityUsecase } from '../../../useCases/Interfaces/admin/problem-management/change-visibility.usecase.interface';
+import { IAutoGenerateTestcasesUsecasse } from '../../../useCases/Interfaces/admin/problem-management/auto-generate-testcase';
 
 @injectable()
 export class ProblemManagementController {
@@ -43,7 +44,8 @@ export class ProblemManagementController {
     private _deleteTestcaseUsecase: IDeleteTestcaseUsecase,
     @inject('IGetProblemUsecase') private _getProblemUsecase: IGetProblemUsecase,
     @inject('IUpdateProblemUsecase') private _updateProblemUsecase: IUpdateProblemUsecase,
-    @inject('IChangeVisibilityUsecase') private _changeVisibilityUsecase: IChangeVisibilityUsecase
+    @inject('IChangeVisibilityUsecase') private _changeVisibilityUsecase: IChangeVisibilityUsecase,
+    @inject('IAutoGenerateTestcasesUsecasse') private _autoGenerateTestcaseUsecase:IAutoGenerateTestcasesUsecasse
   ) {}
 
   async createProblem(req: Request, res: Response) {
@@ -101,9 +103,9 @@ export class ProblemManagementController {
       example,
     });
 
-    await this._addSingleTestcaseUsecase.execute(validated);
+    const response = await this._addSingleTestcaseUsecase.execute(validated);
 
-    res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.SINGLE_TESTCASE_ADDED));
+    res.status(HTTP_STATUS.OK).json(commonResponse(response.isAllPassed, SUCCESS_MESSAGES.SINGLE_TESTCASE_VALIDATED, response.passedLanguages));
   }
 
   async getAllTestcases(req: Request, res: Response) {
@@ -146,5 +148,11 @@ export class ProblemManagementController {
     await this._changeVisibilityUsecase.execute(validated.id);
 
     res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.VISIBILITY_CHANGED));
+  }
+
+  async autoGenerateTestcases(req:Request,res:Response){
+    const {problemId} = req.body
+    await this._autoGenerateTestcaseUsecase.executes(problemId)
+    res.status(HTTP_STATUS.OK).json(commonResponse(true , SUCCESS_MESSAGES.TEST_CASE_AUTO_GENERATE))
   }
 }

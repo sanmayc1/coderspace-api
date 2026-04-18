@@ -14,7 +14,7 @@ export const BADGE = ['silver', 'gold', 'platinum'];
 export const DIFFICULTY: TDifficulty[] = ['easy', 'medium', 'hard'];
 export type TView = 'public' | 'private';
 export const VIEW: TView[] = ['public', 'private'];
-export const PAYMENT_STATUS_ENUM = ['pending', 'paid', 'failed'];
+export const PAYMENT_STATUS_ENUM = ['pending', 'success', 'failed'];
 type FilterOp = 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'in' | 'contains';
 
 interface FilterCondition {
@@ -43,6 +43,11 @@ export const HTTP_STATUS = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+export const SCORES = {
+  'easy':1,
+  'medium':2,
+  'hard':3
+}
 export const ERROR_MESSAGES = {
   SERVER_ERROR: 'An error occurred, please try again later.',
   VALIDATION_ERROR: 'Validation error occurred',
@@ -100,6 +105,21 @@ export const ERROR_MESSAGES = {
   SUBSCRIPTION_ALREADY_EXISTS: 'Subscription already exists',
   PREMIUM_REQUIRED: 'Access denied, premium required',
   CONTEST_NOT_FOUND: 'Contest not found',
+  CONTEST_ENDED: 'Contest ended',
+  CONTEST_NOT_STARTED: 'Contest not started',
+  CONTEST_ATTEMPT_NOT_FOUND: 'Contest attempt not found.Invalid join',
+  CONTEST_ALREADY_JOINED: 'Contest already joined',
+  NEED_MINIMUM_TESTCASE:"Atleast one test case needed to auto generate please add that",
+  INTERVIEW_NOT_FOUND:"Interview not found",
+  SESSION_ALREADY_EXISTS:"You have already appeared for this interview",
+  INTERVIEW_QUESTION_NOT_FOUND:"Interview question not found",
+  INVALID_CURRENT_PASSWORD:"Invalid current password",
+  SESSION_NOT_FOUND:"Session not found",
+  QUESTIONS_NOT_FOUND:"Questions not found",
+  TESTCASE_ALREADY_EXISTS:"Testcase already exists",
+  NO_LANGUAGE_ADDED_TO_PROBLEM:"Please add one language to the problem before adding testcase",
+  NO_TESTCASE_ADDED:"Please add one testcase to the problem before changing visibility",
+
 };
 export const SUCCESS_MESSAGES = {
   USER_REGISTERED: 'User registered successfully',
@@ -129,7 +149,7 @@ export const SUCCESS_MESSAGES = {
   LANGUAGE_ADDED: 'Language Successfully added',
   LANGUAGES_FETCHED: 'Language successfully fetched',
   LANGUAGE_UPDATED: 'Language updated successfully',
-  SINGLE_TESTCASE_ADDED: 'Single testcase added successfully',
+  SINGLE_TESTCASE_VALIDATED: 'Single testcase validated successfully',
   GET_TESTCASES: 'Testcase successfully fetched',
   TESTCASE_DELETED: 'Testcase successfully deleted',
   GET_PROBLEM: 'Problem fetched successfully',
@@ -151,6 +171,25 @@ export const SUCCESS_MESSAGES = {
   VERIFY_PAYMENT: 'Payment verified successfully',
   MARK_FAILED_PAYMENT: 'Payment marked failed successfully',
   CONTEST_FETCHED: 'Contest fetched successfully',
+  CONTEST_UPDATED: 'Contest updated successfully',
+  CONTEST_DELETED: 'Contest deleted successfully',
+  CONTEST_PROBLEMS_FETCHED: 'Contest problems fetched successfully',
+  CONTEST_JOINED: 'Contest joined successfully',
+  PROBLEMS_FETCHED:"Problems fetched successfully",
+  CONTEST_FINISHED: 'Contest finished successfully',
+  CONTEST_LEADERBOARD_FETCHED: 'Contest leaderboard fetched successfully',
+  TEST_CASE_AUTO_GENERATE:"Testcase auto generate successfully",
+  CHAT_FETCHED:"Chats fetched successfully",
+  INTERVIEW_CREATED:"Interview created successfully",
+  INTERVIEWS_FETCHED:"Interviews fetched successfully",
+  INTERVIEW_DELETED:"Interview deleted successfully",
+  INTERVIEW_SESSION_CREATED:"Interview session created successfully",
+  INTERVIEW_QUESTION_FETCHED:"Interview question fetched successfully",
+  ACCOUNT_PASSWORD_CHANGED:"Account password changed successfully",
+  DASHBOARD_FETCHED:"Dashboard fetched successfully",
+  ANSWER_SUBMITTED:"Answer submitted successfully",
+  INTERVIEW_FINISHED:"Interview finished successfully",
+  INTERVIEW_FEEDBACK_FETCHED:"Interview feedback fetched successfully",
 };
 
 export const COOKIES_NAMES = {
@@ -208,5 +247,13 @@ export const availableLanguages = {
   javascript: { name: 'javascript', extension: 'js', version: '20.11.1' },
 };
 
+export const CONTEST_SCORE_BASED_ON_DIFFICULTY:Record<TDifficulty, number> = {
+    easy: 100,
+    medium: 200,
+    hard: 300,
+}
+
 export type TStatus = 'attempted' | 'solved';
 export const STATUS: TStatus[] = ['attempted', 'solved'];
+
+export const INTERVIEW_STATUS =["ongoing","completed","partially_completed"]
