@@ -40,7 +40,7 @@ export class Server {
   }
 
   private configureRouter(): void {
-    this._app.use(cors({ origin: config.client.uri, credentials: true }));
+    this._app.use(cors({ origin: [config.client.uri ,config.client.uri2], credentials: true }));
     this._app.use('/api/v1/auth', authRoutes.router);
     this._app.use('/api/v1/admin', adminRoutes.router);
     this._app.use('/api/v1/user', userRoutes.router);
