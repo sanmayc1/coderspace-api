@@ -70,7 +70,6 @@ export class GitHubAuthUsecase implements IGithHubAuthUsecase {
       user = await this._userRepository.create({
         accountId: account._id,
         username,
-        githubUrl: userProfile.html_url,
       });
       await this._walletRepository.create({ accountId: account._id });
     } else if (account.authProvider !== 'github') {

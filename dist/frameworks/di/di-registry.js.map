@@ -1,0 +1,1 @@
+{"version":3,"file":"di-registry.js","sourceRoot":"","sources":["../../../src/frameworks/di/di-registry.ts"],"names":[],"mappings":";;;AAAA,yDAAsD;AACtD,+DAA4D;AAC5D,yDAAqD;AAErD,MAAa,mBAAmB;IAC9B,MAAM,CAAC,WAAW;QAChB,mCAAgB,CAAC,eAAe,EAAE,CAAC;QACnC,yCAAmB,CAAC,kBAAkB,EAAE,CAAC;QACzC,kCAAe,CAAC,gBAAgB,EAAE,CAAC;IACrC,CAAC;CACF;AAND,kDAMC"}

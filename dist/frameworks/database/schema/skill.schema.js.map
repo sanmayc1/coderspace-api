@@ -1,0 +1,1 @@
+{"version":3,"file":"skill.schema.js","sourceRoot":"","sources":["../../../../src/frameworks/database/schema/skill.schema.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAGrB,QAAA,WAAW,GAAG,IAAI,iBAAM,CACnC;IACE,KAAK,EAAE;QACL,IAAI,EAAE,MAAM;QACZ,QAAQ,EAAE,IAAI;KACf;CACF,EACD,EAAE,UAAU,EAAE,IAAI,EAAE,CACrB,CAAC"}
