@@ -7,7 +7,7 @@ import { IBlackListTokenRepository } from '../../domain/repositoryInterfaces/bla
 import { IAccountsRepository } from '../../domain/repositoryInterfaces/accounts-repository.interface';
 import { commonResponse } from '../controllers/auth/index';
 import { Server } from 'socket.io';
-import cookie from "cookie";
+import * as cookie from "cookie";
 
 
 @injectable()
@@ -81,7 +81,9 @@ export class AuthMiddleware implements IAuthMiddleware {
 socketAuthMiddleware(io: Server) {
   io.use(async (socket, next) => {
     try {
+       
       const cookies = cookie.parse(socket.handshake.headers.cookie || "");
+    
       const token = cookies[COOKIES_NAMES.ACCESS_TOKEN];
  
       if (!token) {
@@ -94,6 +96,7 @@ socketAuthMiddleware(io: Server) {
 
       next();
     } catch (error) {
+      
       return next(new Error("TOKEN_INVALID"));
     }
   });
