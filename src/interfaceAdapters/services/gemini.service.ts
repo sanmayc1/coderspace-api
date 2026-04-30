@@ -8,7 +8,8 @@ import { IInterviewQuestionsEntity } from '../../domain/entities/interview-quest
 
 @injectable()
 export class GeminiService implements IGeminiService {
-  constructor(private _ai = new GoogleGenAI({ apiKey: config.geminiApiKey })) {}
+  private _ai = new GoogleGenAI({ apiKey: config.geminiApiKey });
+  constructor() {}
   async generateInterviewAnswerFeedback(
     questions: IInterviewQuestionsEntity[],
     totalQuestions:number,

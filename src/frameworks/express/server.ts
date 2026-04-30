@@ -40,7 +40,7 @@ export class Server {
     };
 
     this._app.options(
-      '/*',
+      '/{*splat}',
       cors({
         origin: config.client.uri,
         credentials: true,

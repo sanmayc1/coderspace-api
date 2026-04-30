@@ -6,12 +6,11 @@ import crypto from 'crypto';
 
 @injectable()
 export class PaymentService implements IPaymentService {
-  constructor(
-    private razorpay = new Razorpay({
-      key_id: config.razorpay.apiKey,
-      key_secret: config.razorpay.secert,
-    })
-  ) {}
+  private razorpay = new Razorpay({
+    key_id: config.razorpay.apiKey,
+    key_secret: config.razorpay.secert,
+  });
+  constructor() {}
 
   async createRazorpayOrder(amount: number): Promise<Orders.RazorpayOrder> {
     return await this.razorpay.orders.create({

@@ -9,7 +9,6 @@
     "build": "tsc",
     "format": "prettier --write ."
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
