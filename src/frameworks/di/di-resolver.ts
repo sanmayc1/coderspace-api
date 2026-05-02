@@ -44,6 +44,8 @@ import { AdminDashboardController } from '../../interfaceAdapters/controllers/ad
 import { AdminDashboardRoute } from '../express/routes/admin/admin-dashboard.route';
 import { NotificationController } from '../../interfaceAdapters/controllers/common/notification.controller';
 import { NotificationRoute } from '../express/routes/common/notification.route';
+import { CompanyManagementRoute } from '../express/routes/admin/company-management.routes';
+import { CompanyManagementController } from '../../interfaceAdapters/controllers/admin/company.management.controller';
 
 DependencyInjection.registerAll();
 
@@ -61,6 +63,7 @@ export const authController = container.resolve(AuthController);
 export const githubAuthController = container.resolve(GithHubAuthController);
 export const googleAuthController = container.resolve(GoogleAuthController);
 export const userManagementController = container.resolve(UserManagementController);
+export const companyManagementController = container.resolve(CompanyManagementController)
 export const companyController = container.resolve(CompanyController);
 export const userProfileController = container.resolve(UserProfileController);
 export const problemManagementController = container.resolve(ProblemManagementController);
@@ -83,6 +86,7 @@ export const notificationController = container.resolve(NotificationController);
 // Routes
 export const authRoutes = container.resolve(AuthRoute);
 export const userManagementRoute = container.resolve(UserManagementRoute);
+export const companyManagementRoute = container.resolve(CompanyManagementRoute)
 export const problemManagementRoutes = container.resolve(ProblemManagementRoutes);
 export const skillsAndDomainManagementRoute = container.resolve(SkillsAndDomainManagementRoute);
 export const paymentsManagementRoutes = container.resolve(PaymentsManagementRoutes);

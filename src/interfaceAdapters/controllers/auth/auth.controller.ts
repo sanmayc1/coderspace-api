@@ -189,13 +189,15 @@ export class AuthController {
   }
 
   async companyRegister(req: Request, res: Response) {
+    
     const validated = CompanyRegisterSchema.parse({
       name: req.body.companyName,
       email: req.body.email,
       gstin: req.body.gstin,
       password: req.body.password,
+      companyRegistrationProof: req.file
     });
-
+    
     const email = await this._registerCompanyUsecase.execute(validated);
     setCookies(res, COOKIES_NAMES.SIGNUP, email, true);
     res.status(HTTP_STATUS.CREATED).json(commonResponse(true, SUCCESS_MESSAGES.COMPANY_REGISTERED));

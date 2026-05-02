@@ -84,6 +84,9 @@ import { MarkNotificationReadUsecase } from '../../useCases/common/notification/
 import { UpdateAnswerAndFeedbackUsecase } from '../../useCases/user/interview/update-answer-and-feedback.usecase';
 import { FinishInterviewUsecase } from '../../useCases/user/interview/finish-interview.usecase';
 import { GetInterviewFeedbackUsecase } from '../../useCases/user/interview/get-interview-feedback.usecase';
+import { GetAllCompaniesUsecase } from '../../useCases/admin/company-management/get-all-company.usecase';
+import { VerifyCompanyUsecase } from '../../useCases/admin/company-management/verify-company.usecase';
+import { RejectCompanyUsecase } from '../../useCases/admin/company-management/reject-company.usecase';
 
 export class UsecaseRegistery {
   static registerUsecase() {
@@ -334,5 +337,16 @@ export class UsecaseRegistery {
     container.register('IGetInterviewFeedbackUsecase', {
       useClass: GetInterviewFeedbackUsecase,
     });
+
+    container.register("IGetAllCompaniesUsecase",{
+      useClass:GetAllCompaniesUsecase
+    })
+
+    container.register("IVerifyCompanyUsecase",{
+      useClass:VerifyCompanyUsecase
+    })
+    container.register("IRejectCompanyUsecase",{
+      useClass:RejectCompanyUsecase
+    })
   }
 }

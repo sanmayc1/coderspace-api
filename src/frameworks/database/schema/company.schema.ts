@@ -12,6 +12,19 @@ export const companySchema = new Schema<ICompanyModel>(
       required: true,
       ref: 'Account',
     },
+    isApproved:{
+      type:Boolean,
+      required:true,
+      default:false
+    },
+    certificateUrl:{
+      type:String,
+      required:true,
+      default:""
+    },
+    remarks:{
+      type:String,
+    }
   },
   { timestamps: true }
 );

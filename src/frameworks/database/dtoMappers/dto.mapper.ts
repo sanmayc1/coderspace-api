@@ -139,10 +139,14 @@ export const accountRepositoryMapper = {
 export const companyRepositoryMapper = {
   toEntity(data: ICompanyModel): ICompanyEntity {
     return {
-      accountId: String(data._id),
+      _id: String(data._id),
+      accountId: String(data.accountId),
+      isApproved: data.isApproved,
+      certificateUrl: data.certificateUrl,
       gstin: data.gstin,
       createdAt: data.createdAt,
       updtedAt: data.updtedAt,
+      remarks:data.remarks
     };
   },
   toModel(data: Partial<ICompanyEntity>): Partial<ICompanyModel> {
@@ -151,6 +155,9 @@ export const companyRepositoryMapper = {
         accountId: new mongoose.Types.ObjectId(data.accountId),
       }),
       ...(data.gstin && { gstin: data.gstin }),
+      ...(data.isApproved && { isApproved: data.isApproved }),
+      ...(data.certificateUrl && { certificateUrl: data.certificateUrl }),
+      ...(data.remarks !==undefined && {remarks:data.remarks})
     };
   },
 };
@@ -437,9 +444,7 @@ export const contestAttemptRepositoryMapper = {
           ? String(data.contestId)
           : (data.contestId as IContestEntity),
       userId:
-        data.userId instanceof Types.ObjectId
-          ? String(data.userId)
-          : (data.userId as IUserEntity),
+        data.userId instanceof Types.ObjectId ? String(data.userId) : (data.userId as IUserEntity),
       score: data.score,
       totalProblems: data.totalProblems,
       solvedProblems: data.solvedProblems,
@@ -462,7 +467,6 @@ export const contestAttemptRepositoryMapper = {
   },
 };
 
-
 export const chatRepositoryMapper = {
   toEntity(data: IChatModel): IChatEntity {
     return {
@@ -476,7 +480,7 @@ export const chatRepositoryMapper = {
           ? String(data.receiverId)
           : (data.receiverId as IAccountsEntity),
       content: data.content,
-      seen:data.seen,
+      seen: data.seen,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
     };
@@ -491,25 +495,22 @@ export const chatRepositoryMapper = {
   },
 };
 
-
-
 export const interviewRepositoryMapper = {
   toEntity(data: IInterviewModel): IInterviewEntity {
-    return{
+    return {
       _id: String(data._id),
       title: data.title,
       description: data.description,
-      context:data.context,
-      createdAt:data.createdAt,
-      updatedAt:data.updatedAt,
-      difficulty:data.difficulty,
-      durationInMinutes:data.durationInMinutes,
-      isPremium:data.isPremium,
-      numberOfQuestions:data.numberOfQuestions
-    }
+      context: data.context,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      difficulty: data.difficulty,
+      durationInMinutes: data.durationInMinutes,
+      isPremium: data.isPremium,
+      numberOfQuestions: data.numberOfQuestions,
+    };
   },
   toModel(data: Partial<IInterviewEntity>): Partial<IInterviewModel> {
-    
     return {
       ...(data.title && { title: data.title }),
       ...(data.description && { description: data.description }),
@@ -523,21 +524,20 @@ export const interviewRepositoryMapper = {
   },
 };
 
-
 export const interviewSessionRepositoryMapper = {
   toEntity(data: IInterviewSessionModel): IInterviewSessionEntity {
-    return{
+    return {
       _id: String(data._id),
       accountId: String(data.accountId),
       interviewId: String(data.interviewId),
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
-      startedAt:data.startedAt,
-      completedAt:data.completedAt,
-      status:data.status,
-      overallFeedback:data.overallFeedback,
-      finalScore:data.finalScore,
-    }
+      startedAt: data.startedAt,
+      completedAt: data.completedAt,
+      status: data.status,
+      overallFeedback: data.overallFeedback,
+      finalScore: data.finalScore,
+    };
   },
   toModel(data: Partial<IInterviewSessionEntity>): Partial<IInterviewSessionModel> {
     return {
@@ -553,10 +553,9 @@ export const interviewSessionRepositoryMapper = {
   },
 };
 
-
 export const interviewQuestionsRepositoryMapper = {
   toEntity(data: IInterviewQuestionsModel): IInterviewQuestionsEntity {
-    return{
+    return {
       _id: String(data._id),
       sessionId: String(data.sessionId),
       question: data.question,
@@ -564,10 +563,10 @@ export const interviewQuestionsRepositoryMapper = {
       attempted: data.attempted,
       feedback: data.feedback,
       score: data.score,
-      order:data.order,
+      order: data.order,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
-    }
+    };
   },
   toModel(data: Partial<IInterviewQuestionsEntity>): Partial<IInterviewQuestionsModel> {
     return {

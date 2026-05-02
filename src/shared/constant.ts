@@ -17,7 +17,7 @@ export const VIEW: TView[] = ['public', 'private'];
 export const PAYMENT_STATUS_ENUM = ['pending', 'success', 'failed'];
 type FilterOp = 'eq' | 'ne' | 'lt' | 'lte' | 'gt' | 'gte' | 'in' | 'contains';
 
-interface FilterCondition {
+export interface FilterCondition {
   op: FilterOp;
   value: any;
 }
@@ -119,6 +119,8 @@ export const ERROR_MESSAGES = {
   TESTCASE_ALREADY_EXISTS:"Testcase already exists",
   NO_LANGUAGE_ADDED_TO_PROBLEM:"Please add one language to the problem before adding testcase",
   NO_TESTCASE_ADDED:"Please add one testcase to the problem before changing visibility",
+  ADMIN_ONBOARD:"Your account is currently under review and has not been approved yet. Our team is working on it!",
+  COMPANY_REGISTRATION_PROOF_REQUIRED:"Company registration proof is required"
 
 };
 export const SUCCESS_MESSAGES = {
@@ -190,6 +192,9 @@ export const SUCCESS_MESSAGES = {
   ANSWER_SUBMITTED:"Answer submitted successfully",
   INTERVIEW_FINISHED:"Interview finished successfully",
   INTERVIEW_FEEDBACK_FETCHED:"Interview feedback fetched successfully",
+  GETALLCOMPANIES:"All companies fetched successfully",
+  COMPANY_VERIFIED:"Company verified successfully",
+  COMPANY_REJECTED:"Company rejected successfully",
 };
 
 export const COOKIES_NAMES = {

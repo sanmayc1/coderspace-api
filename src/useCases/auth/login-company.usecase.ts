@@ -9,6 +9,7 @@ import { IAccountsRepository } from '../../domain/repositoryInterfaces/accounts-
 import { IAccountsEntity } from '../../domain/entities/accounts-entity';
 import { LoginUsecaseMapper } from '../dtos/mappers/register.usecase.mapper';
 import { ILoginUsecaseOutputDto } from '../dtos/auth.dto';
+import { ICompanyRepository } from '../../domain/repositoryInterfaces/company-repository.interface';
 
 @injectable()
 export class LoginCompanyUsecase implements ILoginCompanyUsecase {
@@ -17,7 +18,8 @@ export class LoginCompanyUsecase implements ILoginCompanyUsecase {
     @inject('IJwtService') private _jwtService: IJwtService,
     @inject('IUniqueIdService') private _uniqueIdService: IUniqueIdService,
     @inject('IAccountRepository')
-    private _accountRepository: IAccountsRepository
+    private _accountRepository: IAccountsRepository,
+    @inject('ICompanyRepository') private _companyRepository: ICompanyRepository
   ) {}
   async execute(
     data: Pick<IAccountsEntity, 'email' | 'password'>
@@ -60,6 +62,32 @@ export class LoginCompanyUsecase implements ILoginCompanyUsecase {
 
     if (account.isBlocked) {
       throw new CustomError(HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.ACCOUNT_BLOCKED, 'password');
+    }
+
+    const company = await this._companyRepository.findByAccountId(account._id as string);
+    
+    if (!company) {
+      throw new CustomError(
+        HTTP_STATUS.BAD_REQUEST,
+        ERROR_MESSAGES.INVALID_CREDENTIALS,
+        'password'
+      );
+    }
+
+    if (!company.isApproved && !company.remarks) {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        ERROR_MESSAGES.ADMIN_ONBOARD,
+        'approval'
+      );
+    }
+
+    if (!company.isApproved && company.remarks) {
+      throw new CustomError(
+        HTTP_STATUS.FORBIDDEN,
+        company.remarks,
+        'approval-rejected'
+      );
     }
 
     const deviceId = this._uniqueIdService.generate();

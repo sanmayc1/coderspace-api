@@ -237,4 +237,21 @@ export interface IGetAllInterviewsUsecaseOutputDto {
   itemsPerPage: number;
 }
 
+export interface ICompanyDto {
+  name: string;
+  email: string;
+  gstNumber: string;
+  isBlocked: boolean;
+  isApproved: boolean;
+  certificateUrl: string;
+  accountId: string;
+  remarks: string;
+}
+
+export interface IGetAllCompaniesUsecaseOutputDto {
+  companies: ICompanyDto[];
+  totalPages: number;
+  currentPage: number;
+}
+
 

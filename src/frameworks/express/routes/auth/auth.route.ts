@@ -9,6 +9,7 @@ import {
 } from '../../../di/di-resolver';
 import { BaseRoute } from '../base-route';
 import { config } from '../../../../shared/config';
+import { upload } from '../../../../shared/utils/multer';
 
 @injectable()
 export class AuthRoute extends BaseRoute {
@@ -78,6 +79,7 @@ export class AuthRoute extends BaseRoute {
 
     this.router.post(
       '/company/register',
+       upload.single('companyRegistrationProof'),
       asyncHandler(authController.companyRegister.bind(authController))
     );
   }

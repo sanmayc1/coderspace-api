@@ -8,6 +8,7 @@ import {
   skillsAndDomainManagementRoute,
   userManagementRoute,
   adminDashboardRoute,
+  companyManagementRoute,
 } from '../../../di/di-resolver';
 import { asyncHandler } from '../../../../shared/async-handler';
 
@@ -23,11 +24,19 @@ export class AdminRoutes extends BaseRoute {
       asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
       userManagementRoute.router
     );
+
+    this.router.use(
+      "/company",
+      asyncHandler(authMiddleware.handle(['admin'])).bind(authMiddleware),
+      companyManagementRoute.router
+    );
+
     this.router.use(
       '/problems',
       asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
       problemManagementRoutes.router
     );
+
     this.router.use(
       '/',
       asyncHandler(authMiddleware.handle(['admin', 'company'])).bind(authMiddleware),
@@ -51,6 +60,5 @@ export class AdminRoutes extends BaseRoute {
       asyncHandler(authMiddleware.handle(['admin']).bind(authMiddleware)),
       adminDashboardRoute.router
     );
-
   }
 }

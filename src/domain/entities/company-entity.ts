@@ -3,5 +3,8 @@ export interface ICompanyEntity {
   gstin: string;
   accountId: string;
   createdAt?: Date;
+  isApproved:boolean;
+  certificateUrl:string
+  remarks:string
   updtedAt?: Date;
 }

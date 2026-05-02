@@ -47,6 +47,7 @@ export interface RegisterCompanyRequestDto {
   gstin: string;
   email: string;
   password: string;
+  companyRegistrationProof: Express.Multer.File
 }
 
 

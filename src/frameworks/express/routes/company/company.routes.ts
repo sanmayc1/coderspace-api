@@ -31,5 +31,7 @@ export class CompanyRoutes extends BaseRoute {
       asyncHandler(authMiddleware.handle(['company'])).bind(authMiddleware),
       companyController.getDashboard.bind(companyController)
     );
+
+    
   }
 }
