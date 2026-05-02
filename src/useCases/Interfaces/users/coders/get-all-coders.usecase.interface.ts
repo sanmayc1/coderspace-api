@@ -1,8 +1,8 @@
-import { IGetAllCodersUsecaseOutputDto } from "../../../dtos/user.dto";
+import { IGetAllCodersUsecaseInput, IGetAllCodersUsecaseOutputDto } from "../../../dtos/user.dto";
 
 
 
 
 export interface IGetAllCodersUsecase {
-    execute(accountId:string): Promise<IGetAllCodersUsecaseOutputDto[]>;
+    execute(data:IGetAllCodersUsecaseInput): Promise<IGetAllCodersUsecaseOutputDto>;
 }

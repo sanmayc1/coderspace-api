@@ -12,12 +12,18 @@ export class CodersController {
     @inject('IGetAllCodersUsecase') private _getAllCodersUsecase: IGetAllCodersUsecase,
     @inject('IFollowCodersUsecase') private _followCodersUsecase: IFollowCodersUsecase,
     @inject('IUnfollowCodersUsecase') private _unfollowCodersUsecase: IUnfollowCodersUsecase,
-    @inject('IGetCoderUsecase') private _getCoderUsecase: IGetCoderUsecase,
+    @inject('IGetCoderUsecase') private _getCoderUsecase: IGetCoderUsecase
   ) {}
 
   async getAllCoders(req: Request, res: Response) {
-    const coders = await this._getAllCodersUsecase.execute(req.user?.accountId as string);
-
+    
+    const page = Number(req.query.page)
+    const accountId = req.user?.accountId as string
+    const search = req.query.search as string
+    const sort = req.query.sort as string
+    const badge = req.query.badgeFilter as string
+    const coders = await this._getAllCodersUsecase.execute({accountId,page,badge,search,sort});
+    
     res.status(HTTP_STATUS.OK).json(commonResponse(true, SUCCESS_MESSAGES.GET_ALL_CODERS, coders));
   }
 

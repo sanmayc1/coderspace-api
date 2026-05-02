@@ -13,5 +13,12 @@ export interface IUserRepository extends IBaseRepository<IUserEntity> {
     search: string,
     sort: string
   ): Promise<{ users: IUserEntity[] | []; count: number }>;
-  getAllUsersWithFollowing(userId:string): Promise<(IUserEntity & {isFollowing:boolean}) [] | []>
+  getAllUsersWithFollowing(
+    userId: string,
+    skip: number,
+    limit: number,
+    search: string,
+    sort: string,
+    badge: string
+  ): Promise<{ users: (IUserEntity & { isFollowing: boolean })[]; count: number }>;
 }

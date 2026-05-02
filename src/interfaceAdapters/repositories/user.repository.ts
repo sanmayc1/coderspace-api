@@ -70,13 +70,32 @@ export class UserRepository
   }
 
   async getAllUsersWithFollowing(
-    userId: string
-  ): Promise<(IUserEntity & { isFollowing: boolean })[] | []> {
+    userId: string,
+    skip: number,
+    limit: number,
+    search: string,
+    sort: string,
+    badge: string
+  ): Promise<{ users: (IUserEntity & { isFollowing: boolean })[]; count: number }> {
     const viewerId = new mongoose.Types.ObjectId(userId);
-    const doc = await UserModel.aggregate([
-      {
-        $match: { _id: {$ne: viewerId} },
-      },
+
+    const filter: any = { _id: { $ne: viewerId } };
+
+    if (search) {
+      filter.$or = [
+        { 'accountId.name': new RegExp(search, 'i') },
+        { 'accountId.email': new RegExp(search, 'i') },
+        { username: new RegExp(search, 'i') },
+      ];
+    }
+
+    if (badge && badge !== 'All') {
+      filter.badge = badge;
+    }
+
+    const sortOption = USER_SORTING[sort as keyof typeof USER_SORTING] || { createdAt: -1 };
+
+    const pipeline: any[] = [
       {
         $lookup: {
           from: 'accounts',
@@ -87,6 +106,15 @@ export class UserRepository
       },
       { $unwind: { path: '$accountId', preserveNullAndEmptyArrays: true } },
       { $match: { 'accountId.isVerified': true } },
+      { $match: filter },
+    ];
+
+    const countPipeline = [...pipeline, { $count: 'total' }];
+    const countResult = await UserModel.aggregate(countPipeline);
+    const count = countResult.length > 0 ? countResult[0].total : 0;
+
+    const doc = await UserModel.aggregate([
+      ...pipeline,
       {
         $lookup: {
           from: 'followers',
@@ -108,9 +136,14 @@ export class UserRepository
           isFollowing: { $gt: [{ $size: '$followers' }, 0] },
         },
       },
+      { $sort: sortOption as { [key: string]: -1 | 1 } },
+      { $skip: skip },
+      { $limit: limit },
     ]);
-    return doc
-      ? doc.map((user) => ({ ...userMapperRepo.toEntity(user), isFollowing: user.isFollowing }))
-      : [];
+
+    return {
+      users: doc.map((user) => ({ ...userMapperRepo.toEntity(user), isFollowing: user.isFollowing })),
+      count,
+    };
   }
 }

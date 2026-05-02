@@ -274,14 +274,22 @@ export const userGetProblemUsecaseMapper = {
 };
 
 export const getAllCodersUsecaseMapper = {
-  toResponse(data: IUserEntity & { isFollowing: boolean }): IGetAllCodersUsecaseOutputDto {
+  toResponse(
+    users: (IUserEntity & { isFollowing: boolean })[],
+    currentPage: number,
+    totalPage: number
+  ): IGetAllCodersUsecaseOutputDto {
     return {
-      userId: data._id as string,
-      name: (data.accountId as IAccountsEntity).name,
-      username: data.username,
-      badge: data.badge as TBadge,
-      profileUrl: (data.accountId as IAccountsEntity).profileUrl || '',
-      isFollowing: data.isFollowing,
+      coders: users.map((data) => ({
+        userId: data._id as string,
+        name: (data.accountId as IAccountsEntity).name,
+        username: data.username,
+        badge: data.badge as TBadge,
+        profileUrl: (data.accountId as IAccountsEntity).profileUrl || '',
+        isFollowing: data.isFollowing,
+      })),
+      currentPage,
+      totalPage,
     };
   },
 };

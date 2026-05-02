@@ -42,12 +42,16 @@ export interface IUpdateUserPasswordInputDto {
 }
 
 export interface IGetAllCodersUsecaseOutputDto {
-  userId: string;
-  name: string;
-  username: string;
-  badge: string;
-  profileUrl: string;
-  isFollowing: boolean;
+  coders: {
+    userId: string;
+    name: string;
+    username: string;
+    badge: string;
+    profileUrl: string;
+    isFollowing: boolean;
+  }[];
+  currentPage: number;
+  totalPage: number;
 }
 
 export interface IGetCoderUsecaseOutputDto {
@@ -63,7 +67,7 @@ export interface IGetCoderUsecaseOutputDto {
   problemSolved: number;
   profileUrl: string;
   isFollowing: boolean;
-  accountId:string
+  accountId: string;
 }
 
 export interface ISubmitProblemUsecaseOutputDto {
@@ -74,9 +78,9 @@ export interface ISubmitProblemUsecaseOutputDto {
     isCorrect: boolean;
   }[];
   success: boolean;
-  levelReached:number
-  badgeReached:string
-  xpCoinEarned:number
+  levelReached: number;
+  badgeReached: string;
+  xpCoinEarned: number;
 }
 
 export interface ISubmitProblemUsecaseInputDto {
@@ -85,8 +89,6 @@ export interface ISubmitProblemUsecaseInputDto {
   language: string;
   accountId: string;
 }
-
-
 
 export interface IGetProblemUpdatesUsecaseInputDto {
   accountId: string;
@@ -184,7 +186,6 @@ export interface IGetContestProblemUsecaseOutputDto {
   endDateAndTime: Date;
 }
 
-
 export interface IContestProblemSubmitUsecaseOutputDto {
   testcases: {
     input: string;
@@ -203,58 +204,53 @@ export interface IContestProblemSubmitUsecaseInputDto {
   accountId: string;
 }
 
-export interface IGetContestLeaderboardUsecaseOutputDto  {
-  leaderboard:ILeaderboardUserDTO[];
-  currentPage:number;
-  totalPages:number;
+export interface IGetContestLeaderboardUsecaseOutputDto {
+  leaderboard: ILeaderboardUserDTO[];
+  currentPage: number;
+  totalPages: number;
 }
 
-
-
-export interface IGetAllChatsUsecaseOutputDto  {
-    chatPartner:{
-    id:string,
-    name:string
-    profilePicture:string
-  }
-  lastMessage:{
-    content:string,
-    timestamp:Date
-  }
-  unreadCount:number
+export interface IGetAllChatsUsecaseOutputDto {
+  chatPartner: {
+    id: string;
+    name: string;
+    profilePicture: string;
+  };
+  lastMessage: {
+    content: string;
+    timestamp: Date;
+  };
+  unreadCount: number;
 }
-
 
 export interface IGetChatDto {
-  id:string,
-  message:string,
-  timestamp:Date,
-  receiverId:string,
-  senderId:string,
-  seen:boolean
+  id: string;
+  message: string;
+  timestamp: Date;
+  receiverId: string;
+  senderId: string;
+  seen: boolean;
 }
 
 export interface IGetChatUsecaseOutputDto {
-  chats:IGetChatDto[];
-  chatPartner:{
-    id:string,
-    name:string
-    profilePicture:string
-  }
+  chats: IGetChatDto[];
+  chatPartner: {
+    id: string;
+    name: string;
+    profilePicture: string;
+  };
 }
-
 
 export interface IGetAllInterviewsUserUsecaseInterviewDto {
-  title: string,
-  id:string,
-  description: string,
-  numberOfQuestions: number,
-  duration: number,
-  premium: boolean,
-  isAttempted:boolean
-  sessionId?:string
+  title: string;
+  id: string;
+  description: string;
+  numberOfQuestions: number;
+  duration: number;
+  premium: boolean;
+  isAttempted: boolean;
+  sessionId?: string;
 }
-
 
 export interface IGetAllInterviewsUserUsecaseOutputDto {
   interviews: IGetAllInterviewsUserUsecaseInterviewDto[];
@@ -262,13 +258,20 @@ export interface IGetAllInterviewsUserUsecaseOutputDto {
   currentPage: number;
 }
 
-export interface ICreateInterviewSessionUsecaseOutputDto{
-  sessionId:string
+export interface ICreateInterviewSessionUsecaseOutputDto {
+  sessionId: string;
 }
 
+export interface IGetInterviewQuestionUsecaseOutputDto {
+  question: string;
+  audio: string;
+  questionNumber: number;
+}
 
-export interface IGetInterviewQuestionUsecaseOutputDto{
-  question:string,
-  audio:string,
-  questionNumber:number
+export interface IGetAllCodersUsecaseInput {
+  accountId: string;
+  page: Number;
+  search: string;
+  sort: string;
+  badge: string;
 }
